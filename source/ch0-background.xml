@@ -1,0 +1,62 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Colors, Depth, Space (and Time?)</title>
+
+    <section>
+      <title>Image File Formats</title>
+        <subsection>
+          <title>Vector Formats</title>
+          <p>
+            Vector formats represent images as a series of drawing instructions. Becuase of this, they are infinitely scalable. This is well suited for iamges that can be defined geometrically, but not as well for real-world images.
+
+            Common file type: SVG (Scalable Vector Graphics).
+          </p>
+        </subsection>
+
+        <subsection>
+          <title>Raster Formats</title>
+          <p>
+            Raster formats represent images as a grid of color values (pixels).
+          </p>
+          <p>
+            Raster images can be uncompressed or compressed.
+          </p>
+          <p>
+            Uncompressed formats contain color data for each pixel. These files are quite large. Common file types: BMP, TIFF, RAW
+          </p>
+          <p>
+            Compressed formats use a compression algorithm to minimize file size. Some of these algorithms are lossless, while others are lossy.
+          </p>
+          <p>
+            Lossless compression algorithms contain enough information to exactly recreate the original image. Common file types: PNG (Portable Network Graphics), GIF (Graphics Interchange Format)
+          </p>
+          <p>
+            Lossy compression algorithms do not retain all the details of the original image. Common file type: JPEG (Joint Photographic Experts Group).
+          </p>
+        </subsection>
+        <subsection>
+          <title>NetPBM File Formats</title>
+          <p>
+            A family of uncompressed raster image file formats (<url href="https://en.wikipedia.org/wiki/Netpbm">more info</url>).
+          </p>
+          <p>
+            In this class we will be using the <em>PPM</em> (Portable PixMap) format specifically. PPM files prespresent pixel data as RGB (Red, Green, Blue) triplets in either ASCII or binary. In ASCII based PPMs, all whitespace is equivalent. Here is a sample ASCII PPM file:
+          </p>
+          <cd>
+            P3
+            4 3
+            255
+            255 0 0  255 0 0  255 0 0  255 0 0
+            0 255 0  0 255 0  0 255 0  0 255 0
+            0 0 255  0 0 255  0 0 255  0 0 255
+          </cd>
+          <p>
+            The first three lines make up the file header:
+            <ul>
+              <li><c>P3</c>: Type of PPM, 3-btye RGB, in ASCII (<c>P6</c> is RGB in binary).</li>
+              <li><c>4 3</c>: Width x Height, in pixels.</li>
+              <li><c>255</c>: Maximum value per color (will scale to 255 if not 255)</li>
+            </ul>
+          </p>
+        </subsection>
+    </section>
+  </chapter>

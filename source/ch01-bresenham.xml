@@ -1,0 +1,137 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Bresenham's Line Algorithm</title>
+  <section>
+    <title>The Problem</title>
+    <p>
+      The particular problem of drawing a line on a computer screen, is that the physical pixels, and the data structures we use to represent images in memory, are bound by integer coordinates. We cannot exactly represent a line that in reality has an infinite amount of non-integer points along it. The purpose of a line algorithm is to find the pixels, using integer coordinates, that <em>best approximate</em> what the line should look like.
+    </p>
+  </section>
+  <section>
+    <title>Testing Potential Points</title>
+    <p>
+      The basic concept of Bresenham's Line Algorithm is to find potential pixels that we think would be good candidates for the line, test them, and then select the best one. To begin, we will start by restricting our line algorithm to only lines where <m>0 \leq m \leq 1</m>, this will help narrow doent the possible pixels. Eventually, we can modify it to work for the other octants. We will also assume that our endpoints <m>(x_{0}, y_{0}), (x_{1}, y_{1})</m> only have integer coordinates. With those restrictions in place, if we are drawing a line as starting at <m>(x_{0}, y_{0})</m>, we only have 2 candidate pixels, <m>A: (x_{0}+1, y_{0})</m> and <m>B: (x_{0}+1, y_{0}+1)</m>:
+      <image source="images/ch01-grid.jpg">
+        <description>A 9x5 grid with endpoints marked at (0, 0) and (9,3)</description>
+      </image>
+    </p>
+  </section>
+  <section>
+    <title>Developing the Algorithm</title>
+    <subsection>
+      <title>Round I: Testing Both Points</title>
+      <p>
+        Since we know the slope is less than 1 (and positive), we know that we can create our line by moving forward in x by 1 until we reach <m>x_{1}</m>. Let's assume there is a function <m>f(x, y)</m>, that we can use to test our candidate points, such that the smaller the value of the function, the closer <m>(x, y)</m> is to the line. Putting this together,  we have all we need for an initial algorithm:
+      </p>
+      <cd>
+        x = x0, y = y0
+        while x &lt;= x1.
+          plot(x, y) //actually draw the pixel
+          d0 = f(x+1, y)
+          d1 = f(x+1, y+1)
+          if d1 &lt; d0 //meaning d1 is close to the real line
+            y++ //only increment y when necessary
+          x++ //we always increment x
+      </cd>
+    </subsection>
+    <subsection>
+      <title>Round II: Testing the Midpoint</title>
+      <p>
+        Instead of testing both possible points, we could test the midpoint, <m>(x+1, y+\dfrac{1}{2})</m>. The midpoint of the possible pixels is on the border between them, which leaves us with 3 possibilities:
+        <ol>
+          <li>The midpoint is <em>above</em> the line. This means the line is mostly below the midpoint, and we should choose the lower pixel, <m>(x+1, y)</m>.</li>
+          <li>The midpoint to <em>below</em> the line. This means the line is mostly above the midpoint, and we should choose the upper pixel, <m>(x+1, y+1)</m>.</li>
+          <li>The midpoint is <em>on</em> the line. In this case, either pixel is a good match.</li>
+        </ol>
+      </p>
+    </subsection>
+    <subsection>
+      <title>The Testing Function</title>
+      <p>
+        Let's look at <m>f</m>. We will use the standard form of a line:
+        <me>f(x, y) = Ax + By + C</me>
+        Where <m>A = (y1-y0)</m>, <m>B = -(x1-x0)</m>, and <m>C = b(y1-y0)</m> (here <m>b</m> is the y-intercept). Since we are assuming <m>0 \leq m \leq 1</m>, and that our input coordinates are positive, then we know that <m>A</m> is also positive, and <m>B</m> is the only negative value in the function at all (ignoring <m>C</m>). That tells us that if <m>f(x, y)</m> is negative, then <m>y</m> is larger than it should be if <m>(x, y)</m> were on the line, meaning that <m>(x, y)</m> is <em>above</em> the line. Conversely, if <m>f(x, y)</m> is positive, then <m>y</m> is smaller than it should be if <m>(x, y)</m> were on the line, meaning that <m>(x, y)</m> is <em>below</em> the line. So now we can say that:
+        <ul>
+          <li>If <m>(x+1, y+\dfrac{1}{2})</m> is negative the midpoint is above the line.</li>
+          <li>If <m>(x+1, y+\dfrac{1}{2})</m> is positive the midpoint is below the line.</li>
+          <li>If <m>(x+1, y+\dfrac{1}{2})</m> is <m>0</m> the midpoint is on the line</li>
+        </ul>
+        This brings us to the next iteration of the algorithm:
+      </p>
+      <cd>
+        x = x0, y = y0
+        d = f(x+1, y+1/2)
+        while x &lt;= x1
+          plot(x, y) //actually draw the pixel
+          if d > 0 //+d value means the m.p. is below the line
+            y++ //only increment y when necessary
+          x++ //we always increment x
+          d = f(x, y)
+        </cd>
+    </subsection>
+    <subsection>
+      <title>Round III: Testing No Points!</title>
+      <p>
+        The first time we run <m>f</m> is on <m>(x_{0}+1, y_{0}+\dfrac{1}{2})</m>:
+          <me>
+            \begin{aligned}
+            f(x_{0}+1, y_{0}+\dfrac{1}{2}) \amp= A(x_{0}+1) + B(y_{0}+\dfrac{1}{2}) + C \\
+            f(x_{0}+1, y_{0}+\dfrac{1}{2}) \amp= Ax_{0} + By_{0} + C + A + \dfrac{1}{2}B \\
+            f(x_{0}+1, y_{0}+\dfrac{1}{2}) \amp= f(x_{0}, y_{0}) + A + \dfrac{1}{2}B \\
+            f(x_{0}+1, y_{0}+\dfrac{1}{2}) \amp= A + \dfrac{1}{2}B
+            \end{aligned}
+          </me>
+          <m>(x_{0}, y_{0})</m> is on the line so we know <m>f(x_{0}, y_{0}) = 0</m>. This results in an initial calculation based on values that are straightforward to get given the endpoints of the line. This is not a huge benefit though, since we're still calculating <m>f</m> repeatedly inside our loop. So let's think about what's happening inside the loop. Each time the loop runs, we add 1 to <m>x</m>, and sometimes we add 1 to <m>y</m>. Look at what happens when we choose <m>(x+1, y+1)</m>.
+          <me>
+            \begin{aligned}
+            f(x+1, y+1) \amp= A(x+1) + B(y+1) + C \\
+            f(x+1, y+1) \amp= Ax + By + C + A + B \\
+            f(x+1, y+1) \amp= f(x, y) + A + B
+            \end{aligned}
+          </me>
+          In our code, <c>d</c> represents the previous value of <m>f</m>, calculated as <m>f(x, y)</m>, then if we use <m>(x+1, y+1)</m>, the result is <c>d + A + B</c>. In general, every time we add 1 to <c>x</c>, we must add <c>A</c> to <c>d</c>, and every time we add 1 to <c>y</c>, we must add <c>B</c> to <c>d</c>. This means we can remove <m>f</m> from our algorithm entirely, giving us (this version starts by multiplying <c>A</c> and <c>B</c> by 2 in order to keep all values as integers):
+        </p>
+        <cd>
+          x = x0, y = y0
+          A = 2(y1 - y0)
+          B = -2(x1 - x0)
+          d = A + 1/2B
+          while x &lt;= x1
+            plot(x, y)
+            if d > 0
+              y++
+              d+= B
+            x++
+            d+= A
+        </cd>
+        <p>
+          Another way to think about this algorithm is to consider <c>d</c> as a variable that accumulates how off from the true line we have become. If we were always exactly on the line (this is the case for slopes 1, 0 and undefined), we'd be adding <c>0</c> to <c>d</c> each loop iteration. Given that we are starting with positive slopes less than 1, our loop is designed to always increase <c>x</c>, and occasionally, when <c>d</c> has accumulated too much error, we need to increase <c>y</c>. <c>A</c> is based off the change in <c>y</c>, which is always positive, <c>B</c> is the negation in the change in <c>x</c>, which is always negative. When <c>d</c> becomes negative overall, it means we've gone too far from the line, and need to make it positive by adding <c>A</c> and also increasing in <c>y</c>.
+        </p>
+        <p>
+          Now we need to revisit our initial restriction, that <m>0 \leq m \leq 1</m>. In graphics, we often take the coordinate plan and break it up into 8 sections, called <em>octants</em>:
+
+          <image source="images/ch01-octants.jpg">
+            <description>The coordinate plane divide in 8 equal parts</description>
+          </image>
+          
+        </p>
+        <p>
+          In order to have a fully functioning line algorithm, we need to handle any slope. Thankfully, we can ignore octants III - V, because those slopes correspond to lines in octants I, II, VII and VIII. To translate our octant 1 algorithm to another octant, we need to look at what has changed, and how that impacts the calculations. In octant II, <m>1 \leq m \leq \infty</m>, or, the line goes up more often than it goes across. This means:
+          <ul>
+            <li>Our loop should be based on y values: <c>while y &lt;= y1</c>.</li>
+            <li>Our loop should always run <c>y++</c> and <c>d+=B</c>, and only run <c>x++</c> and <c>d+=A</c> inside a conditional statment.</li>
+            <li>The first midpoint is based off of <m>f(x_{0}+\dfrac{1}{2}, y_{0}+1)</m>: <c>d = 1/2A + B</c>.</li>
+            <li><c>A</c> is positive, and since we are always adding <c>A</c> to <c>d</c>, the trigger for increasing <c>x</c> should be <c>d &lt; 0</c>, so that the neagative value, <c>B</c> can correct the overly positive error.</li>
+          </ul>
+        </p>
+
+    </subsection>
+  </section>
+</chapter>
+
+
+<!-- ORIGINAL MARKDOWN NOTES
+
+
+
+
+-->
