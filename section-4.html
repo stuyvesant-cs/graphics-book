@@ -12,8 +12,8 @@
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
-<meta property="book:title" content="My Great Book">
-<meta property="book:author" content="You">
+<meta property="book:title" content="Computer Graphics">
+<meta property="book:author" content="JonAlf Dyrland-Weaver">
 <script>var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
 window.MathJax = {
   tex: {
@@ -66,8 +66,8 @@ window.MathJax = {
 <body class="pretext book ignore-math">
 <a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead"><div class="ptx-banner">
 <a id="logo-link" href=""></a><div class="title-container">
-<h1 class="heading"><a href="my-great-book.html"><span class="title">My Great Book:</span> <span class="subtitle">An example to get you started</span></a></h1>
-<p class="byline">You</p>
+<h1 class="heading"><a href="stuy-gfx.html"><span class="title">Computer Graphics:</span> <span class="subtitle">A Language Agnostic Guid to Fakin' It</span></a></h1>
+<p class="byline">JonAlf Dyrland-Weaver</p>
 </div>
 <div id="searchresultsplaceholder" style="display: none">
 <button id="closesearchresults" onclick="document.getElementById('searchresultsplaceholder').style.display = 'none'; return false;">x</button><h2>Search Results: <span id="searchterms"></span>
@@ -317,7 +317,7 @@ f(x+1, y+1) \amp= f(x, y) + A + B
             d+= A
         </pre>
 <div class="para" id="p-17">Another way to think about this algorithm is to consider <code class="code-inline tex2jax_ignore">d</code> as a variable that accumulates how off from the true line we have become. If we were always exactly on the line (this is the case for slopes 1, 0 and undefined), we'd be adding <code class="code-inline tex2jax_ignore">0</code> to <code class="code-inline tex2jax_ignore">d</code> each loop iteration. Given that we are starting with positive slopes less than 1, our loop is designed to always increase <code class="code-inline tex2jax_ignore">x</code>, and occasionally, when <code class="code-inline tex2jax_ignore">d</code> has accumulated too much error, we need to increase <code class="code-inline tex2jax_ignore">y</code>. <code class="code-inline tex2jax_ignore">A</code> is based off the change in <code class="code-inline tex2jax_ignore">y</code>, which is always positive, <code class="code-inline tex2jax_ignore">B</code> is the negation in the change in <code class="code-inline tex2jax_ignore">x</code>, which is always negative. When <code class="code-inline tex2jax_ignore">d</code> becomes negative overall, it means we've gone too far from the line, and need to make it positive by adding <code class="code-inline tex2jax_ignore">A</code> and also increasing in <code class="code-inline tex2jax_ignore">y</code>.</div>
-<div class="para" id="p-18">Now we need to revisit our initial restriction, that <span class="process-math">\(0 \leq m \leq 1\text{.}\)</span> In graphics, we often take the coordinate plan and break it up into 8 sections, called <em class="emphasis">octants</em>:  <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch01-octants.jpg" class="contained" alt="The coordinate plane divide in 8 equal parts"></div>
+<div class="para" id="p-18">Now we need to revisit our initial restriction, that <span class="process-math">\(0 \leq m \leq 1\text{.}\)</span> In graphics, we often take the coordinate plan and break it up into 8 sections, called <em class="emphasis">octants</em>: <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch01-octants.jpg" class="contained" alt="The coordinate plane divide in 8 equal parts"></div>
 </div>
 <div class="para logical" id="p-19">
 <div class="para">In order to have a fully functioning line algorithm, we need to handle any slope. Thankfully, we can ignore octants III - V, because those slopes correspond to lines in octants I, II, VII and VIII. To translate our octant 1 algorithm to another octant, we need to look at what has changed, and how that impacts the calculations. In octant II, <span class="process-math">\(1 \leq m \leq \infty\text{,}\)</span> or, the line goes up more often than it goes across. This means:</div>

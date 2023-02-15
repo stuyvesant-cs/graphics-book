@@ -8,7 +8,7 @@
 <html lang="en-US">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Colors, Depth, Space (and Time?)</title>
+<title>Computer Graphics</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="part-1.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-1.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="chapter-2.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><span class="previous-button button disabled"><span class="icon">&lt;</span><span class="name">Prev</span></span><span class="up-button button disabled"><span class="icon">^</span><span class="name">Up</span></span><a class="next-button button" href="frontmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -192,7 +192,7 @@ window.MathJax = {
 <li>
 <div class="toc-item"><a href="part-1.html" class="internal"><span class="codenumber">I</span> <span class="title">2-D structures</span></a></div>
 <ul class="structural">
-<li class="active">
+<li>
 <div class="toc-item"><a href="chapter-1.html" class="internal"><span class="codenumber">1</span> <span class="title">Colors, Depth, Space (and Time?)</span></a></div>
 <ul class="structural"><li>
 <div class="toc-item"><a href="chapter-1.html#section-1" class="internal"><span class="codenumber">1.1</span> <span class="title">Image File Formats</span></a></div>
@@ -227,51 +227,13 @@ window.MathJax = {
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content">
-<section class="chapter" id="chapter-1"><h2 class="heading">
-<span class="type">Chapter</span> <span class="codenumber">1</span> <span class="title">Colors, Depth, Space (and Time?)</span>
-</h2>
-<section class="section" id="section-1"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">1.1</span> <span class="title">Image File Formats</span>
-</h3>
-<section class="subsection" id="subsection-1"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">1.1.1</span> <span class="title">Vector Formats</span>
-</h4>
-<div class="para" id="p-1">Vector formats represent images as a series of drawing instructions. Becuase of this, they are infinitely scalable. This is well suited for iamges that can be defined geometrically, but not as well for real-world images. Common file type: SVG (Scalable Vector Graphics).</div></section><section class="subsection" id="subsection-2"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">1.1.2</span> <span class="title">Raster Formats</span>
-</h4>
-<div class="para" id="p-2">Raster formats represent images as a grid of color values (pixels).</div>
-<div class="para" id="p-3">Raster images can be uncompressed or compressed.</div>
-<div class="para" id="p-4">Uncompressed formats contain color data for each pixel. These files are quite large. Common file types: BMP, TIFF, RAW</div>
-<div class="para" id="p-5">Compressed formats use a compression algorithm to minimize file size. Some of these algorithms are lossless, while others are lossy.</div>
-<div class="para" id="p-6">Lossless compression algorithms contain enough information to exactly recreate the original image. Common file types: PNG (Portable Network Graphics), GIF (Graphics Interchange Format)</div>
-<div class="para" id="p-7">Lossy compression algorithms do not retain all the details of the original image. Common file type: JPEG (Joint Photographic Experts Group).</div></section><section class="subsection" id="subsection-3"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">1.1.3</span> <span class="title">NetPBM File Formats</span>
-</h4>
-<div class="para" id="p-8">A family of uncompressed raster image file formats (<a class="external" href="https://en.wikipedia.org/wiki/Netpbm" target="_blank">more info</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-2" id="fn-2"><sup> 1 </sup></a>).</div>
-<div class="para" id="p-9">In this class we will be using the <em class="emphasis">PPM</em> (Portable PixMap) format specifically. PPM files prespresent pixel data as RGB (Red, Green, Blue) triplets in either ASCII or binary. In ASCII based PPMs, all whitespace is equivalent. Here is a sample ASCII PPM file:</div>
-<pre class="code-display tex2jax_ignore">
-            P3
-            4 3
-            255
-            255 0 0  255 0 0  255 0 0  255 0 0
-            0 255 0  0 255 0  0 255 0  0 255 0
-            0 0 255  0 0 255  0 0 255  0 0 255
-          </pre>
-<div class="para logical" id="p-10">
-<div class="para">The first three lines make up the file header:</div>
-<ul class="disc">
-<li id="li-1"><div class="para" id="p-derived-li-1">
-<code class="code-inline tex2jax_ignore">P3</code>: Type of PPM, 3-btye RGB, in ASCII (<code class="code-inline tex2jax_ignore">P6</code> is RGB in binary).</div></li>
-<li id="li-2"><div class="para" id="p-derived-li-2">
-<code class="code-inline tex2jax_ignore">4 3</code>: Width x Height, in pixels.</div></li>
-<li id="li-3"><div class="para" id="p-derived-li-3">
-<code class="code-inline tex2jax_ignore">255</code>: Maximum value per color (will scale to 255 if not 255)</div></li>
-</ul>
-</div></section></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-2"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Netpbm</code></div></div>
-</div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="book" id="stuy-gfx"><nav class="summary-links"><ul>
+<li><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></li>
+<li><a href="part-1.html" class="internal"><span class="codenumber">I</span> <span class="title">2-D structures</span></a></li>
+<li><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></li>
+</ul></nav></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="part-1.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="chapter-2.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<span class="previous-button button disabled"><span class="icon">&lt;</span><span class="name">Prev</span></span><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="frontmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div class="ptx-page-footer">
