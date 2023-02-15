@@ -11,16 +11,16 @@
     </latax-image-preamble>
   </docinfo>
 
-  <book xml:id="my-great-book">
-    <title>My Great Book</title>
-    <subtitle>An example to get you started</subtitle>
+  <book xml:id="stuy-gfx">
+    <title>Computer Graphics</title>
+    <subtitle>A Language Agnostic Guid to Fakin' It</subtitle>
 
     <frontmatter xml:id="frontmatter">
       <titlepage>
         <author>
-          <personname>You</personname>
-          <department>Your department</department>
-          <institution>Your institution</institution>
+          <personname>JonAlf Dyrland-Weaver</personname>
+          <department>Computer Science</department>
+          <institution>Stuyvesant High School</institution>
         </author>
         <date>
           <today />
@@ -29,16 +29,9 @@
 
       <colophon>
 
-        <website>
-          <name>
-            <c>example.org</c>
-          </name>
-          <address>https://example.org</address>
-        </website>
-
         <copyright>
           <year>2020<ndash />2023</year>
-          <holder>You</holder>
+          <holder>JonAlf Dyrland-Weaver</holder>
           <shortlicense>
             This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit <url href="http://creativecommons.org/licenses/by-sa/4.0/" visual="creativecommons.org/licenses/by-sa/4.0"> CreativeCommons.org</url>
           </shortlicense>
@@ -56,8 +49,12 @@
     </chapter>
     -->
 
-    <xi:include href="ch0-background.xml" />
-    <xi:include href="ch01-bresenham.xml" />
+    <part>
+      <title>2-D structures</title>
+      <xi:include href="ch0-background.xml" />
+      <xi:include href="ch01-bresenham.xml" />
+      <xi:include href="ch02-matrix.xml" />
+    </part>
 
     <backmatter xml:id="backmatter">
       <title>Backmatter</title>
