@@ -13,7 +13,7 @@
 
   <book xml:id="stuy-gfx">
     <title>Computer Graphics</title>
-    <subtitle>A Language Agnostic Guid to Fakin' It</subtitle>
+    <subtitle>A Language Agnostic Guide to Fakin' It</subtitle>
 
     <frontmatter xml:id="frontmatter">
       <titlepage>
