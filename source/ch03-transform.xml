@@ -8,7 +8,7 @@
         <li>What information is required in order to perform the transformation?</li>
         <li>What happens to <m>(x, y, z)</m> after the transformation is applied?</li>
       </ul>
-      While there are many transformations we could create, we will focus on <em>translation</em>, <em>dialation</em>, and <em>rotation</em> for our graphics engine. These will allow us to make interesting manupulations of our images, while also demonstrating how to develop other transformations, if desired.
+      While there are many transformations we could create, we will focus on <em>translation</em>, <em>dilation</em>, and <em>rotation</em> for our graphics engine. These will allow us to make interesting manupulations of our images, while also demonstrating how to develop other transformations, if desired.
     </p>
     <subsection>
       <title>Translation</title>
@@ -53,6 +53,161 @@
         </me>
       </p>
     </subsection>
+    <subsection>
+      <title>Dilation</title>
+      <p>
+        Dilation (or scaling) is enlarging or shrinking an image. Dilations will preserve the number and order of points, but not the distance (unless the dilation factor is 1 for all coordinates). Currently, dilations will be performed with respect ot the origin, meaning that objects not centered at the origin will also move away (when enlarging) or toward (when shrinking) the origin. Eventually, this will be less of a concern, but for now, you can achieve arbitrary dilations by translating to the origin, dilating, and then translating back.
+
+        <ul>
+          <li>Necessary information: Dilation factors for each component, <m>(a, b, c)</m></li>
+          <li>Function: <m>D_{a, b, c} (x, y, z) \rightarrow (ax, by, cz)</m></li>
+        </ul>
+        You can generate a dilation matrix by starting with the Identity matrix, and then replacing the 1s with your translation factors like so:
+
+        <me>
+          \begin{bmatrix} a \amp 0 \amp 0 \amp 0
+                      \\\ 0 \amp b \amp 0 \amp 0
+                      \\\ 0 \amp 0 \amp c \amp 0
+                      \\\ 0 \amp 0 \amp 0 \amp 1
+        \end{bmatrix}
+        \begin{bmatrix} x_0 \amp x_1
+                      \\ y_0 \amp y_1
+                      \\ z_0 \amp z_1
+                      \\ 1 \amp 1
+        \end{bmatrix} =
+        \begin{bmatrix} ax_0 \amp ax_1
+                      \\by_0 \amp by_1
+                      \\cz_0 \amp cz_1
+                      \\ 1 \amp 1
+        \end{bmatrix}
+      </me>
+
+      Dilations intended to preserve the asptect ratio of the orginal image should use the same value for <m>a</m>, <m>b</m>, and <m>c</m>. Using different values will resulting in stretching/squishing the image in verious dimentions.
+      </p>
+    </subsection>
+    <subsection>
+      <title>Rotation</title>
+      <p>
+        Like dilations rotations will also be performed with respect to the origin. We will be performing 2D rotations in 3D space. So for any rotation, one coordinate will remain fixed, and the others will change based on the rotation. We will refer to the fixed coordinate as the <em>axis of rotation</em>.
+      </p>
+      <p>
+       Figuring out the rotation function is a bit more complicated than the previous transformations. First let's look at a rotation about the z axis:
+       <image source="images/ch03-z_rotation.png">
+         <description></description>
+       </image>
+
+       Since the point does not change along the axis of rotation, we only need to conern ourselves with <m>(x, y)</m> We need to find a way to represent <m>(x',y')</m> based on information we know. Using polar coordinates, we can re-write <m>(x, y)</m> as <m>(rcos\phi, rsin\phi)</m> Similarly, <m>(x', y')</m> can be written as <m>(rcos(\phi+\theta), rsin(\phi+\theta))</m> Using the angle sum formula, and the values for <m>(x, y)</m> above, we get the following:
+
+        <me>x' = rcos(\phi + \theta) \quad y' = rsin(\phi + \theta)</me>
+        <me>x' = rcos\phi cos\theta - rsin\phi sin\theta \quad y' = rsin\phi cos\theta + rcos\phi sin\theta</me>
+        <me>x' = xcos\theta - ysin\theta \quad y' = ycos\theta + xsin\theta</me>
+
+        This gives us <m>(x', y')</m> in terms of values we know. Because rotations change depending on the fixed axis, we will have 3 different rotation functions.
+        <ul>
+          <li>Necessary information: Angle of rotation, <m>\theta</m> and axis of rotation.</li>
+          <li>Function: See below for each axis of rotation</li>
+        </ul>
+      </p>
+      <subsubsection>
+        <title>Z-Axis Rotation</title>
+        <p>
+          Function: <m>R_{\theta, z-axis} (x, y, z) \rightarrow (xcos\theta-ysin\theta, xsin\theta+ycos\theta,z)</m>
+
+          <me>
+            \begin{bmatrix} cos\theta \amp -sin\theta \amp 0 \amp 0
+                        \\\ sin\theta \amp cos\theta \amp 0 \amp 0
+                        \\\ 0 \amp 0 \amp 1 \amp 0
+                        \\\ 0 \amp 0 \amp 0 \amp 1
+            \end{bmatrix}
+            \begin{bmatrix} x_0
+                          \\ y_0
+                          \\ z_0
+                          \\ 1
+            \end{bmatrix} =
+            \begin{bmatrix} x_0cos\theta-y_0sin\theta
+                          \\x_0sin\theta + y_0cos\theta
+                          \\z_0
+                          \\ 1
+            \end{bmatrix}
+          </me>
+        </p>
+      </subsubsection>
+      <subsubsection>
+        <title>X-Axis Rotation</title>
+        <p>
+          Function: <m>R_{\theta, x-axis} (x, y, z) \rightarrow (x, ycos\theta - zsin\theta, ysin\theta + zcos\theta)</m>
+
+          <me>
+            \begin{bmatrix} 1 \amp 0 \amp 0 \amp 0
+                          \\\ 0 \amp cos\theta \amp -sin\theta \amp 0
+                          \\\ 0 \amp sin\theta \amp cos\theta \amp 0
+                          \\\ 0 \amp 0 \amp 0 \amp 1
+            \end{bmatrix}
+            \begin{bmatrix} x_0
+                          \\ y_0
+                          \\ z_0
+                          \\ 1
+            \end{bmatrix} =
+            \begin{bmatrix} x_0
+                          \\y_0cos\theta - z_0sin\theta
+                          \\y_0sin\theta + z_0cos\theta
+                          \\ 1
+            \end{bmatrix}
+          </me>
+        </p>
+      </subsubsection>
+      <subsubsection>
+        <title>Y-Axis Rotation</title>
+        <p>
+          Function: <m>R_{\theta, y-axis} (x, y, z) \rightarrow (xcos\theta+zsin\theta, y, -xsin\theta + zcos\theta)</m>
+
+          <me>
+            \begin{bmatrix} cos\theta \amp 0 \amp sin\theta \amp 0
+                          \\\ 0 \amp 1 \amp 0 \amp 0
+                          \\\ -sin\theta \amp 0 \amp cos\theta \amp 0
+                          \\\ 0 \amp 0 \amp 0 \amp 1
+            \end{bmatrix}
+            \begin{bmatrix} x_0
+                          \\ y_0
+                          \\ z_0
+                          \\ 1
+            \end{bmatrix} =
+            \begin{bmatrix} x_0cos\theta+z_0sin\theta
+                          \\y_0
+                          \\-x_0sin\theta + z_0cos\theta
+                          \\ 1
+            \end{bmatrix}
+          </me>
+        </p>
+      </subsubsection>
+    </subsection>
+  </section>
+  <section>
+    <title>Combining Transformations</title>
+    <p>
+      Let's say we have the following matrices:
+      <ul>
+        <li><m>E_0</m>: Edge matrix</li>
+        <li><m>T</m>: Translation</li>
+        <li><m>D</m>: Dilation</li>
+        <li><m>R</m>: Rotation</li>
+      </ul>
+      And we perform the following operations to generate new edge matrices:
+      <ul>
+        <li><m>E_1 = TE_0</m>: <m>E_0</m>, moved</li>
+        <li><m>E_2 = DE_1</m>: <m>E_0</m>, moved, then scaled</li>
+        <li><m>E_3 = RE_2</m>: <m>E_0</m>, moved, then scaled, then rotated</li>
+      </ul>
+      Substituting back up the chain we get:
+      <me>
+        \begin{aligned}
+          E_3 \amp= RE_2 \\
+          E_3 \amp= R(DE_1) \\
+          E_3 \amp= R(D(TE_0))
+        \end{aligned}
+      </me>
+      Or more clearly, <m>E_3 = RDTE_0</m>.
+    </p>
   </section>
 </chapter>
 
@@ -60,109 +215,13 @@
 <!-- ORIGINAL MARKDOWN NOTES
 
 
-**Translation** or move
-
-
-**Dilation** or scale
-- Necessary information: Dilation factors for each component, <m>(a, b, c)<m>
-- Function: <m>D_{a, b, c} (x, y, z) \rightarrow (ax, by, cz)<m>
-- Matrix \amp example:
-
-  <m>\begin{bmatrix} a \amp 0 \amp 0 \amp 0
-                \\\ 0 \amp b \amp 0 \amp 0
-                \\\ 0 \amp 0 \amp c \amp 0
-                \\\ 0 \amp 0 \amp 0 \amp 1
-  \end{bmatrix}
-  \begin{bmatrix} x_0 \amp x_1
-                \\ y_0 \amp y_1
-                \\ z_0 \amp z_1
-                \\ 1 \amp 1
-  \end{bmatrix} =
-  \begin{bmatrix} ax_0 \amp ax_1
-                \\by_0 \amp by_1
-                \\cz_0 \amp cz_1
-                \\ 1 \amp 1
-  \end{bmatrix}<m>
-
-- Dilations intended to preserve the asptect ratio of the orginal image should use the same value for <m>a<m>, <m>b<m>, and <m>c<m>. Using different values will resulting in stretching/squishing the image in verious dimentions.
-- Dilations applied in this manner are also done with respect ot the origin. Eventually, this will be less of a concern, but for now, you can achieve arbitrary dilations by translating to the origin, dilating, and then translating back.
-
-**Rotation**
-- Necessary information: Angle of rotation, <m>\theta<m> and axis of rotation.
-- Figuring out the rotation function is a bit more complicated than the previous transformations.
-- First let's look at a translation about the z axis:
-  ![axis]({{"/assets/img/n02-z_rotation.png" | relative_url}})
-  - Since the point does not change along the axis of rotation, we only need to conern ourselves with <m>(x, y)<m>
-  - We need to find a way to represent <m>(x',y')<m> based on information we know.
-  - Using polar coordinates, we can re-write <m>(x, y)<m> as <m>(rcos\phi, rsin\phi)<m>
-  - Similarly, <m>(x', y')<m> can be written as <m>(rcos(\phi+\theta), rsin(\phi+\theta))<m>
-  - Using the angle sum formula, and the values for <m>(x, y)<m> above, we get the following:
-
-    <m>x' = rcos(\phi + \theta) \quad y' = rsin(\phi + \theta)<m>
-
-    <m>x' = rcos\phi cos\theta - rsin\phi sin\theta \quad y' = rsin\phi cos\theta + rcos\phi sin\theta<m>
-
-    <m>x' = xcos\theta - ysin\theta \quad y' = ycos\theta + xsin\theta<m>
-
-- z-axis rotation
-  - Function: <m>R_{\theta, z-axis} (x, y, z) \rightarrow (xcos\theta-ysin\theta, xsin\theta+ycos\theta,z)<m>
-  - Matrix \amp example:
-
-    <m>\begin{bmatrix} cos\theta \amp -sin\theta \amp 0 \amp 0
-                  \\\ sin\theta \amp cos\theta \amp 0 \amp 0
-                  \\\ 0 \amp 0 \amp 1 \amp 0
-                  \\\ 0 \amp 0 \amp 0 \amp 1
-    \end{bmatrix}
-    \begin{bmatrix} x_0
-                  \\ y_0
-                  \\ z_0
-                  \\ 1
-    \end{bmatrix} =
-    \begin{bmatrix} x_0cos\theta-y_0sin\theta
-                  \\x_0sin\theta + y_0cos\theta
-                  \\z_0
-                  \\ 1
-    \end{bmatrix}<m>
-
-- x-axis rotation
-  - Function: <m>R_{\theta, x-axis} (x, y, z) \rightarrow (x, ycos\theta - zsin\theta, ysin\theta + zcos\theta)<m>
-  - Matrix \amp example:
-
-    <m>\begin{bmatrix} 1 \amp 0 \amp 0 \amp 0
-                  \\\ 0 \amp cos\theta \amp -sin\theta \amp 0
-                  \\\ 0 \amp sin\theta \amp cos\theta \amp 0
-                  \\\ 0 \amp 0 \amp 0 \amp 1
-    \end{bmatrix}
-    \begin{bmatrix} x_0
-                  \\ y_0
-                  \\ z_0
-                  \\ 1
-    \end{bmatrix} =
-    \begin{bmatrix} x_0
-                  \\y_0cos\theta - z_0sin\theta
-                  \\y_0sin\theta + z_0cos\theta
-                  \\ 1
-    \end{bmatrix}<m>
-
-- y-axis rotation
-  - Function: <m>R_{\theta, y-axis} (x, y, z) \rightarrow (xcos\theta+zsin\theta, y, -xsin\theta + zcos\theta)<m>
-  - Matrix \amp example:
-
-    <m>\begin{bmatrix} cos\theta \amp 0 \amp sin\theta \amp 0
-                  \\\ 0 \amp 1 \amp 0 \amp 0
-                  \\\ -sin\theta \amp 0 \amp cos\theta \amp 0
-                  \\\ 0 \amp 0 \amp 0 \amp 1
-    \end{bmatrix}
-    \begin{bmatrix} x_0
-                  \\ y_0
-                  \\ z_0
-                  \\ 1
-    \end{bmatrix} =
-    \begin{bmatrix} x_0cos\theta+z_0sin\theta
-                  \\y_0
-                  \\-x_0sin\theta + z_0cos\theta
-                  \\ 1
-    \end{bmatrix}<m>
-
-
+  - Substituting back up this chain, we get:
+    - $$E_3 = RDTE_0$$ Becuse matrix multiplication is _associative_, we can write this as:
+    - $$E_3 = (RDT)E_0$$ Which means that we can generate the same image by multipling transformation matrices with each other _then_ multiplying by an edge matrix as we could by multiplying the edge matrix by each transformation matrix _separately_.
+    - This could save lots of time, since all transformation matrices are $$4\times4$$, while our edge matrices are $$4\times N$$.
+  - The order is important. Note that:
+    - $$(RDT)E_0$$ is not the same as
+    - $$(TDR)E_0$$ because matrix multiplication is not commutative.
+    - The first image would be the reslut of moving, scaling, then rotating. The second would be the result of rotating, scaling, then moving.
+    - It is common (since most of us are used to reading left->right), to think about the appilcation of transformations that way. **_You have been warned_**.
 -->
