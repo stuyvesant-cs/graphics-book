@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-1.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-1.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="chapter-4.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -221,7 +221,23 @@ window.MathJax = {
 </li>
 <li class="active">
 <div class="toc-item"><a href="chapter-3.html" class="internal"><span class="codenumber">3</span> <span class="title">Edge Lists &amp; Matricies</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-3.html#section-5" class="internal"><span class="codenumber">3.1</span> <span class="title">Using Edge Lists</span></a></div></li></ul>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-3.html#section-5" class="internal"><span class="codenumber">3.1</span> <span class="title">Using Edge Lists</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-3.html#section-6" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Math for Graphics</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-3.html#subsection-8" class="internal"><span class="codenumber">3.2.1</span> <span class="title">Matrix Multiplication</span></a></div></li>
+<li><div class="toc-item"><a href="chapter-3.html#subsection-9" class="internal"><span class="codenumber">3.2.2</span> <span class="title">Multiplicative Identity</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="chapter-4.html" class="internal"><span class="codenumber">4</span> <span class="title">Transformations</span></a></div>
+<ul class="structural"><li>
+<div class="toc-item"><a href="chapter-4.html#section-7" class="internal"><span class="codenumber">4.1</span> <span class="title">Transformation Matrices</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="chapter-4.html#subsection-10" class="internal"><span class="codenumber">4.1.1</span> <span class="title">Translation</span></a></div></li></ul>
+</li></ul>
 </li>
 </ul>
 </li>
@@ -240,9 +256,93 @@ window.MathJax = {
 <li id="li-15"><div class="para" id="p-derived-li-15">Any transformations (more on that later) will be applied to the main edge list.</div></li>
 <li id="li-16"><div class="para" id="p-derived-li-16">When we are ready to see/save an image, we will iterate over the edge list calling <code class="code-inline tex2jax_ignore">draw_line</code>.</div></li>
 </ul>
-</div></section></section></div>
+</div>
+<div class="para logical" id="p-21">
+<div class="para">There are a few options for maintaining edge lists. Consider the following image: <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch02-points.png" class="contained" alt="A triangle and square"></div> The triangle portion could be represented by any of the following edge lists:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix}P_{0} \amp P_{1} \amp P_{2}\end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">Here, we would generate the image by iterating through the edge list 1 point at a time, connecting each point with the next one, and include a final line back to the initial point. This works well if the entire image was a single closed object, but less so for open ended or disjoint objects.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix}P_{0} \amp P_{1} \amp P_{2} \amp P_{0}\end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">This is very similar to the first, execpt there's no implicit connection from the last point to the first. This means we <em class="emphasis">could</em> have open ended shapes, but disjoint shapes, like the diamond, would not be as simple, since in this option, by adding <span class="process-math">\(P_{3}\)</span> we wouild get a line <span class="process-math">\(\overline{P_{0}P_{3}}\text{,}\)</span> which we don't want.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix}P_{0} \amp P_{1} \amp P_{1} \amp P_{2} \amp P_{2} \amp P_{0}\end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">In this version, we would generate the image by iterating over the list by pairs of points, drawing the lines between them. The advantage to this approach is that the list need not "know" anything about the image and what it contains. Every edge is explicitly defined. The downside is that there is a lot of duplication of points, but hey, memory's cheap.</div>
+</div>
+<div class="para logical" id="p-22">
+<div class="para">We will focus on the last implementation, the other two are viable, but require extra work to be able to draw any arbitrary image (such as a separate list containing # of edges per shape, or a "delimeter" point). It is important to remember that points are <span class="process-math">\((x, y, z)\)</span> triples, so our edge lists would more accurately look like the following:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix}x_{0} \amp x_{1} \amp x_{1} \amp x_{2} \amp \dots \amp x_{n}
+\\\ y_{0} \amp y_{1} \amp x_{1} \amp y_{2} \amp \dots \amp y_{n}
+\\\ z_{0} \amp z_{1} \amp z_{1} \amp z_{2} \amp \dots \amp z_{n}
+\\\ 1 \amp 1 \amp 1 \amp 1 \amp \dots \amp 1
+\end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">The extra row of 1s at the bottom is necessary for certain transformations that we will cover later.</div>
+</div></section><section class="section" id="section-6"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">3.2</span> <span class="title">Matrix Math for Graphics</span>
+</h3>
+<div class="para" id="p-23">Now that we are arranging our image information as edge matrices, we should look into how we can leverage matrix math for graphics purposes. To start, we need only talk about two concepts, <em class="emphasis">matrix multiplication</em> and the <em class="emphasis">multiplicative identiy matrix</em>.</div>
+<section class="subsection" id="subsection-8"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">3.2.1</span> <span class="title">Matrix Multiplication</span>
+</h4>
+<div class="para" id="p-24">In order to mulply two matrices, <span class="process-math">\(AB\text{,}\)</span> the number of columns in <span class="process-math">\(A\)</span> must equal the number of rows in <span class="process-math">\(B\text{.}\)</span> So if <span class="process-math">\(A\)</span> is a <span class="process-math">\(4\times N\)</span> matrix, then <span class="process-math">\(B\)</span> must be <span class="process-math">\(n\times4\text{.}\)</span>
+</div>
+<div class="para logical" id="p-25">
+<div class="para">Matrix multiplication is _not_ commutative, so <span class="process-math">\(AB \neq BA\text{.}\)</span> This will be useful to us later on. To perform <span class="process-math">\(AB\text{,}\)</span> you match up each <em class="emphasis">row</em> of <span class="process-math">\(A\)</span> with the coresponding <em class="emphasis">column</em> in <span class="process-math">\(B\text{,}\)</span> multiply each coresponding element, and add those products together to find each element in the product matrix. For a simple example, consider the following:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix}1 \amp 2 \amp 3 \amp 4\end{bmatrix} \begin{bmatrix}a\\b\\c\\d \end{bmatrix} = \begin{bmatrix}1a + 2b + 3c + 4d\end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">For a more complex example:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix}1 \amp 2 \amp 3
+\\ 4 \amp 5 \amp 6
+\\ 7 \amp 8 \amp 9\end{bmatrix}
+\begin{bmatrix}a \amp b
+\\ c \amp d
+\\ e \amp f\end{bmatrix} =
+\begin{bmatrix}1a + 2c + 3e \amp 1b + 2d + 3f
+\\4a + 5c + 6e \amp 4b + 5d + 6f
+\\7a + 8c + 9e \amp 7b + 8d + 9f\end{bmatrix}
+\end{equation*}
+</div>
+</div></section><section class="subsection" id="subsection-9"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">3.2.2</span> <span class="title">Multiplicative Identity</span>
+</h4>
+<div class="para logical" id="p-26">
+<div class="para">The multiplicative identiy matrix must:</div>
+<ul class="disc">
+<li id="li-17"><div class="para" id="p-derived-li-17">Be a square matrix.</div></li>
+<li id="li-18"><div class="para" id="p-derived-li-18">Have a diagonal of 1s, from upper-left to lower-right corners.</div></li>
+<li id="li-19"><div class="para" id="p-derived-li-19">Have all other values be 0.</div></li>
+</ul>
+<div class="para">A <span class="process-math">\(4\times4\)</span> identity matrix:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix}1 \amp 0 \amp 0 \amp 0
+\\\ 0 \amp 1 \amp 0 \amp 0
+\\\ 0 \amp 0 \amp 1 \amp 0
+\\\ 0 \amp 0 \amp 0 \amp 1
+\end{bmatrix}
+\end{equation*}
+</div>
+</div></section></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="chapter-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<a class="previous-button button" href="chapter-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="chapter-4.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div class="ptx-page-footer">

@@ -8,7 +8,7 @@
 <html lang="en-US">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Colophon</title>
+<title>Transformations</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="frontmatter.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="frontmatter.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="part-1.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-3.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-1.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -232,7 +232,7 @@ window.MathJax = {
 </li>
 </ul>
 </li>
-<li>
+<li class="active">
 <div class="toc-item"><a href="chapter-4.html" class="internal"><span class="codenumber">4</span> <span class="title">Transformations</span></a></div>
 <ul class="structural"><li>
 <div class="toc-item"><a href="chapter-4.html#section-7" class="internal"><span class="codenumber">4.1</span> <span class="title">Transformation Matrices</span></a></div>
@@ -243,15 +243,67 @@ window.MathJax = {
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content">
-<section class="colophon" id="colophon-1"><h2 class="heading hide-type">
-<span class="type">Colophon</span> <span class="codenumber"></span> <span class="title">Colophon</span>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-4"><h2 class="heading">
+<span class="type">Chapter</span> <span class="codenumber">4</span> <span class="title">Transformations</span>
 </h2>
-<p class="copyright">©2020–2023 JonAlf Dyrland-Weaver</p>
-<p class="license">This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit <a class="external" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CreativeCommons.org</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-1" id="fn-1"><sup> 1 </sup></a></p></section><div class="hidden-content tex2jax_ignore" id="hk-fn-1"><div class="fn"><code class="code-inline tex2jax_ignore">creativecommons.org/licenses/by-sa/4.0</code></div></div>
+<section class="section" id="section-7"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">4.1</span> <span class="title">Transformation Matrices</span>
+</h3>
+<div class="para logical" id="p-27">
+<div class="para">In order to perform transformations, we will construct a <em class="emphasis">transformation matrix</em> <span class="process-math">\(F\text{,}\)</span> which can then be applied to our edge matrix <span class="process-math">\(E\)</span> by matrix multiplication. By asserting that the order of multiplication is always <span class="process-math">\(FE\text{,}\)</span> we can constrain <span class="process-math">\(F\)</span> to always be a <span class="process-math">\(4\times4\)</span> matrix. For each transformation, it is helpful to think of it with the following framework:</div>
+<ul class="disc">
+<li id="li-20"><div class="para" id="p-derived-li-20">What information is required in order to perform the transformation?</div></li>
+<li id="li-21"><div class="para" id="p-derived-li-21">What happens to <span class="process-math">\((x, y, z)\)</span> after the transformation is applied?</div></li>
+</ul>
+<div class="para">While there are many transformations we could create, we will focus on <em class="emphasis">translation</em>, <em class="emphasis">dialation</em>, and <em class="emphasis">rotation</em> for our graphics engine. These will allow us to make interesting manupulations of our images, while also demonstrating how to develop other transformations, if desired.</div>
 </div>
+<section class="subsection" id="subsection-10"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">4.1.1</span> <span class="title">Translation</span>
+</h4>
+<div class="para logical" id="p-28">
+<div class="para">Translations can be thought of as sliding an image along any axis. Translations should preserve the number of points, the order of the points, as well as the distances between them.</div>
+<ul class="disc">
+<li id="li-22"><div class="para" id="p-derived-li-22">Necessary information: Translation factors for each component, <span class="process-math">\((a, b, c)\)</span>
+</div></li>
+<li id="li-23"><div class="para" id="p-derived-li-23">Function: <span class="process-math">\(T_{a, b, c} (x, y, z) \rightarrow (x+a, y+b, z+c)\)</span>
+</div></li>
+</ul>
+<div class="para">You can generate a translation matrix by starting with the Identity matrix, and then replacing the values in the last column with your translation factors like so:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix} 1 \amp 0 \amp 0 \amp a
+\\\ 0 \amp 1 \amp 0 \amp b
+\\\ 0 \amp 0 \amp 1 \amp c
+\\\ 0 \amp 0 \amp 0 \amp 1
+\end{bmatrix}
+\begin{bmatrix} x_0 \amp x_1
+\\ y_0 \amp y_1
+\\ z_0 \amp z_1
+\\ 1 \amp 1\end{bmatrix} =
+\begin{bmatrix} x_0 + a \amp x_1 + a
+\\y_0 + b \amp y_1 + b
+\\z_0 + c \amp z_1 + c
+\\ 1 \amp 1 \end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">Note that this simple translation matrix is made possible by including the bottom row of 1s in our edge matrix. Without that, we'd have to include operations like: <span class="process-math">\(\dfrac{x + a}{x}\text{,}\)</span> which would in turn mean that the translation matrix would have to change for <em class="emphasis">every point</em> in the edge matrix, like so:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{bmatrix} \frac{x_0+a}{x_0} \amp 0 \amp 0
+\\\ 0 \amp \frac{y_0+b}{y_0} \amp 0
+\\\ 0 \amp 0 \amp \frac{z_0+c}{z_0}
+\end{bmatrix}
+\begin{bmatrix} x_0
+\\ y_0
+\\ z_0 \end{bmatrix} =
+\begin{bmatrix} x_0 + a
+\\y_0 + b
+\\z_0 + c\end{bmatrix}
+\end{equation*}
+</div>
+</div></section></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="frontmatter.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="part-1.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<a class="previous-button button" href="chapter-3.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div class="ptx-page-footer">
