@@ -10,72 +10,102 @@
         <li>When we are ready to see/save an image, we will iterate over the edge list calling <c>draw_line</c>.</li>
       </ul>
     </p>
+    <p>
+      There are a few options for maintaining edge lists. Consider the following image:
+      <image source="images/ch02-points.png">
+        <description>A triangle and square</description>
+      </image>
+
+      The triangle portion could be represented by any of the following edge lists:
+      <me>
+        \begin{bmatrix}P_{0} \amp P_{1} \amp P_{2}\end{bmatrix}
+      </me>
+
+      Here, we would generate the image by iterating through the edge list 1 point at a time, connecting each point with the next one, and include a final line back to the initial point. This works well if the entire image was a single closed object, but less so for open ended or disjoint objects.
+
+      <me>
+        \begin{bmatrix}P_{0} \amp P_{1} \amp P_{2} \amp P_{0}\end{bmatrix}
+      </me>
+
+      This is very similar to the first, execpt there's no implicit connection from the last point to the first. This means we <em>could</em> have open ended shapes, but disjoint shapes, like the diamond, would not be as simple, since in this option, by adding <m>P_{3}</m> we wouild get a line <m>\overline{P_{0}P_{3}}</m>, which we don't want.
+
+      <me>
+        \begin{bmatrix}P_{0} \amp P_{1} \amp P_{1} \amp P_{2} \amp P_{2} \amp P_{0}\end{bmatrix}
+      </me>
+
+      In this version, we would generate the image by iterating over the list by pairs of points, drawing the lines between them. The advantage to this approach is that the list need not "know" anything about the image and what it contains. Every edge is explicitly defined. The downside is that there is a lot of duplication of points, but hey, memory's cheap.
+    </p>
+    <p>
+      We will focus on the last implementation, the other two are viable, but require extra work to be able to draw any arbitrary image (such as a separate list containing # of edges per shape, or a "delimeter" point). It is important to remember that points are <m>(x, y, z)</m> triples, so our edge lists would more accurately look like the following:
+      <me>
+        \begin{bmatrix}x_{0} \amp x_{1} \amp x_{1} \amp x_{2} \amp \dots \amp x_{n}
+                      \\\ y_{0} \amp y_{1} \amp x_{1} \amp y_{2} \amp \dots \amp y_{n}
+                      \\\ z_{0} \amp z_{1} \amp z_{1} \amp z_{2} \amp \dots \amp z_{n}
+                      \\\ 1 \amp 1 \amp 1 \amp 1 \amp \dots \amp 1
+        \end{bmatrix}
+      </me>
+      The extra row of 1s at the bottom is necessary for certain transformations that we will cover later.
+    </p>
+  </section>
+
+  <section>
+    <title>Matrix Math for Graphics</title>
+    <p>
+      Now that we are arranging our image information as edge matrices, we should look into how we can leverage matrix math for graphics purposes. To start, we need only talk about two concepts, <em>matrix multiplication</em> and the <em>multiplicative identiy matrix</em>.
+    </p>
+    <subsection>
+      <title>Matrix Multiplication</title>
+      <p>
+        In order to mulply two matrices, <m>AB</m>, the number of columns in <m>A</m> must equal the number of rows in <m>B</m>. So if <m>A</m> is a <m>4\times N</m> matrix, then <m>B</m> must be <m>n\times4</m>.
+      </p>
+      <p>
+        Matrix multiplication is _not_ commutative, so <m>AB \neq BA</m>. This will be useful to us later on. To perform <m>AB</m>, you match up each <em>row</em> of <m>A</m> with the coresponding <em>column</em> in <m>B</m>, multiply each coresponding element, and add those products together to find each element in the product matrix. For a simple example, consider the following:
+
+        <me>
+          \begin{bmatrix}1 \amp 2 \amp 3 \amp 4\end{bmatrix} \begin{bmatrix}a\\b\\c\\d \end{bmatrix} = \begin{bmatrix}1a + 2b + 3c + 4d\end{bmatrix}
+        </me>
+
+        For a more complex example:
+
+        <me>
+          \begin{bmatrix}1 \amp 2 \amp 3
+                        \\ 4 \amp 5 \amp 6
+                        \\ 7 \amp 8 \amp 9\end{bmatrix}
+          \begin{bmatrix}a \amp b
+                        \\ c \amp d
+                        \\ e \amp f\end{bmatrix} =
+          \begin{bmatrix}1a + 2c + 3e \amp 1b + 2d + 3f
+                        \\4a + 5c + 6e \amp 4b + 5d + 6f
+                        \\7a + 8c + 9e \amp 7b + 8d + 9f\end{bmatrix}
+        </me>
+      </p>
+    </subsection>
+    <subsection>
+      <title>Multiplicative Identity</title>
+      <p>
+        The multiplicative identiy matrix must:
+        <ul>
+          <li>Be a square matrix.</li>
+          <li>Have a diagonal of 1s, from upper-left to lower-right corners.</li>
+          <li>Have all other values be 0.</li>
+        </ul>
+
+        A <m>4\times4</m> identity matrix:
+        <me>
+          \begin{bmatrix}1 \amp 0 \amp 0 \amp 0
+                        \\\ 0 \amp 1 \amp 0 \amp 0
+                        \\\ 0 \amp 0 \amp 1 \amp 0
+                        \\\ 0 \amp 0 \amp 0 \amp 1
+          \end{bmatrix}
+        </me>
+      </p>
+    </subsection>
   </section>
 </chapter>
 
 
 <!-- ORIGINAL MARKDOWN NOTES
 
-There are a few options for maintaining edge lists. Consider the following image:
 
-  ![points]({{"/assets/img/n00-image.png" | relative_url}})
-
-* The triangle portion could be represented by any of the following edge lists:
-\begin{bmatrix}P_{0} & P_{1} & P_{2}\end{bmatrix}
-  - Here, we would generate the image by iterating through the edge list 1 point at a time, connecting each point with the next one, and include a final line back to the initial point.
-  - This works well if the entire image was a single closed object, but less so for open ended or disjoint objects.
-\begin{bmatrix}P_{0} & P_{1} & P_{2} & P_{0}\end{bmatrix}
-  - This is very similar to the first, execpt there's no implicit connection from the last point to the first.
-  - This means we _could_ have open ended shapes, but disjoint shapes, like the diamond, would not be as simple, since in this option, by adding $$P_{3}$$ we wouild get a line $$\overline{P_{0}P_{3}}$$, which we don't want.
-\begin{bmatrix}P_{0} & P_{1} & P_{1} & P_{2} & P_{2} & P_{0}\end{bmatrix}
-  - In this version, we would generate the image by iterating over the list by pairs of points, drawing the lines between them.
-  - The advantage to this approach is that the list need not "know" anything about the image and what it contains. Every edge is explicitly defined.
-  - The downside is that there is a lot of duplication of points, but hey, memory's cheap.
-
-* We will focus on the last implementation, the other two are viable, but require extra work to be able to draw any arbitrary image (such as a separate list containing # of edges per shape, or a "delimeter" point).
-
-It is important to remember that points are $$(x, y, z)$$ triples, so our edge lists would more accurately look like the following:
-  \begin{bmatrix}x_{0} & x_{1} & x_{1} & x_{2} & \dots & x_{n}
-                \\\ y_{0} & y_{1} & x_{1} & y_{2} & \dots & y_{n}
-                \\\ z_{0} & z_{1} & z_{1} & z_{2} & \dots & z_{n}
-                \\\ 1 & 1 & 1 & 1 & \dots & 1
-  \end{bmatrix}
-  * The extra row of 1s at the bottom is necessary for certain transformations that we will cover later.
-
-
-### Graphics Matrix Math
-
-Now that we are arranging our image information as edge matrices, we should look into how we can leverage matrix math for graphics purposes. To start, we need only talk about two concepts, _matrix multiplication_ and the _multiplicative identiy matrix_.
-
-**Matrix Multiplication**
-- In order to mulply two matrices, $$AB$$, the number of columns in $$A$$ must equal the number of rows in $$B$$. So if $$A$$ is a $$4\times N$$ matrix, then $$B$$ must be $$n\times4$$
-- Matrix multiplication is _not_ commutative, so $$AB \neq BA$$. This will be useful to us later on.
-- To perform $$AB$$, you match up each _row_ of $$A$$ with the coresponding _column_ in $$B$$, multiply each coresponding element, and add those products together to find each element in the product matrix. For a simple example, consider the following:
-
-$$\begin{bmatrix}1 & 2 & 3 & 4\end{bmatrix} \begin{bmatrix}a\\b\\c\\d \end{bmatrix} = \begin{bmatrix}1a + 2b + 3c + 4d\end{bmatrix}$$
-
-- For a more complex example:
-
-$$\begin{bmatrix}1 & 2 & 3
-                \\ 4 & 5 & 6
-                \\ 7 & 8 & 9\end{bmatrix}
-  \begin{bmatrix}a & b
-                \\ c & d
-                \\ e & f\end{bmatrix} =
-  \begin{bmatrix}1a + 2c + 3e & 1b + 2d + 3f
-                \\4a + 5c + 6e & 4b + 5d + 6f
-                \\7a + 8c + 9e & 7b + 8d + 9f\end{bmatrix}$$
-
-**Multiplicative Identity**
-- The multiplicative identiy matrix must:
-  - Be a square matrix.
-  - Have a diagonal of 1s, from upper-left to lower-right corners.
-  - Have all otehr values be 0.
-- A $$4\times4$$ identity matrix:
-\begin{bmatrix}1 & 0 & 0 & 0
-              \\\ 0 & 1 & 0 & 0
-              \\\ 0 & 0 & 1 & 0
-              \\\ 0 & 0 & 0 & 1
-\end{bmatrix}
 
 -->

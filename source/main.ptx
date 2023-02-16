@@ -54,6 +54,7 @@
       <xi:include href="ch0-background.xml" />
       <xi:include href="ch01-bresenham.xml" />
       <xi:include href="ch02-matrix.xml" />
+      <xi:include href="ch03-transform.xml" />
     </part>
 
     <backmatter xml:id="backmatter">
