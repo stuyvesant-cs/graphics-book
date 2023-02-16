@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<h5 class="heading"><span class="type">Paragraph</span></h5>
+<div class="para logical">
+<div class="para">Figuring out the rotation function is a bit more complicated than the previous transformations. First let's look at a rotation about the z axis: <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch03-z_rotation.png" class="contained"></div> Since the point does not change along the axis of rotation, we only need to conern ourselves with <span class="process-math">\((x, y)\)</span> We need to find a way to represent <span class="process-math">\((x',y')\)</span> based on information we know. Using polar coordinates, we can re-write <span class="process-math">\((x, y)\)</span> as <span class="process-math">\((rcos\phi, rsin\phi)\)</span> Similarly, <span class="process-math">\((x', y')\)</span> can be written as <span class="process-math">\((rcos(\phi+\theta), rsin(\phi+\theta))\)</span> Using the angle sum formula, and the values for <span class="process-math">\((x, y)\)</span> above, we get the following:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x' = rcos(\phi + \theta) \quad y' = rsin(\phi + \theta)
+\end{equation*}
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x' = rcos\phi cos\theta - rsin\phi sin\theta \quad y' = rsin\phi cos\theta + rcos\phi sin\theta
+\end{equation*}
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x' = xcos\theta - ysin\theta \quad y' = ycos\theta + xsin\theta
+\end{equation*}
+</div>
+<div class="para">This gives us <span class="process-math">\((x', y')\)</span> in terms of values we know. Because rotations change depending on the fixed axis, we will have 3 different rotation functions.</div>
+<ul class="disc">
+<li><div class="para">Necessary information: Angle of rotation, <span class="process-math">\(\theta\)</span> and axis of rotation.</div></li>
+<li><div class="para">Function: See below for each axis of rotation</div></li>
+</ul>
+</div>
+<span class="incontext"><a href="chapter-4.html#p-31" class="internal">in-context</a></span>
+</body>
+</html>
