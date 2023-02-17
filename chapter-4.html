@@ -483,8 +483,29 @@ E_3 \amp= R(D(TE_0))
 \end{aligned}
 \end{equation*}
 </div>
-<div class="para">Or more clearly, <span class="process-math">\(E_3 = RDTE_0\text{.}\)</span>
+<div class="para">Or more clearly, <span class="process-math">\(E_3 = RDTE_0\text{.}\)</span> Becuse matrix multiplication is <em class="emphasis">associative</em>, we can write this as</div>
+<div class="displaymath process-math">
+\begin{equation*}
+E_3 = (RDT)E_0
+\end{equation*}
 </div>
+<div class="para">Which means that we can generate the same image by multipling transformation matrices with each other <em class="emphasis">then</em> multiplying by an edge matrix as we could by multiplying the edge matrix by each transformation matrix <em class="emphasis">separately</em>. This could save lots of time, since all transformation matrices are <span class="process-math">\(4\times4\text{,}\)</span> while our edge matrices are <span class="process-math">\(4\times N\text{.}\)</span>
+</div>
+</div>
+<div class="para logical" id="p-36">
+<div class="para">The order is important. Note that:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+(RDT)E_0
+\end{equation*}
+</div>
+<div class="para">is not the same as</div>
+<div class="displaymath process-math">
+\begin{equation*}
+(TDR)E_0
+\end{equation*}
+</div>
+<div class="para">because matrix multiplication is not commutative. The first image would be the reslut of moving, scaling, then rotating. The second would be the result of rotating, scaling, then moving. It is common (since most of us are used to reading left-&gt;right), to think about the appilcation of transformations that way. You have been warned.</div>
 </div></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="chapter-3.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>

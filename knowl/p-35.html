@@ -43,7 +43,13 @@ E_3 \amp= R(D(TE_0))
 \end{aligned}
 \end{equation*}
 </div>
-<div class="para">Or more clearly, <span class="process-math">\(E_3 = RDTE_0\text{.}\)</span>
+<div class="para">Or more clearly, <span class="process-math">\(E_3 = RDTE_0\text{.}\)</span> Becuse matrix multiplication is <em class="emphasis">associative</em>, we can write this as</div>
+<div class="displaymath process-math">
+\begin{equation*}
+E_3 = (RDT)E_0
+\end{equation*}
+</div>
+<div class="para">Which means that we can generate the same image by multipling transformation matrices with each other <em class="emphasis">then</em> multiplying by an edge matrix as we could by multiplying the edge matrix by each transformation matrix <em class="emphasis">separately</em>. This could save lots of time, since all transformation matrices are <span class="process-math">\(4\times4\text{,}\)</span> while our edge matrices are <span class="process-math">\(4\times N\text{.}\)</span>
 </div>
 </div>
 <span class="incontext"><a href="chapter-4.html#p-35" class="internal">in-context</a></span>
