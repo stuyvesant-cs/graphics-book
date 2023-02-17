@@ -206,7 +206,16 @@
           E_3 \amp= R(D(TE_0))
         \end{aligned}
       </me>
-      Or more clearly, <m>E_3 = RDTE_0</m>.
+      Or more clearly, <m>E_3 = RDTE_0</m>. Becuse matrix multiplication is <em>associative</em>, we can write this as
+      <me>E_3 = (RDT)E_0</me>
+      Which means that we can generate the same image by multipling transformation matrices with each other <em>then</em> multiplying by an edge matrix as we could by multiplying the edge matrix by each transformation matrix <em>separately</em>. This could save lots of time, since all transformation matrices are <m>4\times4</m>, while our edge matrices are <m>4\times N</m>.
+    </p>
+    <p>
+      The order is important. Note that:
+      <me>(RDT)E_0</me>
+      is not the same as
+      <me>(TDR)E_0</me>
+      because matrix multiplication is not commutative. The first image would be the reslut of moving, scaling, then rotating. The second would be the result of rotating, scaling, then moving. It is common (since most of us are used to reading left->right), to think about the appilcation of transformations that way. <strong>You have been warned</strong>.
     </p>
   </section>
 </chapter>
@@ -214,11 +223,6 @@
 
 <!-- ORIGINAL MARKDOWN NOTES
 
-
-  - Substituting back up this chain, we get:
-    - $$E_3 = RDTE_0$$ Becuse matrix multiplication is _associative_, we can write this as:
-    - $$E_3 = (RDT)E_0$$ Which means that we can generate the same image by multipling transformation matrices with each other _then_ multiplying by an edge matrix as we could by multiplying the edge matrix by each transformation matrix _separately_.
-    - This could save lots of time, since all transformation matrices are $$4\times4$$, while our edge matrices are $$4\times N$$.
   - The order is important. Note that:
     - $$(RDT)E_0$$ is not the same as
     - $$(TDR)E_0$$ because matrix multiplication is not commutative.
