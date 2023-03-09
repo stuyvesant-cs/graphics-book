@@ -11,8 +11,29 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h2 class="heading"><span class="type">Paragraph</span></h2>
-<div class="para">This book was authored in PreTeXt.</div>
-<span class="incontext"><a href="colophon-2.html#p-37" class="internal">in-context</a></span>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para logical">
+<div class="para">Parametric equations can be used to caluculate the components of the points along a cuve as a function of an independent variable (commonly referred to as <span class="process-math">\(t\)</span>). For example, let's say we want to draw a line from <span class="process-math">\((x_0, y_0)\)</span> to <span class="process-math">\((x_1, y_1)\text{.}\)</span> We can define this parametrically as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+x \amp= x_0 + (x_1 - x_0)t \\
+y \amp= y_0 + (y_1 - y_0)t
+\end{aligned}
+\end{equation*}
+</div>
+<div class="para">At <span class="process-math">\(t = 0\text{,}\)</span> we just get <span class="process-math">\((x_0, y_0)\)</span> and at <span class="process-math">\(t = 1\text{,}\)</span> we get <span class="process-math">\((x_1, y_1)\text{.}\)</span> As <span class="process-math">\(t\)</span> moves over the range <span class="process-math">\(0\rightarrow1\text{,}\)</span> these equations will generate all the points along the line. We already have a very good way of drawing a line, but we <em class="emphasis">can</em> generalize this process for other shapes, assuming we have functions <span class="process-math">\(f(t)\)</span> which returns x values and <span class="process-math">\(g(t)\)</span> which returns y values:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+t \amp: 0\rightarrow1 \\
+x \amp= f(t) \\
+y \amp= g(t)
+\end{aligned}
+\end{equation*}
+</div>
+<div class="para">By using the framework above to generate points that we can add to our edge matrices, we can draw any shape that can be defined in such a manner.</div>
+</div>
+<span class="incontext"><a href="chapter-5.html#p-37" class="internal">in-context</a></span>
 </body>
 </html>

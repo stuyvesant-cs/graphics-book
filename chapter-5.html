@@ -8,7 +8,7 @@
 <html lang="en-US">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Colophon</title>
+<title>Parametric Equations &amp; Curves</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="backmatter.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="backmatter.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><span class="next-button button disabled"><span class="name">Next</span><span class="icon">&gt;</span></span></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-1.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -253,7 +253,7 @@ window.MathJax = {
 <li><div class="toc-item"><a href="chapter-4.html#section-8" class="internal"><span class="codenumber">4.2</span> <span class="title">Combining Transformations</span></a></div></li>
 </ul>
 </li>
-<li>
+<li class="active">
 <div class="toc-item"><a href="chapter-5.html" class="internal"><span class="codenumber">5</span> <span class="title">Parametric Equations &amp; Curves</span></a></div>
 <ul class="structural">
 <li>
@@ -267,12 +267,55 @@ window.MathJax = {
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="colophon" id="colophon-2"><h2 class="heading hide-type">
-<span class="type">Colophon</span> <span class="codenumber"></span> <span class="title">Colophon</span>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-5"><h2 class="heading">
+<span class="type">Chapter</span> <span class="codenumber">5</span> <span class="title">Parametric Equations &amp; Curves</span>
 </h2>
-<div class="para" id="p-40">This book was authored in PreTeXt.</div></section></div>
+<section class="section" id="section-9"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">5.1</span> <span class="title">Parametric Equations</span>
+</h3>
+<div class="para logical" id="p-37">
+<div class="para">Parametric equations can be used to caluculate the components of the points along a cuve as a function of an independent variable (commonly referred to as <span class="process-math">\(t\)</span>). For example, let's say we want to draw a line from <span class="process-math">\((x_0, y_0)\)</span> to <span class="process-math">\((x_1, y_1)\text{.}\)</span> We can define this parametrically as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+x \amp= x_0 + (x_1 - x_0)t \\
+y \amp= y_0 + (y_1 - y_0)t
+\end{aligned}
+\end{equation*}
+</div>
+<div class="para">At <span class="process-math">\(t = 0\text{,}\)</span> we just get <span class="process-math">\((x_0, y_0)\)</span> and at <span class="process-math">\(t = 1\text{,}\)</span> we get <span class="process-math">\((x_1, y_1)\text{.}\)</span> As <span class="process-math">\(t\)</span> moves over the range <span class="process-math">\(0\rightarrow1\text{,}\)</span> these equations will generate all the points along the line. We already have a very good way of drawing a line, but we <em class="emphasis">can</em> generalize this process for other shapes, assuming we have functions <span class="process-math">\(f(t)\)</span> which returns x values and <span class="process-math">\(g(t)\)</span> which returns y values:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+t \amp: 0\rightarrow1 \\
+x \amp= f(t) \\
+y \amp= g(t)
+\end{aligned}
+\end{equation*}
+</div>
+<div class="para">By using the framework above to generate points that we can add to our edge matrices, we can draw any shape that can be defined in such a manner.</div>
+</div>
+<section class="subsection" id="subsection-13"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">5.1.1</span> <span class="title">Parametric Circle</span>
+</h4>
+<div class="para logical" id="p-38">
+<div class="para">If you wanted to use this technique to draw a circle with radius <span class="process-math">\(r\)</span> and center <span class="process-math">\((c_x, c_y)\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+t \amp: 0\rightarrow1 \\
+x \amp= rcos(2\pi t) + c_x \\
+y \amp= rsin(2\pi t) + c_y
+\end{aligned}
+\end{equation*}
+</div>
+</div></section></section><section class="section" id="section-10"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">5.2</span> <span class="title">Splines</span>
+</h3>
+<div class="para" id="p-39"></div></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="backmatter.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><span class="next-button button disabled"><span class="name">Next</span><span class="icon">&gt;</span></span>
+<a class="previous-button button" href="chapter-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div class="ptx-page-footer">
