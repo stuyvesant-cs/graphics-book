@@ -57,7 +57,11 @@
       <xi:include href="ch03-transform.xml" />
       <xi:include href="ch04-curves.xml" />
     </part>
-
+    <part>
+      <title>3-D Structures</title>
+      <xi:include href="ch05-3d-shapes.xml" />
+      <xi:include href="ch06-polygons.xml" />
+    </part>
     <backmatter xml:id="backmatter">
       <title>Backmatter</title>
 
