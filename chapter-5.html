@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-1.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-1.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="part-2.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -260,14 +260,42 @@ window.MathJax = {
 <div class="toc-item"><a href="chapter-5.html#section-9" class="internal"><span class="codenumber">5.1</span> <span class="title">Parametric Equations</span></a></div>
 <ul class="structural"><li><div class="toc-item"><a href="chapter-5.html#subsection-13" class="internal"><span class="codenumber">5.1.1</span> <span class="title">Parametric Circle</span></a></div></li></ul>
 </li>
-<li><div class="toc-item"><a href="chapter-5.html#section-10" class="internal"><span class="codenumber">5.2</span> <span class="title">Splines</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-5.html#section-10" class="internal"><span class="codenumber">5.2</span> <span class="title">Splines</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-5.html#subsection-14" class="internal"><span class="codenumber">5.2.1</span> <span class="title">Hermite Curves</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-5.html#subsection-15" class="internal"><span class="codenumber">5.2.2</span> <span class="title">Bezier Curves</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-5.html#subsubsection-4" class="internal"><span class="codenumber">5.2.2.1</span> <span class="title">Bezier Line</span></a></div></li>
+<li><div class="toc-item"><a href="chapter-5.html#subsubsection-5" class="internal"><span class="codenumber">5.2.2.2</span> <span class="title">Bezier Quadratic</span></a></div></li>
+<li><div class="toc-item"><a href="chapter-5.html#subsubsection-6" class="internal"><span class="codenumber">5.2.2.3</span> <span class="title">Bezier Cubic</span></a></div></li>
+<li><div class="toc-item"><a href="chapter-5.html#subsubsection-7" class="internal"><span class="codenumber">5.2.2.4</span> <span class="title">Bezier Implementation</span></a></div></li>
 </ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="part-2.html" class="internal"><span class="codenumber">II</span> <span class="title">3-D Structures</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="chapter-6.html" class="internal"><span class="codenumber">6</span> <span class="title">3D Shapes</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="chapter-6.html#section-11" class="internal"><span class="codenumber">6.1</span> <span class="title"></span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="chapter-7.html" class="internal"><span class="codenumber">7</span> <span class="title">Polygons</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="chapter-7.html#section-12" class="internal"><span class="codenumber">7.1</span> <span class="title"></span></a></div></li></ul>
 </li>
 </ul>
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-5"><h2 class="heading">
+<main class="ptx-main"><div id="ptx-content" class="ptx-content">
+<section class="chapter" id="chapter-5"><h2 class="heading">
 <span class="type">Chapter</span> <span class="codenumber">5</span> <span class="title">Parametric Equations &amp; Curves</span>
 </h2>
 <section class="section" id="section-9"><h3 class="heading hide-type">
@@ -313,9 +341,262 @@ y \amp= rsin(2\pi t) + c_y
 </div></section></section><section class="section" id="section-10"><h3 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">5.2</span> <span class="title">Splines</span>
 </h3>
-<div class="para" id="p-39"></div></section></section></div>
+<div class="para" id="p-39">Splines are a special set of polynomial curves. They are designed in such a way that you can combine 2 or more splines smoothly in order to generate higher degree curves. You may recall the term <a class="external" href="https://en.wikipedia.org/wiki/Flat_spline" target="_blank">spline</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-3" id="fn-3"><sup> 1 </sup></a> from your drafting days, using splines to make non-arc based curves. In Computer Graphics, splines are an effective way of generating arbitrary curves effeciently. We will only need to create 3rd degree curves at most, but still be able to generate more complex looking ones by combining splines.</div>
+<div class="para" id="p-40">Remember that our purpose is to make a graphics engine, and <em class="emphasis">not</em> a graphing calcuator. So when thinking about drawing arbitrary polynomials, we have to think about what information is useful to us. Think about a circle, in order to draw one, we would like to know the center and radius. Turns out, that information not only describes the shape we're drawing, but also goes directly into the parametric equations for making a circle. It is also easy to provide that information via a GUI (click center, drag for radius, boom). A standard 3rd degree polynomial, <span class="process-math">\(ax^3 + bx^2 + cx + d\)</span> doesn't trasnlate as easily into the graphical world. Think about drawing a line, we specify <em class="emphasis">endpoints</em> and generate the equation based on that. We will look at two types of splines, <em class="emphasis">Hermite</em> and <em class="emphasis">Bezier</em> curves, which are similar (in fact, you can translate between the two), but differ in the information required to generate a cruve.</div>
+<section class="subsection" id="subsection-14"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">5.2.1</span> <span class="title">Hermite Curves</span>
+</h4>
+<div class="para logical" id="p-41">
+<div class="para">To generate Hermite Curves, we will need the following information:</div>
+<ul class="disc">
+<li id="li-35"><div class="para" id="p-derived-li-35">
+<span class="process-math">\(P_0, P_1\text{:}\)</span> endpoints</div></li>
+<li id="li-36"><div class="para" id="p-derived-li-36">
+<span class="process-math">\(R_0, R_1\text{:}\)</span> rates of change at each endpoint.</div></li>
+</ul>
+<div class="para">
+<span class="process-math">\(P_0, P_1\)</span> designate where the curve starts and ends. Specifying rates of change at each endpoint allows us to both generate curves between the endpoints, but also connect multiple curves smoothly. Two Hermite curves that share a common endpoint <em class="emphasis">and</em> rate of change at that endpoint will nicely connect to create a larger, more complex cure.</div>
+</div>
+<div class="para logical" id="p-42">
+<div class="para">We will use parametric equations to help get from this information to points along a curve, assuming <span class="process-math">\(t: 0 \rightarrow 1\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f(t) = at^3 + bt^2 + ct + d
+\end{equation*}
+</div>
+<div class="para">This is a standard cubic equation. Substituting for <span class="process-math">\(t\)</span> will generate points along our curve. Ultimately, this is the equation we need to make a curve, so we will need to calculate the coeficients based on the given information.</div>
+</div>
+<div class="para" id="p-43">In order to actually make a curve, we will need separate functions for <span class="process-math">\(x\)</span> and <span class="process-math">\(y\text{,}\)</span> such that <span class="process-math">\(f_x(t) = x\)</span> and <span class="process-math">\(f_y(t) = y\text{.}\)</span> Since the math is identical for both, We will just look at <span class="process-math">\(f(t)\)</span> in general.</div>
+<div class="para logical" id="p-44">
+<div class="para">We will also need the derivative of <span class="process-math">\(f\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f'(t) = 3at^2 + 2bt + c
+\end{equation*}
+</div>
+<div class="para">After checking with Mr. Kats, I am certain that substituting for <span class="process-math">\(t\text{,}\)</span> this will generate the rates of change along the curve defined by <span class="process-math">\(f\text{.}\)</span>
+</div>
+</div>
+<div class="para" id="p-45">Now, let's plug in some values for <span class="process-math">\(t\)</span> and see what we get:</div>
+<div class="para logical" id="p-46">
+<div class="para">When <span class="process-math">\(t = 0\text{:}\)</span>
+</div>
+<ul class="disc">
+<li id="li-37"><div class="para" id="p-derived-li-37">
+<span class="process-math">\(f(0) = d\)</span> which corresponds to <span class="process-math">\(P_0\)</span>
+</div></li>
+<li id="li-38"><div class="para" id="p-derived-li-38">
+<span class="process-math">\(f'(0) = c\)</span> which corresponds to <span class="process-math">\(R_0\)</span>
+</div></li>
+</ul>
+<div class="para">When <span class="process-math">\(t = 1 \text{:}\)</span>
+</div>
+<ul class="disc">
+<li id="li-39"><div class="para" id="p-derived-li-39">
+<span class="process-math">\(f(1) = a + b + c + d\)</span> which corresponds to <span class="process-math">\(P_1\)</span>
+</div></li>
+<li id="li-40"><div class="para" id="p-derived-li-40">
+<span class="process-math">\(f'(1) = 3a + 2b + c\)</span> which corresponds to <span class="process-math">\(R_1\)</span>
+</div></li>
+</ul>
+<div class="para">Now we have 4 unknowns, and 4 equations, you may recall this from math as a <em class="emphasis">system of equations</em> problem. There are many ways to deal with this, but since we're already in graphics, let's use matrices!</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{array}{c}
+H \\
+\left[
+\begin{matrix} 0 \amp 0 \amp 0 \amp 1
+\\\ 1 \amp 1 \amp 1 \amp 1
+\\\ 0 \amp 0 \amp 1 \amp 0
+\\\ 3 \amp 2 \amp 1 \amp 0
+\end{matrix}
+\right]
+\end{array}
+\begin{array}{c}
+C \\
+\left[
+\begin{matrix} a
+\\\ b
+\\\ c
+\\\ d
+\end{matrix}
+\right]
+\end{array}
+=
+\begin{array}{c}
+\\
+\left[
+\begin{matrix} d
+\\\ a + b + c + b
+\\\ c
+\\\ 3a + 2b + c
+\end{matrix}
+\right]
+\end{array}
+=
+\begin{array}{c}
+G \\
+\left[
+\begin{matrix} P_0
+\\\ P_1
+\\\ R_0
+\\\ R_1
+\end{matrix}
+\right]
+\end{array}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="p-47">
+<div class="para">So multiplying the special Hermite matrix, <span class="process-math">\(H\)</span> by the Coeficient matrix <span class="process-math">\(C\text{,}\)</span> reuslts in the Given information <span class="process-math">\(G\text{.}\)</span> Of course, the problem here is that we <em class="emphasis">DONT KNOW THE COEFICIENTS</em>. Never fear, divison (or rather, multiplying by the multiplicative inverse), is here!. <span class="process-math">\(HC = G\text{,}\)</span> so <span class="process-math">\(H^{-1}G = C\text{.}\)</span> We just need the inverse of <span class="process-math">\(H\text{,}\)</span> which I just happen to have right here:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+H^{-1} =
+\begin{bmatrix} 2 \amp -2 \amp 1 \amp 1
+\\\ -3 \amp 3 \amp -2 \amp -1
+\\\ 0 \amp 0 \amp 1 \amp 0
+\\\ 1 \amp 0 \amp 0 \amp 0
+\end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">
+<span class="process-math">\(H^{-1}G\)</span> will give us the coeficients to fill out <span class="process-math">\(f(t) = ax^3 + bx^2 + cx + d\text{,}\)</span> so that we can loop to from 0 to 1 to generate the points along our Hermite curve. <em class="emphasis">Et viola!</em>
+</div>
+</div></section><section class="subsection" id="subsection-15"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">5.2.2</span> <span class="title">Bezier Curves</span>
+</h4>
+<div class="para logical" id="p-48">
+<div class="para">To generate Bezier curves, we need the following information:</div>
+<ul class="disc">
+<li id="li-41"><div class="para" id="p-derived-li-41">
+<span class="process-math">\(P_0, P_3\text{:}\)</span> endpoints</div></li>
+<li id="li-42"><div class="para" id="p-derived-li-42">
+<span class="process-math">\(P_1, P_2\text{:}\)</span> "control" points</div></li>
+</ul>
+<div class="para">
+<span class="process-math">\(P_0, P_1\)</span> designate where the curve starts and ends. <span class="process-math">\(P_1, P_2\)</span> are points that influence the shape of the curve as we move between endpoints. You can think of these points as "pulling" the curve as it is generated. In general, in order to create a Bezier curve of degree <span class="process-math">\(n\text{,}\)</span> we need <span class="process-math">\(n+1\)</span> points. The best way to understand how Bezier curves work is to start with a line and work our way up to cubic.</div>
+</div>
+<section class="subsubsection" id="subsubsection-4"><h5 class="heading hide-type">
+<span class="type">Subsubsection</span> <span class="codenumber">5.2.2.1</span> <span class="title">Bezier Line</span>
+</h5>
+<div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;">
+<div class="sbspanel top" style="width:50%;"><div class="para logical" id="p-49">
+<div class="para">In order to understand higher order Bezier curves, let's start with the simplest, the line. Graphically, a Bezier line can be generated by linerarly moving between the endpoints, as seen in the image to the right. Algebraically, we can write this as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+L = (1-t)P_0 + tP_1
+\end{equation*}
+</div>
+</div></div>
+<div class="sbspanel top" style="width:50%;"><img src="external/images/ch04-bez_1.gif" class="contained"></div>
+</div></div></section><section class="subsubsection" id="subsubsection-5"><h5 class="heading hide-type">
+<span class="type">Subsubsection</span> <span class="codenumber">5.2.2.2</span> <span class="title">Bezier Quadratic</span>
+</h5>
+<div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;">
+<div class="sbspanel top" style="width:50%;"><div class="para logical" id="p-50">
+<div class="para">A quadratic needs one more point than the line. This creates 2 normal lines, that we move along in the standard fashion. This creates a series of endpooints that we can use to create a new line (pictured in green). As we move along each static line, we also move along the dynamic line, which in turn generates the points on our quadratic curve. Since the quadratic is generated by moving across a line, we could represent it as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+Q = (1-t)L_0 + tL_1
+\end{equation*}
+</div>
+<div class="para">But <span class="process-math">\(L_1, L_0\)</span> are not points, they're lines. Substituting in the linear equation, we get:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+Q \amp= (1-t)[(1-t)P_0+tP_1] + t[(1-t)P_1+tP_2] \\
+Q \amp= (1-t)^2P_0 + t(1-t)P_1 + t(1-2)P_1 + t^2P_2 \\
+Q \amp= (1-t)^2P_0 + 2t(1-t)P_1 + t^2P_2
+\end{aligned}
+\end{equation*}
+</div>
+</div></div>
+<div class="sbspanel top" style="width:50%;"><img src="external/images/ch04-bez_2.gif" class="contained"></div>
+</div></div></section><section class="subsubsection" id="subsubsection-6"><h5 class="heading hide-type">
+<span class="type">Subsubsection</span> <span class="codenumber">5.2.2.3</span> <span class="title">Bezier Cubic</span>
+</h5>
+<div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;">
+<div class="sbspanel top" style="width:50%;"><div class="para logical" id="p-51">
+<div class="para">Just as a quadratic is made from 2 linear bezier cuves, a cubic is generated by moving along a line whose endpoints would generate 2 quadratic curves. The blue line generates the cubic, and its endpoints march along the green lines, which in turn march along the staic gray lines connecting all the input points. Since the cubic is generated by moving across a line, we could represent it as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+C = (1-t)Q_0 + tQ_1
+\end{equation*}
+</div>
+<div class="para">But <span class="process-math">\(Q_1, Q_0\)</span> are not points, they're quadratics! Substituting in the quadratic bezier equations is a bit uglier, though the keen observer may have noticed these equations follow the binomial expansion...</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+C \amp= (1-t)[(1-t)^2P_0 + 2t(1-t)P_1 + t^2P_2] + t[(1-t)^2P_1 + 2t(1-t)P_2 + t^2P_3] \\
+C \amp= (1-t)^3P_0 + 3t(1-t)^2P_1 + 3t^2(1-t)P_2 + t^3P_3
+\end{aligned}
+\end{equation*}
+</div>
+</div></div>
+<div class="sbspanel top" style="width:50%;"><img src="external/images/ch04-bez_3.gif" class="contained"></div>
+</div></div></section><section class="subsubsection" id="subsubsection-7"><h5 class="heading hide-type">
+<span class="type">Subsubsection</span> <span class="codenumber">5.2.2.4</span> <span class="title">Bezier Implementation</span>
+</h5>
+<div class="para logical" id="p-52">
+<div class="para">Now we have an equation <span class="process-math">\(C\text{,}\)</span> that will generate points along a cubic Bezier curve, but <span class="process-math">\(t\)</span> is spread throughout the equation. With a little more algebra we can get to:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+C = (-P_0 + 3P_1 - 3P_2 + P_3)t^3 + (3P_0 - 6P_1 + 3P_2)t^2 + (-3P_0 + 3P_1)t + P_0
+\end{equation*}
+</div>
+<div class="para">This is a cubic of the form <span class="process-math">\(at^3 + bt^2 + ct + d\text{,}\)</span> that we can put into a parametric loop, the same way we generated Hermite curves. In fact, if we wanted to, we could use our existing matrix multiplication framework to generate the coeficients based on the given information (this is not a necessary step)</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{array}{c}
+B \\
+\left[
+\begin{matrix} -1 \amp 3 \amp -3 \amp 1
+\\\ 3 \amp -6 \amp 3 \amp 0
+\\\ -3 \amp 3 \amp 0 \amp 0
+\\\ 1 \amp 0 \amp 0 \amp 0
+\end{matrix}
+\right]
+\end{array}
+\begin{array}{c}
+G \\
+\left[
+\begin{matrix} P_0
+\\\ P_1
+\\\ P_2
+\\\ P_3
+\end{matrix}
+\right]
+\end{array}
+=
+\begin{array}{c}
+\\
+\left[
+\begin{matrix} -P_0 + 3P_1 - 3P_2 + P_3
+\\\ 3P_0 - 6P_1 + 3P_2
+\\\ -3P_0 + 3P_1
+\\\ P_0
+\end{matrix}
+\right]
+\end{array}
+=
+\begin{array}{c}
+C \\
+\left[
+\begin{matrix} a
+\\\ b
+\\\ c
+\\\ d
+\end{matrix}
+\right]
+\end{array}
+\end{equation*}
+</div>
+</div></section></section></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-3"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Flat_spline</code></div></div>
+</div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="chapter-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<a class="previous-button button" href="chapter-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="part-2.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div class="ptx-page-footer">

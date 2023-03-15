@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<h5 class="heading"><span class="type">Paragraph</span></h5>
+<div class="para logical">
+<div class="para">When <span class="process-math">\(t = 0\text{:}\)</span>
+</div>
+<ul class="disc">
+<li><div class="para">
+<span class="process-math">\(f(0) = d\)</span> which corresponds to <span class="process-math">\(P_0\)</span>
+</div></li>
+<li><div class="para">
+<span class="process-math">\(f'(0) = c\)</span> which corresponds to <span class="process-math">\(R_0\)</span>
+</div></li>
+</ul>
+<div class="para">When <span class="process-math">\(t = 1 \text{:}\)</span>
+</div>
+<ul class="disc">
+<li><div class="para">
+<span class="process-math">\(f(1) = a + b + c + d\)</span> which corresponds to <span class="process-math">\(P_1\)</span>
+</div></li>
+<li><div class="para">
+<span class="process-math">\(f'(1) = 3a + 2b + c\)</span> which corresponds to <span class="process-math">\(R_1\)</span>
+</div></li>
+</ul>
+<div class="para">Now we have 4 unknowns, and 4 equations, you may recall this from math as a <em class="emphasis">system of equations</em> problem. There are many ways to deal with this, but since we're already in graphics, let's use matrices!</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{array}{c}
+H \\
+\left[
+\begin{matrix} 0 \amp 0 \amp 0 \amp 1
+\\\ 1 \amp 1 \amp 1 \amp 1
+\\\ 0 \amp 0 \amp 1 \amp 0
+\\\ 3 \amp 2 \amp 1 \amp 0
+\end{matrix}
+\right]
+\end{array}
+\begin{array}{c}
+C \\
+\left[
+\begin{matrix} a
+\\\ b
+\\\ c
+\\\ d
+\end{matrix}
+\right]
+\end{array}
+=
+\begin{array}{c}
+\\
+\left[
+\begin{matrix} d
+\\\ a + b + c + b
+\\\ c
+\\\ 3a + 2b + c
+\end{matrix}
+\right]
+\end{array}
+=
+\begin{array}{c}
+G \\
+\left[
+\begin{matrix} P_0
+\\\ P_1
+\\\ R_0
+\\\ R_1
+\end{matrix}
+\right]
+\end{array}
+\end{equation*}
+</div>
+</div>
+<span class="incontext"><a href="chapter-5.html#p-46" class="internal">in-context</a></span>
+</body>
+</html>
