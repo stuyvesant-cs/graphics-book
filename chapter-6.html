@@ -44,7 +44,7 @@ window.MathJax = {
     )}
   },
 };
-</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js"></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
 <script>js_version = 0.2</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.2/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.2/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.2/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
 </script><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -284,11 +284,21 @@ window.MathJax = {
 <ul class="structural">
 <li class="active">
 <div class="toc-item"><a href="chapter-6.html" class="internal"><span class="codenumber">6</span> <span class="title">3D Shapes</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-6.html#section-11" class="internal"><span class="codenumber">6.1</span> <span class="title"></span></a></div></li></ul>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-6.html#section-11" class="internal"><span class="codenumber">6.1</span> <span class="title">Box</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-6.html#section-12" class="internal"><span class="codenumber">6.2</span> <span class="title">Sphere</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="chapter-6.html#subsection-16" class="internal"><span class="codenumber">6.2.1</span> <span class="title">Sphere Point Generation</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="chapter-6.html#section-13" class="internal"><span class="codenumber">6.3</span> <span class="title">Torus</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="chapter-6.html#subsection-17" class="internal"><span class="codenumber">6.3.1</span> <span class="title">Torus Point Generation</span></a></div></li></ul>
+</li>
+</ul>
 </li>
 <li>
 <div class="toc-item"><a href="chapter-7.html" class="internal"><span class="codenumber">7</span> <span class="title">Polygons</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-7.html#section-12" class="internal"><span class="codenumber">7.1</span> <span class="title"></span></a></div></li></ul>
+<ul class="structural"><li><div class="toc-item"><a href="chapter-7.html#section-14" class="internal"><span class="codenumber">7.1</span> <span class="title"></span></a></div></li></ul>
 </li>
 </ul>
 </li>
@@ -297,18 +307,162 @@ window.MathJax = {
 <main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-6"><h2 class="heading">
 <span class="type">Chapter</span> <span class="codenumber">6</span> <span class="title">3D Shapes</span>
 </h2>
-<section class="section" id="section-11"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.1</span> <span class="title"></span>
+<section class="introduction" id="introduction-1">We will be working with the following 3D shapes: Box, Sphere, Torus. There are many other 3D shapes that could be easily generated programmatically, these specific three allow us to work with and test many advanced features, especially when it comes to lighting &amp; shading. If you want to add more shapes, keep that idea as a feature to be added to your final project. For each shape, we want to start by considering 2 important questions: <ol class="decimal">
+<li id="li-43"><div class="para" id="p-derived-li-43">What given information should we require?</div></li>
+<li id="li-44"><div class="para" id="p-derived-li-44">What are the points that our engine will need to generate in order to draw the shape?</div></li>
+</ol> The goal of our engine will be to create the necessary points from the given information (this is how we created circles &amp; splines as well).</section><section class="section" id="section-11"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">6.1</span> <span class="title">Box</span>
 </h3>
-<div class="para" id="p-53"></div></section></section></div>
+<div class="para logical" id="p-53">
+<div class="para">To make a box, we need the folloing:</div>
+<ul class="disc">
+<li id="li-45"><div class="para" id="p-derived-li-45">A vertex: for consistency, we will be using the <em class="emphasis">left-top-front</em> vertex.</div></li>
+<li id="li-46"><div class="para" id="p-derived-li-46">Width: Size in the <em class="emphasis">x</em> dimension.</div></li>
+<li id="li-47"><div class="para" id="p-derived-li-47">Height: Size in the <em class="emphasis">y</em> dimension.</div></li>
+<li id="li-48"><div class="para" id="p-derived-li-48">Depth: Size in the <em class="emphasis">z</em> dimension.</div></li>
+</ul>
+<div class="para">The defining points of a box are its 8 vertices, which can be straightfporwardly calculated from the given information above. Once you have the 8 vertices, you can directly add the 12 edges that make up the box. You don't need to do anything fancy here.</div>
+</div></section><section class="section" id="section-12"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">6.2</span> <span class="title">Sphere</span>
+</h3>
+<div class="para logical" id="p-54">
+<div class="para">To make a sphere, we need the following:</div>
+<ul class="disc">
+<li id="li-49"><div class="para" id="p-derived-li-49">Center point.</div></li>
+<li id="li-50"><div class="para" id="p-derived-li-50">Radius.</div></li>
+</ul>
+<div class="para">The defining points are any points along the surface of the sphere. in theory, there are an infinite number of points on the surface, but we can use a subset of all those to help draw something that looks like a sphere.</div>
+</div>
+<section class="subsection" id="subsection-16"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">6.2.1</span> <span class="title">Sphere Point Generation</span>
+</h4>
+<div class="para logical" id="p-55">
+<div class="para">The points on the surface of a sphere can be generated by taking a circle and rotating it. Each circle rotation creates a new "slice" of the sphere. The circle can be rotated about the x or y axes, but not z. The only difference will be the location of the "poles" of the sphere. An x-rotated sphere will have its poles on the left and right ends, while a y-rotated sphere will have its poles on the top and bottom.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{array}{c}
+x rotation \\
+\left[
+\begin{matrix} 1 \amp 0 \amp 0
+\\\ 0 \amp cos(\phi) \amp -sin(\phi)
+\\\ 0 \amp sin(\phi) \amp cos(phi)
+\end{matrix}
+\right]
+\end{array}
+\begin{array}{c}
+circle \\
+\left[
+\begin{matrix} rcos(\theta)
+\\\ rsin(\theta)
+\\\ 0
+\end{matrix}
+\right]
+\end{array}
+=
+\begin{array}{c}
+sphere \\
+\left[
+\begin{matrix} rcos(\theta)
+\\\ rsin(\theta)cos(\phi)
+\\\ rsin(\theta)sin(\phi)
+\end{matrix}
+\right]
+\end{array}
+\end{equation*}
+</div>
+<div class="para">The matrix multiplication above leaves us with equations that we can use to find the points of a sphere:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+x \amp= rcos(\theta) + C_x \\
+y \amp= rsin(\theta)cos(\phi) + C_y \\
+z \amp= rsin(\theta)sin(\phi) + C_z
+\end{aligned}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="p-56">
+<div class="para">Here <span class="process-math">\(\phi\)</span> is used as the angle of rotation and <span class="process-math">\(\theta\)</span> is used as the angle of circle creation. If you only use one angle, then you would generate one point per circle each rotation. The resulting shape would be a sprial going along the sphere (pleasing, but not our goal). You can generate a sphere either by creating a full circle and rotating it π radians, or by creating a semi-circle and rotating it 2π radians. For reasons that will become clear later, it is to our advantage to use the semi-circle method. With these equations we can create a nested-loop parametric function to generate all the points on a circle:</div>
+<pre class="code-display tex2jax_ignore">
+        for rot: 0 -&gt; 1
+          for cir: 0 -&gt; 1
+            x = r * cos(π * cir) + Cx
+            y = r * sin(π * cir) * cos(2π * rot) + Cy
+            z = r * sin(π * cir) * sin(2π * rot) + Cz
+        </pre>
+</div></section></section><section class="section" id="section-13"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">6.3</span> <span class="title">Torus</span>
+</h3>
+<div class="para logical" id="p-57">
+<div class="para">A torus is a doughnut (or bagel, if that's your thing)-like shape, that is simlar in some repsects to a sphere. To generate a torus, we will need:</div>
+<ul class="disc">
+<li id="li-51"><div class="para" id="p-derived-li-51">Center point of the entire torus.</div></li>
+<li id="li-52"><div class="para" id="p-derived-li-52">Radius of circular cross-section <span class="process-math">\(r\)</span>
+</div></li>
+<li id="li-53"><div class="para" id="p-derived-li-53">Distance from the torus center to center of the cross-section <span class="process-math">\(R\)</span>
+</div></li>
+</ul>
+<div class="para">Like a sphere, the defining points are any points along the surface of the torus.</div>
+</div>
+<section class="subsection" id="subsection-17"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">6.3.1</span> <span class="title">Torus Point Generation</span>
+</h4>
+<div class="para logical" id="p-58">
+<div class="para">A torus, can be generated in a similar way to a sphere, except you move the circle away from the torus center before rotating. You have to be careful about how you move the circle and then rotate it. Only specific combinations will work:</div>
+<ul class="disc">
+<li id="li-54"><div class="para" id="p-derived-li-54">Move a circle horizontally (x translation) and y rotation.</div></li>
+<li id="li-55"><div class="para" id="p-derived-li-55">Move a circle vertically (y translation) and x rotation.</div></li>
+</ul>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{array}{c}
+y rotation \\
+\left[
+\begin{matrix} cos(\phi) \amp 0 \amp sin(\phi)
+\\\ 0 \amp 1 \amp 0
+\\\ -sin(\phi) \amp 0 \amp cos(\phi)
+\end{matrix}
+\right]
+\end{array}
+\begin{array}{c}
+circle \\
+\left[
+\begin{matrix} rcos(\theta) + R
+\\\ rsin(\theta)
+\\\ 0
+\end{matrix}
+\right]
+\end{array}
+=
+\begin{array}{c}
+sphere \\
+\left[
+\begin{matrix} cos(\phi)(rcos(\theta) + R)
+\\\ rsin(\theta)
+\\\ -sin(\phi)(rcos(\theta) + R)
+\end{matrix}
+\right]
+\end{array}
+\end{equation*}
+</div>
+<div class="para">This leaves us with the following Torus equations:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+x \amp= cos(p) * (rcos(t) + R) + C_x \\
+y \amp= rsin(t) + C_y \\
+z \amp= -sin(p) * (rcos(t) + R) + C_z
+\end{aligned}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="p-59">Here <span class="process-math">\(\phi\)</span> is used as the angle of rotation and <span class="process-math">\(\theta\)</span> is used as the angle of circle creation. Unlike a sphere, both <span class="process-math">\(\phi\)</span> and <span class="process-math">\(\theta\)</span> must go from 0 to 2π in order to generate a full Torus. Limiting one of the angles to π would result in odd variations of half-tori.</div></section></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="part-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="chapter-7.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
-<div class="ptx-page-footer">
-<a class="pretext-link" href="https://pretextbook.org"><div class="name">Authored in PreTeXt</div>
-<div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259 "></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0  472  9732 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496 A 4241 4241  0  0  1  4724  3590 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259 A 4507 4507  0  0  1  4724  9448 "></path><polyline points="5385,4299 4062,8125 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8598,3496 8598,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="850,3496 850,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="4960,9685 4488,9685 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="3070,4582 1889,6141 3070,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="6418,4582 7600,6141 6418,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8976,3590 8976,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732 "></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy"><div class="name">Powered by Runestone</div>
-<img class="logo" title="Powered by Runestone" src="https://runestone.academy/runestone/static/rectangle_badge.png" alt="Powered by Runestone"></a><a class="mathjax-logo" href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a>
+<div id="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png"></a>
 </div>
 </body>
 </html>

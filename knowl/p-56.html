@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<h5 class="heading"><span class="type">Paragraph</span></h5>
+<div class="para logical">
+<div class="para">Here <span class="process-math">\(\phi\)</span> is used as the angle of rotation and <span class="process-math">\(\theta\)</span> is used as the angle of circle creation. If you only use one angle, then you would generate one point per circle each rotation. The resulting shape would be a sprial going along the sphere (pleasing, but not our goal). You can generate a sphere either by creating a full circle and rotating it π radians, or by creating a semi-circle and rotating it 2π radians. For reasons that will become clear later, it is to our advantage to use the semi-circle method. With these equations we can create a nested-loop parametric function to generate all the points on a circle:</div>
+<pre class="code-display tex2jax_ignore">
+        for rot: 0 -&gt; 1
+          for cir: 0 -&gt; 1
+            x = r * cos(π * cir) + Cx
+            y = r * sin(π * cir) * cos(2π * rot) + Cy
+            z = r * sin(π * cir) * sin(2π * rot) + Cz
+        </pre>
+</div>
+<span class="incontext"><a href="chapter-6.html#p-56" class="internal">in-context</a></span>
+</body>
+</html>
