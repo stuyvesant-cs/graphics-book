@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<h5 class="heading"><span class="type">Paragraph</span></h5>
+<div class="para logical">
+<div class="para">At the poles, there is only one triangle to add per section, this is triangle 0 above. Otherwise, triangles are added in pairs, as is shown by triangles 1 and 2. If <code class="code-inline tex2jax_ignore">n</code> is the number of points in a semi-circle, then we can define the triangles for the non-poles as:</div>
+<pre class="code-display tex2jax_ignore">
+           p, p + 1, (p + n) + 1
+           p, (p + n) + 1, p + n
+         </pre>
+<div class="para">At the poles, we need to make sure not to add both triangles. Following the above formulae, at <code class="code-inline tex2jax_ignore">p=0</code>, we would have triangles <code class="code-inline tex2jax_ignore">0, 1, 12</code> and <code class="code-inline tex2jax_ignore">0, 12, 11</code>. But for the second triangle, <code class="code-inline tex2jax_ignore">0</code> and <code class="code-inline tex2jax_ignore">11</code> are the same point. This would render as a straight line, which might not seem like a big deal, but having these "degenerate" triangles at the poles will cause problems down the line, so it's best to exclude them now.</div>
+</div>
+<span class="incontext"><a href="chapter-7.html#p-69" class="internal">in-context</a></span>
+</body>
+</html>

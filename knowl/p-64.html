@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para">Our current shapes are all based on _edge lists_, where every 2 points determine a distinct edge to be drawn. We should keep this framework around in order to draw 2 dimensional shapes when desired. We need to add <em class="emphasis">polygon lists</em>, where every 3 points determine a distinct triangle. Here is a chart comparing the functions in our 2D, edge based, drawing stack and their 3D, polygon based, equivalents. <figure class="table table-like"><figcaption><span class="type">Table</span><span class="space"> </span><span class="codenumber">7.1<span class="period">.</span></span><span class="space"> </span></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b0 r0 l0 t0 lines">Edge Framework</th>
+<th scope="col" class="l m b0 r0 l0 t0 lines">Polygon Framework</th>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">add_point</code><br>Add a point to the edge list</td>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">add_point</code><br>Add a point to the polygon list</td>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">add_edge</code><br>Add the endpoints of a line to the edge list.</td>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">add_polygon</code><br>Add the three vertices of a triangle into the polygon list.<br>The vertices must be added in<em class="emphasis">counter-clockwise</em> order.</td>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">draw_lines</code><br>Go through the edge list 2 points at a time,<br>drawing a line between each pair of points.</td>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">draw_polygons</code><br>Go through the polygon list 3 points at a time,<br>connecting the points to draw a triangle.<br>Other polygon features can be added here later.</td>
+</tr>
+</table></div></figure> By adding the points in counter-clockwise order, we will be able to eventually determine what is <em class="emphasis">forwards</em> and <em class="emphasis">backwards</em> with respect to the triangle. This will help us implement more advanced features later.</div>
+<span class="incontext"><a href="chapter-7.html#p-64" class="internal">in-context</a></span>
+</body>
+</html>

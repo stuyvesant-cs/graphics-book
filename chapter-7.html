@@ -294,23 +294,149 @@ window.MathJax = {
 <div class="toc-item"><a href="chapter-6.html#section-13" class="internal"><span class="codenumber">6.3</span> <span class="title">Torus</span></a></div>
 <ul class="structural"><li><div class="toc-item"><a href="chapter-6.html#subsection-17" class="internal"><span class="codenumber">6.3.1</span> <span class="title">Torus Point Generation</span></a></div></li></ul>
 </li>
+<li><div class="toc-item"><a href="chapter-6.html#section-14" class="internal"><span class="codenumber">6.4</span> <span class="title">Implementing 3D Shapes</span></a></div></li>
 </ul>
 </li>
 <li class="active">
 <div class="toc-item"><a href="chapter-7.html" class="internal"><span class="codenumber">7</span> <span class="title">Polygons</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-7.html#section-14" class="internal"><span class="codenumber">7.1</span> <span class="title"></span></a></div></li></ul>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-7.html#section-15" class="internal"><span class="codenumber">7.1</span> <span class="title">Polygon Lists</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-7.html#section-16" class="internal"><span class="codenumber">7.2</span> <span class="title">Polygon Based Shapes</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-7.html#subsection-18" class="internal"><span class="codenumber">7.2.1</span> <span class="title">Box</span></a></div></li>
+<li><div class="toc-item"><a href="chapter-7.html#subsection-19" class="internal"><span class="codenumber">7.2.2</span> <span class="title">Sphere</span></a></div></li>
+<li><div class="toc-item"><a href="chapter-7.html#subsection-20" class="internal"><span class="codenumber">7.2.3</span> <span class="title">Torus</span></a></div></li>
+</ul>
+</li>
+<li><div class="toc-item"><a href="chapter-7.html#section-17" class="internal"><span class="codenumber">7.3</span> <span class="title">Vectors</span></a></div></li>
+<li><div class="toc-item"><a href="chapter-7.html#section-18" class="internal"><span class="codenumber">7.4</span> <span class="title">Backface Culling</span></a></div></li>
+</ul>
 </li>
 </ul>
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-7"><h2 class="heading">
+<main class="ptx-main"><div id="ptx-content" class="ptx-content">
+<section class="chapter" id="chapter-7"><h2 class="heading">
 <span class="type">Chapter</span> <span class="codenumber">7</span> <span class="title">Polygons</span>
 </h2>
-<section class="section" id="section-14"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">7.1</span> <span class="title"></span>
+<section class="introduction" id="introduction-2"><div class="para" id="p-62">Currently, our basic unit of drawing is a line. When we create a shape, we add edges to an edge matrix, and we loop through that matrix drawing lines. A 3D shape rendered using edges only has no real surface to speak of. Instead, it is a <a class="external" href="https://en.wikipedia.org/wiki/Wire-frame_model" target="_blank">wire-frame model</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-4" id="fn-4"><sup> 1 </sup></a>. Wire-frame models can be rendered quickly, but because they lack true surface, there are limits to how realistic they can look.</div> <div class="para logical" id="p-63">
+<div class="para">If we change our basic unit of drawing form a line to a polygon, we will have surfaces to work with, generating a <a class="external" href="https://en.wikipedia.org/wiki/Polygon_mesh" target="_blank">polygon mesh</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-5" id="fn-5"><sup> 2 </sup></a>. Having a surface gives us more options when rendering 3D objects. Most notably:</div>
+<ul class="disc">
+<li id="li-56"><div class="para" id="p-derived-li-56">Polygons can be filled with colors, creating solid objects.</div></li>
+<li id="li-57"><div class="para" id="p-derived-li-57">We can describe polygons as "facing" a particular direction, and use that information to determine sides of our 3D shapes that are facing away from the viewer and should therefore not be rendered.</div></li>
+<li id="li-58"><div class="para" id="p-derived-li-58">We can also use the direction a polygon is facing to help calculate real-world lighting and shading values.</div></li>
+</ul>
+<div class="para">There are many possible shapes we could use as our basic polygons, we will use triangles, as they are the simplest polygon.</div>
+</div></section><section class="section" id="section-15"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">7.1</span> <span class="title">Polygon Lists</span>
 </h3>
-<div class="para" id="p-60"></div></section></section></div>
+<div class="para" id="p-64">Our current shapes are all based on _edge lists_, where every 2 points determine a distinct edge to be drawn. We should keep this framework around in order to draw 2 dimensional shapes when desired. We need to add <em class="emphasis">polygon lists</em>, where every 3 points determine a distinct triangle. Here is a chart comparing the functions in our 2D, edge based, drawing stack and their 3D, polygon based, equivalents. <figure class="table table-like" id="table-1"><figcaption><span class="type">Table</span><span class="space"> </span><span class="codenumber">7.1<span class="period">.</span></span><span class="space"> </span></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<tr class="header-horizontal">
+<th scope="col" class="l m b0 r0 l0 t0 lines">Edge Framework</th>
+<th scope="col" class="l m b0 r0 l0 t0 lines">Polygon Framework</th>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">add_point</code><br>Add a point to the edge list</td>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">add_point</code><br>Add a point to the polygon list</td>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">add_edge</code><br>Add the endpoints of a line to the edge list.</td>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">add_polygon</code><br>Add the three vertices of a triangle into the polygon list.<br>The vertices must be added in<em class="emphasis">counter-clockwise</em> order.</td>
+</tr>
+<tr>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">draw_lines</code><br>Go through the edge list 2 points at a time,<br>drawing a line between each pair of points.</td>
+<td class="l m b0 r0 l0 t0 lines">
+<code class="code-inline tex2jax_ignore">draw_polygons</code><br>Go through the polygon list 3 points at a time,<br>connecting the points to draw a triangle.<br>Other polygon features can be added here later.</td>
+</tr>
+</table></div></figure> By adding the points in counter-clockwise order, we will be able to eventually determine what is <em class="emphasis">forwards</em> and <em class="emphasis">backwards</em> with respect to the triangle. This will help us implement more advanced features later.</div></section><section class="section" id="section-16"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">7.2</span> <span class="title">Polygon Based Shapes</span>
+</h3>
+<section class="subsection" id="subsection-18"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">7.2.1</span> <span class="title">Box</span>
+</h4>
+<div class="para" id="p-65">A box has 6 faces, each one made up of 2 triangles. Like before, the easiest thing to do here is add your 12 triangles directly into the polygon list. The order of the triangles does not matter, but <em class="emphasis">the order of the points does</em>. Points should always be added counter-clockwise.</div></section><section class="subsection" id="subsection-19"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">7.2.2</span> <span class="title">Sphere</span>
+</h4>
+<div class="para" id="p-66">We generate spheres by drawing a series of rotated semi-circles. If you followed my advice, you should have a separate <code class="code-inline tex2jax_ignore">generate_sphere</code> function that returns a matrix of points for the sphere. Our job now is to go through that list of points, adding triples of points representing the triangles on the surface of the sphere to our polygon list. The best thing to do is physically draw the first two semicircles generated by your code, and write out what triangles are required. <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-sphere_points.png" class="contained" alt="2 sphere semicircles"></div>
+</div>
+<div class="para" id="p-67">When drawing semi-circles, you need to generate the poles, which are created when <code class="code-inline tex2jax_ignore">t=0</code> and <code class="code-inline tex2jax_ignore">t=1</code>, respectively. This is different from drawing full circles, you don't need to include <code class="code-inline tex2jax_ignore">t=1</code> there because the point at <code class="code-inline tex2jax_ignore">t=1</code> is identical to the point at <code class="code-inline tex2jax_ignore">t=0</code>.The way my loops are written, this means when I set <code class="code-inline tex2jax_ignore">steps</code> to 10 I actually get 11 points per semi-circle.</div>
+<div class="para logical" id="p-68">
+<div class="para">It is also important to keep track of the direction your semi-circles are drawn in. If you used the example from class (semi-circles rotated about the x-axis), then each new semi-circle is drawn in front of/below the previous one. Here are some of the triangles taken from the diagram above:</div>
+<pre class="code-display tex2jax_ignore">
+          0: p0, p1, p12
+          1: p1, p2, p13
+          2: p1, p13, p12
+        </pre>
+</div>
+<div class="para logical" id="p-69">
+<div class="para">At the poles, there is only one triangle to add per section, this is triangle 0 above. Otherwise, triangles are added in pairs, as is shown by triangles 1 and 2. If <code class="code-inline tex2jax_ignore">n</code> is the number of points in a semi-circle, then we can define the triangles for the non-poles as:</div>
+<pre class="code-display tex2jax_ignore">
+           p, p + 1, (p + n) + 1
+           p, (p + n) + 1, p + n
+         </pre>
+<div class="para">At the poles, we need to make sure not to add both triangles. Following the above formulae, at <code class="code-inline tex2jax_ignore">p=0</code>, we would have triangles <code class="code-inline tex2jax_ignore">0, 1, 12</code> and <code class="code-inline tex2jax_ignore">0, 12, 11</code>. But for the second triangle, <code class="code-inline tex2jax_ignore">0</code> and <code class="code-inline tex2jax_ignore">11</code> are the same point. This would render as a straight line, which might not seem like a big deal, but having these "degenerate" triangles at the poles will cause problems down the line, so it's best to exclude them now.</div>
+</div></section><section class="subsection" id="subsection-20"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">7.2.3</span> <span class="title">Torus</span>
+</h4>
+<div class="para logical" id="p-70">
+<div class="para">Torus creation is very similar to the sphere, with a couple of changes.</div>
+<ul class="disc">
+<li id="li-59"><div class="para" id="p-derived-li-59">Tori must be generated with full circles.</div></li>
+<li id="li-60"><div class="para" id="p-derived-li-60">No 2 circles of a torus share any common points, which means we don't have <em class="emphasis">poles</em>. This actually makes it easier to code since we don't have those special cases.</div></li>
+<li id="li-61"><div class="para" id="p-derived-li-61">The tori from class are generated by rotating about the y-axis. This means that each new circle is drawn <em class="emphasis">behind</em> the previous one.</div></li>
+</ul>
+<div class="para">As with the sphere, it is advised that you draw out the first two slices of torus to map out the appropriate triangles.</div>
+</div></section></section><section class="section" id="section-17"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">7.3</span> <span class="title">Vectors</span>
+</h3>
+<section class="introduction" id="introduction-3">Backface culling is a crucial hidden surface removal algorithm. <em class="emphasis">But</em> before we get into how it works, we need to take a quick detour to cover some pieces of Vector math. This will also come in handy when we start workign with lighting and shading.</section><div class="para" id="p-71">A <a class="external" href="https://en.wikipedia.org/wiki/Euclidean_vector" target="_blank">vector</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-6" id="fn-6"><sup> 3 </sup></a>is a unit that has both direction and magnitude (size). Vectors are written like so: <span class="process-math">\(\lt x, y, z&gt;\)</span> Notice that vector components are placed inside <span class="process-math">\(\lt &gt;\)</span> to differentiate them from points. A point only describes a single point in space, whereas a vector describes a relationship between 2 points (often, not always, an arbitrary point and the origin)</div>
+<div class="para logical" id="p-72">
+<div class="para">You can think of a vector as describing how you would get from point <span class="process-math">\(A\)</span> to point <span class="process-math">\(B\text{.}\)</span> For example, consider the following two points:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+p0 \amp= (4, 10, 0) \\
+p1 \amp= (6, 5, 23) \\
+\end{aligned}
+\end{equation*}
+</div>
+<div class="para">To get from <span class="process-math">\(p0\)</span> to <span class="process-math">\(p1\text{,}\)</span> you would have to move +2 in x, -5 in y and +23 in z, so we would write the vector as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\overrightarrow{A} = \lt 2, -5, 23&gt;
+\end{equation*}
+</div>
+<div class="para">The vector from <span class="process-math">\(p1\)</span> to <span class="process-math">\(p0\)</span> moves in the opposite direction, and would be written as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\overrightarrow{B} = \lt -2, 5, -23&gt;
+\end{equation*}
+</div>
+<div class="para">Generally, you can find the vector between 2 points by subtraction. Notationally, vectors are written with a <span class="process-math">\(\rightarrow\)</span> as seen above.</div>
+</div></section><section class="section" id="section-18"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">7.4</span> <span class="title">Backface Culling</span>
+</h3>
+<section class="introduction" id="introduction-4">As mentioned earlier, Backface Culling is a <em class="emphasis">hidden surface removal</em> algorithm. As the name implies, its purpose is to omit any polygons (or surfaces) that would not be visible normally. Reducind the number of polygons to be rendered will provide a major efficiency boost, especially as we add more complexity (and thus calculations) to our polygon rendering. Backface culling specifically deals with the fact that the back side of a shape is entirely blocked by the front. So at any given viewing angle, you can only see at most half of the 3D shapes we are working with.</section><div class="para logical" id="p-73">
+<div class="para">As mentioend before, backface culling is the process of removing the backwards facing surfaces from our rendering engine. In order to do this, we need to define 2 vectors:</div>
+<ol class="decimal">
+<li id="li-62"><div class="para" id="p-derived-li-62">
+<span class="process-math">\(\overrightarrow{N}\text{:}\)</span> The surface normal, a vector perpendicular to the plane of the polygon (or surface), pointing outward.</div></li>
+<li id="li-63"><div class="para" id="p-derived-li-63">
+<span class="process-math">\(\overrightarrow{V}\text{:}\)</span> The view vector, a vector pointing out from the plane of the polygon (or surface) into the "eye" of the observer.</div></li>
+</ol>
+<div class="para">
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-backface_culling.png" class="contained" alt="A side-view of a polygon with a vctor poining perpendicular from it, and another vector drawn between the surace and an eye."></div> We can tell if a surface is front or back facing based on the value of <span class="process-math">\(\theta\text{,}\)</span> the angle between <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{.}\)</span> When <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> then the surface is visible to the observer. Outside of that range, the surface is pointing away from the observer and is thus a backface. While it is referred to as backface culling, this process could be more accurately described as frontface including. We don't actually remove the backfaces from our polygon lists (if we rotate the shape, then those faces may no longer be back facing!), rather, we check and only draw the polygons facing forward.</div>
+</div></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-4"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Wire-frame_model</code></div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-5"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Polygon_mesh</code></div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-6"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Euclidean_vector</code></div></div>
+</div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="chapter-6.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
