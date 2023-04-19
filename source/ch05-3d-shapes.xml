@@ -158,4 +158,13 @@
       </p>
     </subsection>
   </section>
+  <section>
+    <title>Implementing 3D Shapes</title>
+    <p>
+      The algorithms desribed above generate the points for our 3D shapes, but they don't cover how we should use those points in order to 
+    </p>
+    <p>
+      Currently, the basic drawing unit for our graphics engine is a <em>line</em>. This works quite well for representing
+    </p>
+  </section>
 </chapter>
