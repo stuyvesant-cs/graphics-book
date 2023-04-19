@@ -310,7 +310,6 @@ window.MathJax = {
 </ul>
 </li>
 <li><div class="toc-item"><a href="chapter-7.html#section-17" class="internal"><span class="codenumber">7.3</span> <span class="title">Vectors</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-7.html#section-18" class="internal"><span class="codenumber">7.4</span> <span class="title">Backface Culling</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -420,19 +419,6 @@ p1 \amp= (6, 5, 23) \\
 \end{equation*}
 </div>
 <div class="para">Generally, you can find the vector between 2 points by subtraction. Notationally, vectors are written with a <span class="process-math">\(\rightarrow\)</span> as seen above.</div>
-</div></section><section class="section" id="section-18"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">7.4</span> <span class="title">Backface Culling</span>
-</h3>
-<section class="introduction" id="introduction-4">As mentioned earlier, Backface Culling is a <em class="emphasis">hidden surface removal</em> algorithm. As the name implies, its purpose is to omit any polygons (or surfaces) that would not be visible normally. Reducind the number of polygons to be rendered will provide a major efficiency boost, especially as we add more complexity (and thus calculations) to our polygon rendering. Backface culling specifically deals with the fact that the back side of a shape is entirely blocked by the front. So at any given viewing angle, you can only see at most half of the 3D shapes we are working with.</section><div class="para logical" id="p-73">
-<div class="para">As mentioend before, backface culling is the process of removing the backwards facing surfaces from our rendering engine. In order to do this, we need to define 2 vectors:</div>
-<ol class="decimal">
-<li id="li-62"><div class="para" id="p-derived-li-62">
-<span class="process-math">\(\overrightarrow{N}\text{:}\)</span> The surface normal, a vector perpendicular to the plane of the polygon (or surface), pointing outward.</div></li>
-<li id="li-63"><div class="para" id="p-derived-li-63">
-<span class="process-math">\(\overrightarrow{V}\text{:}\)</span> The view vector, a vector pointing out from the plane of the polygon (or surface) into the "eye" of the observer.</div></li>
-</ol>
-<div class="para">
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-backface_culling.png" class="contained" alt="A side-view of a polygon with a vctor poining perpendicular from it, and another vector drawn between the surace and an eye."></div> We can tell if a surface is front or back facing based on the value of <span class="process-math">\(\theta\text{,}\)</span> the angle between <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{.}\)</span> When <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> then the surface is visible to the observer. Outside of that range, the surface is pointing away from the observer and is thus a backface. While it is referred to as backface culling, this process could be more accurately described as frontface including. We don't actually remove the backfaces from our polygon lists (if we rotate the shape, then those faces may no longer be back facing!), rather, we check and only draw the polygons facing forward.</div>
 </div></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-4"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Wire-frame_model</code></div></div>
 <div class="hidden-content tex2jax_ignore" id="hk-fn-5"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Polygon_mesh</code></div></div>
 <div class="hidden-content tex2jax_ignore" id="hk-fn-6"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Euclidean_vector</code></div></div>

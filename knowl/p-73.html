@@ -11,18 +11,8 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para logical">
-<div class="para">As mentioend before, backface culling is the process of removing the backwards facing surfaces from our rendering engine. In order to do this, we need to define 2 vectors:</div>
-<ol class="decimal">
-<li><div class="para">
-<span class="process-math">\(\overrightarrow{N}\text{:}\)</span> The surface normal, a vector perpendicular to the plane of the polygon (or surface), pointing outward.</div></li>
-<li><div class="para">
-<span class="process-math">\(\overrightarrow{V}\text{:}\)</span> The view vector, a vector pointing out from the plane of the polygon (or surface) into the "eye" of the observer.</div></li>
-</ol>
-<div class="para">
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-backface_culling.png" class="contained" alt="A side-view of a polygon with a vctor poining perpendicular from it, and another vector drawn between the surace and an eye."></div> We can tell if a surface is front or back facing based on the value of <span class="process-math">\(\theta\text{,}\)</span> the angle between <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{.}\)</span> When <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> then the surface is visible to the observer. Outside of that range, the surface is pointing away from the observer and is thus a backface. While it is referred to as backface culling, this process could be more accurately described as frontface including. We don't actually remove the backfaces from our polygon lists (if we rotate the shape, then those faces may no longer be back facing!), rather, we check and only draw the polygons facing forward.</div>
-</div>
-<span class="incontext"><a href="chapter-7.html#p-73" class="internal">in-context</a></span>
+<h2 class="heading"><span class="type">Paragraph</span></h2>
+<div class="para">This book was authored in PreTeXt.</div>
+<span class="incontext"><a href="colophon-2.html#p-73" class="internal">in-context</a></span>
 </body>
 </html>
