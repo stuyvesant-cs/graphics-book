@@ -8,7 +8,7 @@
 <html lang="en-US">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Colors, Depth, Space (and Time?)</title>
+<title>Backface Culling</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="part-1.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-1.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="chapter-2.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-7.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-2.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -192,7 +192,7 @@ window.MathJax = {
 <li>
 <div class="toc-item"><a href="part-1.html" class="internal"><span class="codenumber">I</span> <span class="title">2-D structures</span></a></div>
 <ul class="structural">
-<li class="active">
+<li>
 <div class="toc-item"><a href="chapter-1.html" class="internal"><span class="codenumber">1</span> <span class="title">Colors, Depth, Space (and Time?)</span></a></div>
 <ul class="structural"><li>
 <div class="toc-item"><a href="chapter-1.html#section-1" class="internal"><span class="codenumber">1.1</span> <span class="title">Image File Formats</span></a></div>
@@ -320,55 +320,130 @@ window.MathJax = {
 </li>
 </ul>
 </li>
+<li class="active">
+<div class="toc-item"><a href="chapter-8.html" class="internal"><span class="codenumber">8</span> <span class="title">Backface Culling</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-8.html#section-19" class="internal"><span class="codenumber">8.1</span> <span class="title">Vectors</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-8.html#section-20" class="internal"><span class="codenumber">8.2</span> <span class="title">The Algorithm</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-8.html#subsection-24" class="internal"><span class="codenumber">8.2.1</span> <span class="title">Calculate <span class="process-math">\(\overrightarrow{N}\)</span></span></a></div></li>
+<li><div class="toc-item"><a href="chapter-8.html#subsection-25" class="internal"><span class="codenumber">8.2.2</span> <span class="title">Calculate <span class="process-math">\(\theta\)</span></span></a></div></li>
+<li><div class="toc-item"><a href="chapter-8.html#subsection-26" class="internal"><span class="codenumber">8.2.3</span> <span class="title">Putting it all together</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
 <main class="ptx-main"><div id="ptx-content" class="ptx-content">
-<section class="chapter" id="chapter-1"><h2 class="heading">
-<span class="type">Chapter</span> <span class="codenumber">1</span> <span class="title">Colors, Depth, Space (and Time?)</span>
+<section class="chapter" id="chapter-8"><h2 class="heading">
+<span class="type">Chapter</span> <span class="codenumber">8</span> <span class="title">Backface Culling</span>
 </h2>
-<section class="section" id="section-1"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">1.1</span> <span class="title">Image File Formats</span>
+<section class="introduction" id="introduction-5">Backface Culling is a <em class="emphasis">hidden surface removal</em> algorithm. As the name implies, its purpose is to omit any polygons (or surfaces) that would not be visible normally. Reducind the number of polygons to be rendered will provide a major efficiency boost, especially as we add more complexity (and thus calculations) to our polygon rendering. Backface culling specifically deals with the fact that the back side of a shape is entirely blocked by the front. So at any given viewing angle, you can only see at most half of the 3D shapes we are working with.</section><section class="section" id="section-19"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">8.1</span> <span class="title">Vectors</span>
 </h3>
-<section class="subsection" id="subsection-1"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">1.1.1</span> <span class="title">Vector Formats</span>
+<section class="introduction" id="introduction-6">Before we get into how backface culling works, we need to take a quick detour to cover some pieces of Vector math. This will also come in handy when we start working with lighting and shading.</section><div class="para" id="p-82">A <a class="external" href="https://en.wikipedia.org/wiki/Euclidean_vector" target="_blank">vector</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-8" id="fn-8"><sup> 1 </sup></a>is a unit that has both direction and magnitude (size). Vectors are written like so: <span class="process-math">\(\lt x, y, z&gt;\)</span> Notice that vector components are placed inside <span class="process-math">\(\lt &gt;\)</span> to differentiate them from points. A point only describes a single point in space, whereas a vector describes a relationship between 2 points (often, not always, an arbitrary point and the origin)</div>
+<div class="para logical" id="p-83">
+<div class="para">You can think of a vector as describing how you would get from point <span class="process-math">\(A\)</span> to point <span class="process-math">\(B\text{.}\)</span> For example, consider the following two points:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+p0 \amp= (4, 10, 0) \\
+p1 \amp= (6, 5, 23) \\
+\end{aligned}
+\end{equation*}
+</div>
+<div class="para">To get from <span class="process-math">\(p0\)</span> to <span class="process-math">\(p1\text{,}\)</span> you would have to move +2 in x, -5 in y and +23 in z, so we would write the vector as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\overrightarrow{A} = \lt 2, -5, 23&gt;
+\end{equation*}
+</div>
+<div class="para">The vector from <span class="process-math">\(p1\)</span> to <span class="process-math">\(p0\)</span> moves in the opposite direction, and would be written as:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\overrightarrow{B} = \lt -2, 5, -23&gt;
+\end{equation*}
+</div>
+<div class="para">Generally, you can find the vector between 2 points by subtraction. Notationally, vectors are written with a <span class="process-math">\(\rightarrow\)</span> as seen above.</div>
+</div></section><section class="section" id="section-20"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">8.2</span> <span class="title">The Algorithm</span>
+</h3>
+<div class="para logical" id="p-84">
+<div class="para">As mentioend before, backface culling is the process of removing the backwards facing surfaces from our rendering engine. In order to do this, we need to define 2 vectors:</div>
+<ol class="decimal">
+<li id="li-73"><div class="para" id="p-derived-li-73">
+<span class="process-math">\(\overrightarrow{N}\text{:}\)</span> The surface normal, a vector perpendicular to the plane of the polygon (or surface), pointing outward.</div></li>
+<li id="li-74"><div class="para" id="p-derived-li-74">
+<span class="process-math">\(\overrightarrow{V}\text{:}\)</span> The view vector, a vector pointing out from the plane of the polygon (or surface) into the "eye" of the observer.</div></li>
+</ol>
+<div class="para">
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-backface_culling.png" class="contained" alt="A side-view of a polygon with a vctor poining perpendicular from it, and another vector drawn between the surace and an eye."></div> We can tell if a surface is front or back facing based on the value of <span class="process-math">\(\theta\text{,}\)</span> the angle between <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{.}\)</span> When <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> then the surface is visible to the observer. Outside of that range, the surface is pointing away from the observer and is thus a backface. While it is referred to as backface culling, this process could be more accurately described as frontface including. We don't actually remove the backfaces from our polygon lists (if we rotate the shape, then those faces may no longer be back facing!), rather, we check and only draw the polygons facing forward. We can break up backface culling as follows:</div>
+<ol class="decimal">
+<li id="li-75"><div class="para" id="p-derived-li-75">Calculate <span class="process-math">\(\overrightarrow{N}\)</span>
+</div></li>
+<li id="li-76"><div class="para" id="p-derived-li-76">Calculate <span class="process-math">\(\theta\)</span>
+</div></li>
+<li id="li-77"><div class="para" id="p-derived-li-77">IF <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> draw the triangle.</div></li>
+</ol>
+</div>
+<section class="subsection" id="subsection-24"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">8.2.1</span> <span class="title">Calculate <span class="process-math">\(\overrightarrow{N}\)</span></span>
 </h4>
-<div class="para" id="p-1">Vector formats represent images as a series of drawing instructions. Becuase of this, they are infinitely scalable. This is well suited for iamges that can be defined geometrically, but not as well for real-world images. Common file type: SVG (Scalable Vector Graphics).</div></section><section class="subsection" id="subsection-2"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">1.1.2</span> <span class="title">Raster Formats</span>
+<div class="para logical" id="p-85">
+<div class="para">We can find the surface normal by taking the <em class="emphasis">cross product</em> of two vectors along the edges of the polygon provided that they share one endpoint and point in opposite directions. If we have a trainlge like this: <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-surface_normal.png" class="contained" alt="A triangle labeled p0, p1, p2"></div> <span class="process-math">\(\overrightarrow{A}\)</span> is the vector from <span class="process-math">\(P_0\)</span> to <span class="process-math">\(P_1\)</span> and <span class="process-math">\(\overrightarrow{B}\)</span> is the vector from <span class="process-math">\(P_0\)</span> to <span class="process-math">\(P_2\text{.}\)</span> We can get the cross procuct like this:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+\overrightarrow{A} \amp= P_1 - P_0 = \lt x_1 - x_0, y_1 - y_0, z_1 - z_0&gt; \\
+\overrightarrow{B} \amp= P_2 - P_0 = \lt x_2 - x_0, y_2 - y_0, z_2 - z_0&gt; \\
+\overrightarrow{N} \amp= \overrightarrow{A} \times \overrightarrow{B} \\
+\overrightarrow{N} \amp= \lt a_yb_z - a_zb_y, a_zb_x - a_xb_z, a_xb_y - a_yb_x&gt;
+\end{aligned}
+\end{equation*}
+</div>
+</div></section><section class="subsection" id="subsection-25"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">8.2.2</span> <span class="title">Calculate <span class="process-math">\(\theta\)</span></span>
 </h4>
-<div class="para" id="p-2">Raster formats represent images as a grid of color values (pixels).</div>
-<div class="para" id="p-3">Raster images can be uncompressed or compressed.</div>
-<div class="para" id="p-4">Uncompressed formats contain color data for each pixel. These files are quite large. Common file types: BMP, TIFF, RAW</div>
-<div class="para" id="p-5">Compressed formats use a compression algorithm to minimize file size. Some of these algorithms are lossless, while others are lossy.</div>
-<div class="para" id="p-6">Lossless compression algorithms contain enough information to exactly recreate the original image. Common file types: PNG (Portable Network Graphics), GIF (Graphics Interchange Format)</div>
-<div class="para" id="p-7">Lossy compression algorithms do not retain all the details of the original image. Common file type: JPEG (Joint Photographic Experts Group).</div></section><section class="subsection" id="subsection-3"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">1.1.3</span> <span class="title">NetPBM File Formats</span>
-</h4>
-<div class="para" id="p-8">A family of uncompressed raster image file formats (<a class="external" href="https://en.wikipedia.org/wiki/Netpbm" target="_blank">more info</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-2" id="fn-2"><sup> 1 </sup></a>).</div>
-<div class="para" id="p-9">In this class we will be using the <em class="emphasis">PPM</em> (Portable PixMap) format specifically. PPM files prespresent pixel data as RGB (Red, Green, Blue) triplets in either ASCII or binary. In ASCII based PPMs, all whitespace is equivalent. Here is a sample ASCII PPM file:</div>
-<pre class="code-display tex2jax_ignore">
-            P3
-            4 3
-            255
-            255 0 0  255 0 0  255 0 0  255 0 0
-            0 255 0  0 255 0  0 255 0  0 255 0
-            0 0 255  0 0 255  0 0 255  0 0 255
-          </pre>
-<div class="para logical" id="p-10">
-<div class="para">The first three lines make up the file header:</div>
+<div class="para" id="p-86">Before we figure out <span class="process-math">\(\theta\text{,}\)</span> we need to discuss the <em class="emphasis">view vector</em> (<span class="process-math">\(\overrightarrow{V}\)</span>). <span class="process-math">\(\overrightarrow{V}\)</span> is supposed to be a vector that comes out of the plane of a surface and into the observer's eye. So the question is, what is the relationship between the observer and the surface?</div>
+<div class="para" id="p-87">For right now, we will assume that the observer is very very very far away from the object. This assumption means that moving left, right, up or down will not have any perceptible effect on what part of the object you are looking at. Think about looking up at the moon, if you move around, you don't start to see a new part of the moon. It looks the same, even if you went from Staten Island up to the Bronx, the moon would look the same. Programatically, this means that we can ignore any changes along the x or y axes.</div>
+<div class="para logical" id="p-88">
+<div class="para">So z is the important axis, since that determines if you are in front of or behind an object. Remember that z moves in a positive direction out from the screen towards the viewer, so <span class="process-math">\(\overrightarrow{V}\text{,}\)</span> the vector from the object to the viewer, should have a positive z component. For right now we can use <span class="process-math">\(\overrightarrow{V} = \lt 0, 0, 1&gt;\)</span> <aside class="aside aside-like" id="aside-3"><div class="para" id="p-89">We will not be looking at changing <span class="process-math">\(\overrightarrow{V}\)</span> for now, but you can think about what that would mean for the rendered image and what effects that might lead to.</div></aside> for the following reasons:</div>
 <ul class="disc">
-<li id="li-1"><div class="para" id="p-derived-li-1">
-<code class="code-inline tex2jax_ignore">P3</code>: Type of PPM, 3-btye RGB, in ASCII (<code class="code-inline tex2jax_ignore">P6</code> is RGB in binary).</div></li>
-<li id="li-2"><div class="para" id="p-derived-li-2">
-<code class="code-inline tex2jax_ignore">4 3</code>: Width x Height, in pixels.</div></li>
-<li id="li-3"><div class="para" id="p-derived-li-3">
-<code class="code-inline tex2jax_ignore">255</code>: Maximum value per color (will scale to 255 if not 255)</div></li>
+<li id="li-78"><div class="para" id="p-derived-li-78">We don't care about changes in x and y, so leaving them at 0 is fine.</div></li>
+<li id="li-79"><div class="para" id="p-derived-li-79">We need a positive z.</div></li>
+<li id="li-80"><div class="para" id="p-derived-li-80">By giving z the value of 1, the total mangnitude of <span class="process-math">\(\overrightarrow{V}\)</span> is 1. This is referred to as a <span class="process-math">\(normalized\)</span> vector.  It's not very important right now, but it will be later on, so we might as well start here.</div></li>
 </ul>
-</div></section></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-2"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Netpbm</code></div></div>
+</div>
+<div class="para logical" id="p-90">
+<div class="para">Now that we know both <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{,}\)</span> there's a little bit of vector math we can use to our advantage to help us find <span class="process-math">\(\theta\text{.}\)</span> The <a class="external" href="https://www.mathsisfun.com/algebra/vectors-dot-product.html" target="_blank">dot prduct</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-9" id="fn-9"><sup> 2 </sup></a> of  <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\)</span> is a <em class="emphasis">scalar</em> (not a vector) value equal to the cosine of the angle between them times the product of each vector's magnitude (<span class="process-math">\(M\)</span>). Or, more succintly: <span class="process-math">\(\overrightarrow{N} \cdot \overrightarrow{V} = Mcos\theta\text{.}\)</span> Given two vectors, you can calculate the dot product like so:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\overrightarrow{N} \cdot \overrightarrow{V} = Mcos\theta = n_xv_x + n_yv_y + n_zv_z
+\end{equation*}
+</div>
+<div class="para">There are properties of <span class="process-math">\(cos\theta\text{,}\)</span> that can help us out a lot. Namely, <span class="process-math">\(cos\theta &gt; 0\)</span> when <span class="process-math">\(-90 \lt \theta \lt 90\)</span> which is conveniently, exactly the range for surfaces we want to see. So it turns out, we only care about whether or not the dot product is positive or negative. If it's positive, then the surface is front facing, and we should draw it, if it's negative, we pass. And since mangnitude is always positive, we don't actually need to worry about it for this calculation (later on, when we get to lighting, we will care about mangnitude, but that's a problem for future us, who will be smarter than present us).</div>
+</div></section><section class="subsection" id="subsection-26"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">8.2.3</span> <span class="title">Putting it all together</span>
+</h4>
+<div class="para logical" id="p-91">
+<div class="para">Given any triangle starting at <span class="process-math">\(P_0\text{:}\)</span> <aside class="aside aside-like" id="aside-4"><div class="para" id="p-92">The keen observer will note that since <span class="process-math">\(\overrightarrow{V} = \lt 0, 0, 1&gt;\text{,}\)</span> the x and y components of the dot product will be 0. Also, since the z component of <span class="process-math">\(\overrightarrow{V}\)</span> is 1, the dot product will simply be the z component of <span class="process-math">\(\overrightarrow{N}\text{.}\)</span> This is ok for now, but eventually we will actually need the value of the dot product, so it doesn't hurt to do that now anyway.</div></aside>
+</div>
+<ol class="decimal">
+<li id="li-81"><div class="para" id="p-derived-li-81">Calculate <span class="process-math">\(\overrightarrow{N} = \overrightarrow{A} \times \overrightarrow{B}\text{,}\)</span> where <span class="process-math">\(\overrightarrow{A} = P_1 - P_0\text{,}\)</span> and <span class="process-math">\(\overrightarrow{B} = P_2 - P_0\text{.}\)</span>
+</div></li>
+<li id="li-82"><div class="para" id="p-derived-li-82">Calculate <span class="process-math">\(\overrightarrow{N} \cdot \overrightarrow{V}\text{,}\)</span> where <span class="process-math">\(\overrightarrow{V} = \lt 0, 0, 1&gt;\)</span>
+</div></li>
+<li id="li-83"><div class="para" id="p-derived-li-83">If <span class="process-math">\(\overrightarrow{N} \cdot \overrightarrow{V} &gt; 0\text{,}\)</span> draw the triangle.</div></li>
+</ol>
+</div></section></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-8"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Euclidean_vector</code></div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-9"><div class="fn"><code class="code-inline tex2jax_ignore">www.mathsisfun.com/algebra/vectors-dot-product.html</code></div></div>
 </div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="part-1.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="chapter-2.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<a class="previous-button button" href="chapter-7.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer">

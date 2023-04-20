@@ -310,6 +310,14 @@ window.MathJax = {
 </ul>
 </li>
 <li><div class="toc-item"><a href="chapter-7.html#section-17" class="internal"><span class="codenumber">7.3</span> <span class="title">Vectors</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-7.html#section-18" class="internal"><span class="codenumber">7.4</span> <span class="title">Backface Culling</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-7.html#subsection-21" class="internal"><span class="codenumber">7.4.1</span> <span class="title">Calculate <span class="process-math">\(\overrightarrow{N}\)</span></span></a></div></li>
+<li><div class="toc-item"><a href="chapter-7.html#subsection-22" class="internal"><span class="codenumber">7.4.2</span> <span class="title">Calculate <span class="process-math">\(\theta\)</span></span></a></div></li>
+<li><div class="toc-item"><a href="chapter-7.html#subsection-23" class="internal"><span class="codenumber">7.4.3</span> <span class="title">Putting it all together</span></a></div></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -419,9 +427,80 @@ p1 \amp= (6, 5, 23) \\
 \end{equation*}
 </div>
 <div class="para">Generally, you can find the vector between 2 points by subtraction. Notationally, vectors are written with a <span class="process-math">\(\rightarrow\)</span> as seen above.</div>
-</div></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-4"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Wire-frame_model</code></div></div>
+</div></section><section class="section" id="section-18"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">7.4</span> <span class="title">Backface Culling</span>
+</h3>
+<section class="introduction" id="introduction-4">As mentioned earlier, Backface Culling is a <em class="emphasis">hidden surface removal</em> algorithm. As the name implies, its purpose is to omit any polygons (or surfaces) that would not be visible normally. Reducind the number of polygons to be rendered will provide a major efficiency boost, especially as we add more complexity (and thus calculations) to our polygon rendering. Backface culling specifically deals with the fact that the back side of a shape is entirely blocked by the front. So at any given viewing angle, you can only see at most half of the 3D shapes we are working with.</section><div class="para logical" id="p-73">
+<div class="para">As mentioend before, backface culling is the process of removing the backwards facing surfaces from our rendering engine. In order to do this, we need to define 2 vectors:</div>
+<ol class="decimal">
+<li id="li-62"><div class="para" id="p-derived-li-62">
+<span class="process-math">\(\overrightarrow{N}\text{:}\)</span> The surface normal, a vector perpendicular to the plane of the polygon (or surface), pointing outward.</div></li>
+<li id="li-63"><div class="para" id="p-derived-li-63">
+<span class="process-math">\(\overrightarrow{V}\text{:}\)</span> The view vector, a vector pointing out from the plane of the polygon (or surface) into the "eye" of the observer.</div></li>
+</ol>
+<div class="para">
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-backface_culling.png" class="contained" alt="A side-view of a polygon with a vctor poining perpendicular from it, and another vector drawn between the surace and an eye."></div> We can tell if a surface is front or back facing based on the value of <span class="process-math">\(\theta\text{,}\)</span> the angle between <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{.}\)</span> When <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> then the surface is visible to the observer. Outside of that range, the surface is pointing away from the observer and is thus a backface. While it is referred to as backface culling, this process could be more accurately described as frontface including. We don't actually remove the backfaces from our polygon lists (if we rotate the shape, then those faces may no longer be back facing!), rather, we check and only draw the polygons facing forward. We can break up backface culling as follows:</div>
+<ol class="decimal">
+<li id="li-64"><div class="para" id="p-derived-li-64">Calculate <span class="process-math">\(\overrightarrow{N}\)</span>
+</div></li>
+<li id="li-65"><div class="para" id="p-derived-li-65">Calculate <span class="process-math">\(\theta\)</span>
+</div></li>
+<li id="li-66"><div class="para" id="p-derived-li-66">IF <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> draw the triangle.</div></li>
+</ol>
+</div>
+<section class="subsection" id="subsection-21"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">7.4.1</span> <span class="title">Calculate <span class="process-math">\(\overrightarrow{N}\)</span></span>
+</h4>
+<div class="para logical" id="p-74">
+<div class="para">We can find the surface normal by taking the <em class="emphasis">cross product</em> of two vectors along the edges of the polygon provided that they share one endpoint and point in opposite directions. If we have a trainlge like this: <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-surface_normal.png" class="contained" alt="A triangle labeled p0, p1, p2"></div> <span class="process-math">\(\overrightarrow{A}\)</span> is the vector from <span class="process-math">\(P_0\)</span> to <span class="process-math">\(P_1\)</span> and <span class="process-math">\(\overrightarrow{B}\)</span> is the vector from <span class="process-math">\(P_0\)</span> to <span class="process-math">\(P_2\text{.}\)</span> We can get the cross procuct like this:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+\overrightarrow{A} \amp= P_1 - P_0 = \lt x_1 - x_0, y_1 - y_0, z_1 - z_0&gt; \\
+\overrightarrow{B} \amp= P_2 - P_0 = \lt x_2 - x_0, y_2 - y_0, z_2 - z_0&gt; \\
+\overrightarrow{N} \amp= \overrightarrow{A} \times \overrightarrow{B} \\
+\overrightarrow{N} \amp= \lt a_yb_z - a_zb_y, a_zb_x - a_xb_z, a_xb_y - a_yb_x&gt;
+\end{aligned}
+\end{equation*}
+</div>
+</div></section><section class="subsection" id="subsection-22"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">7.4.2</span> <span class="title">Calculate <span class="process-math">\(\theta\)</span></span>
+</h4>
+<div class="para" id="p-75">Before we figure out <span class="process-math">\(\theta\text{,}\)</span> we need to discuss the <em class="emphasis">view vector</em> (<span class="process-math">\(\overrightarrow{V}\)</span>). <span class="process-math">\(\overrightarrow{V}\)</span> is supposed to be a vector that comes out of the plane of a surface and into the observer's eye. So the question is, what is the relationship between the observer and the surface?</div>
+<div class="para" id="p-76">For right now, we will assume that the observer is very very very far away from the object. This assumption means that moving left, right, up or down will not have any perceptible effect on what part of the object you are looking at. Think about looking up at the moon, if you move around, you don't start to see a new part of the moon. It looks the same, even if you went from Staten Island up to the Bronx, the moon would look the same. Programatically, this means that we can ignore any changes along the x or y axes.</div>
+<div class="para logical" id="p-77">
+<div class="para">So z is the important axis, since that determines if you are in front of or behind an object. Remember that z moves in a positive direction out from the screen towards the viewer, so <span class="process-math">\(\overrightarrow{V}\text{,}\)</span> the vector from the object to the viewer, should have a positive z component. For right now we can use <span class="process-math">\(\overrightarrow{V} = \lt 0, 0, 1&gt;\)</span> <aside class="aside aside-like" id="aside-1"><div class="para" id="p-78">We will not be looking at changing <span class="process-math">\(\overrightarrow{V}\)</span> for now, but you can think about what that would mean for the rendered image and what effects that might lead to.</div></aside> for the following reasons:</div>
+<ul class="disc">
+<li id="li-67"><div class="para" id="p-derived-li-67">We don't care about changes in x and y, so leaving them at 0 is fine.</div></li>
+<li id="li-68"><div class="para" id="p-derived-li-68">We need a positive z.</div></li>
+<li id="li-69"><div class="para" id="p-derived-li-69">By giving z the value of 1, the total mangnitude of <span class="process-math">\(\overrightarrow{V}\)</span> is 1. This is referred to as a <span class="process-math">\(normalized\)</span> vector.  It's not very important right now, but it will be later on, so we might as well start here.</div></li>
+</ul>
+</div>
+<div class="para logical" id="p-79">
+<div class="para">Now that we know both <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{,}\)</span> there's a little bit of vector math we can use to our advantage to help us find <span class="process-math">\(\theta\text{.}\)</span> The <a class="external" href="https://www.mathsisfun.com/algebra/vectors-dot-product.html" target="_blank">dot prduct</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-7" id="fn-7"><sup> 4 </sup></a> of  <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\)</span> is a <em class="emphasis">scalar</em> (not a vector) value equal to the cosine of the angle between them times the product of each vector's magnitude (<span class="process-math">\(M\)</span>). Or, more succintly: <span class="process-math">\(\overrightarrow{N} \cdot \overrightarrow{V} = Mcos\theta\text{.}\)</span> Given two vectors, you can calculate the dot product like so:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\overrightarrow{N} \cdot \overrightarrow{V} = Mcos\theta = n_xv_x + n_yv_y + n_zv_z
+\end{equation*}
+</div>
+<div class="para">There are properties of <span class="process-math">\(cos\theta\text{,}\)</span> that can help us out a lot. Namely, <span class="process-math">\(cos\theta &gt; 0\)</span> when <span class="process-math">\(-90 \lt \theta \lt 90\)</span> which is conveniently, exactly the range for surfaces we want to see. So it turns out, we only care about whether or not the dot product is positive or negative. If it's positive, then the surface is front facing, and we should draw it, if it's negative, we pass. And since mangnitude is always positive, we don't actually need to worry about it for this calculation (later on, when we get to lighting, we will care about mangnitude, but that's a problem for future us, who will be smarter than present us).</div>
+</div></section><section class="subsection" id="subsection-23"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">7.4.3</span> <span class="title">Putting it all together</span>
+</h4>
+<div class="para logical" id="p-80">
+<div class="para">Given any triangle starting at <span class="process-math">\(P_0\text{:}\)</span> <aside class="aside aside-like" id="aside-2"><div class="para" id="p-81">The keen observer will note that since <span class="process-math">\(\overrightarrow{V} = \lt 0, 0, 1&gt;\text{,}\)</span> the x and y components of the dot product will be 0. Also, since the z component of <span class="process-math">\(\overrightarrow{V}\)</span> is 1, the dot product will simply be the z component of <span class="process-math">\(\overrightarrow{N}\text{.}\)</span> This is ok for now, but eventually we will actually need the value of the dot product, so it doesn't hurt to do that now anyway.</div></aside>
+</div>
+<ol class="decimal">
+<li id="li-70"><div class="para" id="p-derived-li-70">Calculate <span class="process-math">\(\overrightarrow{N} = \overrightarrow{A} \times \overrightarrow{B}\text{,}\)</span> where <span class="process-math">\(\overrightarrow{A} = P_1 - P_0\text{,}\)</span> and <span class="process-math">\(\overrightarrow{B} = P_2 - P_0\text{.}\)</span>
+</div></li>
+<li id="li-71"><div class="para" id="p-derived-li-71">Calculate <span class="process-math">\(\overrightarrow{N} \cdot \overrightarrow{V}\text{,}\)</span> where <span class="process-math">\(\overrightarrow{V} = \lt 0, 0, 1&gt;\)</span>
+</div></li>
+<li id="li-72"><div class="para" id="p-derived-li-72">If <span class="process-math">\(\overrightarrow{N} \cdot \overrightarrow{V} &gt; 0\text{,}\)</span> draw the triangle.</div></li>
+</ol>
+</div></section></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-4"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Wire-frame_model</code></div></div>
 <div class="hidden-content tex2jax_ignore" id="hk-fn-5"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Polygon_mesh</code></div></div>
 <div class="hidden-content tex2jax_ignore" id="hk-fn-6"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Euclidean_vector</code></div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-7"><div class="fn"><code class="code-inline tex2jax_ignore">www.mathsisfun.com/algebra/vectors-dot-product.html</code></div></div>
 </div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="chapter-6.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
