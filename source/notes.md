@@ -1,10 +1,3 @@
-
-
-### 
-
-##### [Back to top](#)
------
-
 ### Relative Coordinate Systems
 
 * Currently, all of our shapes are drawn in the same coordinate system. This was initially brought up back when we started transformations, noting that they were all done with respect to the origin. If our shapes were note centered at the origin, then scaling or rotating would move the shape in addition to performing the desired transformation.
@@ -42,6 +35,8 @@
 
 ##### [Back to top](#)
 -----
+
+
 
 ### Scanline Conversion
 Now that we have moved to a polygon based drawing engine (for 3D objects at least), we can realistically talk about filling in the polygons to make our shapes appear solid, instead of meshes.

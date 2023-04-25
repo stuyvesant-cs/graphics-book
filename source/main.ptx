@@ -61,6 +61,7 @@
       <title>3-D Structures</title>
       <xi:include href="ch05-3d-shapes.xml" />
       <xi:include href="ch06-polygons.xml" />
+      <xi:include href="ch07-culling.xml" />
     </part>
     <backmatter xml:id="backmatter">
       <title>Backmatter</title>
