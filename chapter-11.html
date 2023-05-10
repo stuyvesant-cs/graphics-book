@@ -8,7 +8,7 @@
 <html lang="en-US">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>3D Shapes</title>
+<title>Z Buffering</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="part-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-2.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="chapter-7.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-10.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-4.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -282,7 +282,7 @@ window.MathJax = {
 <li>
 <div class="toc-item"><a href="part-2.html" class="internal"><span class="codenumber">II</span> <span class="title">3-D Structures</span></a></div>
 <ul class="structural">
-<li class="active">
+<li>
 <div class="toc-item"><a href="chapter-6.html" class="internal"><span class="codenumber">6</span> <span class="title">3D Shapes</span></a></div>
 <ul class="structural">
 <li><div class="toc-item"><a href="chapter-6.html#section-11" class="internal"><span class="codenumber">6.1</span> <span class="title">Box</span></a></div></li>
@@ -345,7 +345,8 @@ window.MathJax = {
 </li>
 <li>
 <div class="toc-item"><a href="part-4.html" class="internal"><span class="codenumber">IV</span> <span class="title">Lighting &amp; Shading</span></a></div>
-<ul class="structural"><li>
+<ul class="structural">
+<li>
 <div class="toc-item"><a href="chapter-10.html" class="internal"><span class="codenumber">10</span> <span class="title">Scanline Conversion</span></a></div>
 <ul class="structural">
 <li><div class="toc-item"><a href="chapter-10.html#section-22" class="internal"><span class="codenumber">10.1</span> <span class="title">Overview</span></a></div></li>
@@ -361,169 +362,68 @@ window.MathJax = {
 <ul class="structural"><li><div class="toc-item"><a href="chapter-10.html#subsection-29" class="internal"><span class="codenumber">10.3.1</span> <span class="title">"Special" Triangles</span></a></div></li></ul>
 </li>
 </ul>
-</li></ul>
+</li>
+<li class="active">
+<div class="toc-item"><a href="chapter-11.html" class="internal"><span class="codenumber">11</span> <span class="title">Z Buffering</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-11.html#section-25" class="internal"><span class="codenumber">11.1</span> <span class="title">The Z-Buffer</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-11.html#section-26" class="internal"><span class="codenumber">11.2</span> <span class="title">Calculating <span class="process-math">\(z\)</span> Values</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-11.html#subsection-30" class="internal"><span class="codenumber">11.2.1</span> <span class="title"><code class="code-inline tex2jax_ignore">scanline_convert</code></span></a></div></li>
+<li><div class="toc-item"><a href="chapter-11.html#subsection-31" class="internal"><span class="codenumber">11.2.2</span> <span class="title"><code class="code-inline tex2jax_ignore">draw_line</code> and <code class="code-inline tex2jax_ignore">draw_scanline</code></span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-6"><h2 class="heading">
-<span class="type">Chapter</span> <span class="codenumber">6</span> <span class="title">3D Shapes</span>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content">
+<section class="chapter" id="chapter-11"><h2 class="heading">
+<span class="type">Chapter</span> <span class="codenumber">11</span> <span class="title">Z Buffering</span>
 </h2>
-<section class="introduction" id="introduction-1">We will be working with the following 3D shapes: Box, Sphere, Torus. There are many other 3D shapes that could be easily generated programmatically, these specific three allow us to work with and test many advanced features, especially when it comes to lighting &amp; shading. If you want to add more shapes, keep that idea as a feature to be added to your final project. For each shape, we want to start by considering 2 important questions: <ol class="decimal">
-<li id="li-43"><div class="para" id="p-derived-li-43">What given information should we require?</div></li>
-<li id="li-44"><div class="para" id="p-derived-li-44">What are the points that our engine will need to generate in order to draw the shape?</div></li>
-</ol> The goal of our engine will be to create the necessary points from the given information (this is how we created circles &amp; splines as well).</section><section class="section" id="section-11"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.1</span> <span class="title">Box</span>
+<section class="introduction" id="introduction-9">A hidden surface is any surface that is represented within our polygon matrices but would not be visible in the generated image. There are genrally two reasons a surface would be hidden; either it is facing away from the viewer, or it is being obstructed by another surface. Backfacce culling takes care of the first case, and Z-Buffering is how we will handle the second. Importantly, we could not work on this kind of hidden surface removal until after working on scanline conversion. Backface culling happens per polygon, eitehr the entire surface is visible or not based on its orientation. We cannot be certain that when one object is in front of another, that an entire polygon is covered, so in order to accurately deal with this, we need to be working at the pixel level. Now that we are scanline converting our images, we have a fraemwork in palce to visit all the pixels that should be drawn.</section><section class="section" id="section-25"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">11.1</span> <span class="title">The Z-Buffer</span>
 </h3>
-<div class="para logical" id="p-53">
-<div class="para">To make a box, we need the folloing:</div>
-<ul class="disc">
-<li id="li-45"><div class="para" id="p-derived-li-45">A vertex: for consistency, we will be using the <em class="emphasis">left-top-front</em> vertex.</div></li>
-<li id="li-46"><div class="para" id="p-derived-li-46">Width: Size in the <em class="emphasis">x</em> dimension.</div></li>
-<li id="li-47"><div class="para" id="p-derived-li-47">Height: Size in the <em class="emphasis">y</em> dimension.</div></li>
-<li id="li-48"><div class="para" id="p-derived-li-48">Depth: Size in the <em class="emphasis">z</em> dimension.</div></li>
-</ul>
-<div class="para">The defining points of a box are its 8 vertices, which can be straightfporwardly calculated from the given information above. Once you have the 8 vertices, you can directly add the 12 edges that make up the box. You don't need to do anything fancy here.</div>
-</div></section><section class="section" id="section-12"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.2</span> <span class="title">Sphere</span>
+<div class="para" id="p-101">A Z-Buffer is a 2D array of <em class="emphasis">floating point</em> z values that maps directly to the 2D array of colors/pixels that contains our image. For example, the Z-buffer value at <span class="process-math">\((4, 10)\)</span> is the z coordinate for the pixel drawn at point <span class="process-math">\((4, 10)\text{.}\)</span> Since z values represent the depth of a pixel, we can use the Z-Buffer to keep track of how forward or backward any plotted pixel is.</div>
+<div class="para" id="p-102">Currently when we plot a pixel we provide the <span class="process-math">\((x, y)\)</span> coordinates and color. Now we will provide <span class="process-math">\((x, y, z)\)</span> and a color. <span class="process-math">\((x, y)\)</span> will determine the position of the color in the image and the <span class="process-math">\(z\)</span> value in the Z-Buffer. Before we deicdee to plot a given pixel in the image, we will check the <span class="process-math">\(z\)</span> value against the value currently in the Z-Buffer.</div>
+<div class="para" id="p-103">If the new <span class="process-math">\(z\)</span> is larger than the value in the Z-Buffer, that means that whatever pixel is currently plotted in the image comes from a shape that is <em class="emphasis">behind</em> the new pixel (remember, +z is closer to the viewer). When this happens we will update the image and Z-Buffer at the specified <span class="process-math">\((x, y)\)</span> position with the new color and <span class="process-math">\(z\)</span> value. Otherwise, we will skip plotting the pixel in the image and Z-Buffer, as there must already be an object at that position that is more forward.</div>
+<div class="para" id="p-104">In order for this the Z-Buffer to work, we need a good value to initialize Z-Buffer entries to. What we want is a value that represents something so far behind that any object we add would be on top. This should be the smallest (most negative) value possible. In the math world, a resonable suggestion would be to use -∞. Turns out in the Computer Programming world, that is also the answer! There is in fact a standard way to represent both ∞ and -∞ with <a class="external" href="https://en.wikipedia.org/wiki/IEEE_754-1985#Positive_and_negative_infinity" target="_blank">floating point values</a><a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-10" id="fn-10"><sup> 1 </sup></a>. Often dividing a negative floating point value by 0 will do this (i.e. <code class="code-inline tex2jax_ignore">-1.0/0.0</code>), but different programming languages often have constants defined for this value as well.</div></section><section class="section" id="section-26"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">11.2</span> <span class="title">Calculating <span class="process-math">\(z\)</span> Values</span>
 </h3>
-<div class="para logical" id="p-54">
-<div class="para">To make a sphere, we need the following:</div>
-<ul class="disc">
-<li id="li-49"><div class="para" id="p-derived-li-49">Center point.</div></li>
-<li id="li-50"><div class="para" id="p-derived-li-50">Radius.</div></li>
-</ul>
-<div class="para">The defining points are any points along the surface of the sphere. in theory, there are an infinite number of points on the surface, but we can use a subset of all those to help draw something that looks like a sphere.</div>
-</div>
-<section class="subsection" id="subsection-16"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">6.2.1</span> <span class="title">Sphere Point Generation</span>
+<div class="para" id="p-105">In addition to maintaining a Z-Buffer, we need to now calculate z values whenever we draw lines. This includes our <code class="code-inline tex2jax_ignore">draw_line</code>, <code class="code-inline tex2jax_ignore">scanline_convert</code>, and <code class="code-inline tex2jax_ignore">draw_scanline</code> (if you made a separate function to just draw scanlines) functions.</div>
+<section class="subsection" id="subsection-30"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">11.2.1</span> <span class="title"><code class="code-inline tex2jax_ignore">scanline_convert</code></span>
 </h4>
-<div class="para logical" id="p-55">
-<div class="para">The points on the surface of a sphere can be generated by taking a circle and rotating it. Each circle rotation creates a new "slice" of the sphere. The circle can be rotated about the x or y axes, but not z. The only difference will be the location of the "poles" of the sphere. An x-rotated sphere will have its poles on the left and right ends, while a y-rotated sphere will have its poles on the top and bottom.</div>
+<div class="para" id="p-106">Here, <span class="process-math">\(z\)</span> values can be calculated the same way we find the <span class="process-math">\(x\)</span> values. We already have <span class="process-math">\(z\)</span> coordinates stored in out polygon matrices, we just need to calcualte the <span class="process-math">\(z\)</span> values as we move across each scanline. It is important to remember that unlike <span class="process-math">\(y\text{,}\)</span> we cannot be certain that the <span class="process-math">\(z\)</span> value is the same along the entire scanline.</div>
+<div class="para" id="p-107">
+<span class="process-math">\(z_0\)</span> is on the line <span class="process-math">\(\overline{BT}\text{,}\)</span> so it starts at <span class="process-math">\(z_b\)</span> and goes to <span class="process-math">\(z_t\text{.}\)</span> <span class="process-math">\(z_1\)</span> is on the line <span class="process-math">\(\overline{BM}\)</span> starting at <span class="process-math">\(z_b\)</span> going to <span class="process-math">\(z_m\)</span> and then it moves onto the line <span class="process-math">\(\overline{MT}\text{,}\)</span> going from <span class="process-math">\(z_m\)</span> to <span class="process-math">\(z_t\text{.}\)</span>
+</div>
+<div class="para logical" id="p-108">
+<div class="para">You will need a <span class="process-math">\(\Delta z_0\)</span> and <span class="process-math">\(\Delta z_1\text{.}\)</span> These are calculated the same was as their <span class="process-math">\(x\)</span> equivalents:</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\begin{array}{c}
-x rotation \\
-\left[
-\begin{matrix} 1 \amp 0 \amp 0
-\\\ 0 \amp cos(\phi) \amp -sin(\phi)
-\\\ 0 \amp sin(\phi) \amp cos(phi)
-\end{matrix}
-\right]
-\end{array}
-\begin{array}{c}
-circle \\
-\left[
-\begin{matrix} rcos(\theta)
-\\\ rsin(\theta)
-\\\ 0
-\end{matrix}
-\right]
-\end{array}
-=
-\begin{array}{c}
-sphere \\
-\left[
-\begin{matrix} rcos(\theta)
-\\\ rsin(\theta)cos(\phi)
-\\\ rsin(\theta)sin(\phi)
-\end{matrix}
-\right]
-\end{array}
+\Delta z = \dfrac{\text {total change in z}}{\text {number of scanlines}}
 \end{equation*}
 </div>
-<div class="para">The matrix multiplication above leaves us with equations that we can use to find the points of a sphere:</div>
-<div class="displaymath process-math">
-\begin{equation*}
-\begin{aligned}
-x \amp= rcos(\theta) + C_x \\
-y \amp= rsin(\theta)cos(\phi) + C_y \\
-z \amp= rsin(\theta)sin(\phi) + C_z
-\end{aligned}
-\end{equation*}
-</div>
-</div>
-<div class="para logical" id="p-56">
-<div class="para">Here <span class="process-math">\(\phi\)</span> is used as the angle of rotation and <span class="process-math">\(\theta\)</span> is used as the angle of circle creation. If you only use one angle, then you would generate one point per circle each rotation. The resulting shape would be a sprial going along the sphere (pleasing, but not our goal). You can generate a sphere either by creating a full circle and rotating it π radians, or by creating a semi-circle and rotating it 2π radians. For reasons that will become clear later, it is to our advantage to use the semi-circle method. With these equations we can create a nested-loop parametric function to generate all the points on a circle:</div>
-<pre class="code-display tex2jax_ignore">
-        for rot: 0 -&gt; 1
-          for cir: 0 -&gt; 1
-            x = r * cos(π * cir) + Cx
-            y = r * sin(π * cir) * cos(2π * rot) + Cy
-            z = r * sin(π * cir) * sin(2π * rot) + Cz
-        </pre>
-</div></section></section><section class="section" id="section-13"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.3</span> <span class="title">Torus</span>
-</h3>
-<div class="para logical" id="p-57">
-<div class="para">A torus is a doughnut (or bagel, if that's your thing)-like shape, that is simlar in some repsects to a sphere. To generate a torus, we will need:</div>
-<ul class="disc">
-<li id="li-51"><div class="para" id="p-derived-li-51">Center point of the entire torus.</div></li>
-<li id="li-52"><div class="para" id="p-derived-li-52">Radius of circular cross-section <span class="process-math">\(r\)</span>
-</div></li>
-<li id="li-53"><div class="para" id="p-derived-li-53">Distance from the torus center to center of the cross-section <span class="process-math">\(R\)</span>
-</div></li>
-</ul>
-<div class="para">Like a sphere, the defining points are any points along the surface of the torus.</div>
-</div>
-<section class="subsection" id="subsection-17"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">6.3.1</span> <span class="title">Torus Point Generation</span>
+</div></section><section class="subsection" id="subsection-31"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">11.2.2</span> <span class="title"><code class="code-inline tex2jax_ignore">draw_line</code> and <code class="code-inline tex2jax_ignore">draw_scanline</code></span>
 </h4>
-<div class="para logical" id="p-58">
-<div class="para">A torus, can be generated in a similar way to a sphere, except you move the circle away from the torus center before rotating. You have to be careful about how you move the circle and then rotate it. Only specific combinations will work:</div>
-<ul class="disc">
-<li id="li-54"><div class="para" id="p-derived-li-54">Move a circle horizontally (x translation) and y rotation.</div></li>
-<li id="li-55"><div class="para" id="p-derived-li-55">Move a circle vertically (y translation) and x rotation.</div></li>
-</ul>
+<div class="para" id="p-109">We actually have to go back to our very first graphics algorithm and modify it to take <span class="process-math">\(z\)</span> values into account. On the plus side, we <em class="emphasis">need</em> <span class="process-math">\(z\)</span> values to be floating point based, so we will not have to try to map them as best we can to integers. This makes the calculation more straightforward. You can think of generating <span class="process-math">\(z\)</span> values in a similar way to what weed need to do in <code class="code-inline tex2jax_ignore">scanline_convert</code>.</div>
+<div class="para logical" id="p-110">
+<div class="para">If we are drawing a line from <span class="process-math">\((x_0, y_0, z_0)\)</span> to <span class="process-math">\((x_1, y_1, z_1)\text{,}\)</span> that means as we draw the line, <span class="process-math">\(z\)</span> must go from <span class="process-math">\(z_0\)</span> to <span class="process-math">\(z_1\text{.}\)</span> Since we draw our lines 1 pixel at a time, we need to figure out how much <span class="process-math">\(z\)</span> changes with each pixel. Like above:</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\begin{array}{c}
-y rotation \\
-\left[
-\begin{matrix} cos(\phi) \amp 0 \amp sin(\phi)
-\\\ 0 \amp 1 \amp 0
-\\\ -sin(\phi) \amp 0 \amp cos(\phi)
-\end{matrix}
-\right]
-\end{array}
-\begin{array}{c}
-circle \\
-\left[
-\begin{matrix} rcos(\theta) + R
-\\\ rsin(\theta)
-\\\ 0
-\end{matrix}
-\right]
-\end{array}
-=
-\begin{array}{c}
-sphere \\
-\left[
-\begin{matrix} cos(\phi)(rcos(\theta) + R)
-\\\ rsin(\theta)
-\\\ -sin(\phi)(rcos(\theta) + R)
-\end{matrix}
-\right]
-\end{array}
+\Delta z = \dfrac{\text {total change in z}}{\text {number of pixels plotted}}
 \end{equation*}
 </div>
-<div class="para">This leaves us with the following Torus equations:</div>
-<div class="displaymath process-math">
-\begin{equation*}
-\begin{aligned}
-x \amp= cos(p) * (rcos(t) + R) + C_x \\
-y \amp= rsin(t) + C_y \\
-z \amp= -sin(p) * (rcos(t) + R) + C_z
-\end{aligned}
-\end{equation*}
+<div class="para">Note that the denominator is the <em class="emphasis"># of pixels</em> not the length of the line. If the line is in octants I or VIII, the total # of pixels is based on the <span class="process-math">\(x\)</span> values. If the line is in octants II or VII, the total # of pixels is based on the <span class="process-math">\(y\)</span> values. Think about the value that controls the loop that generates the line. Which coordinate is guaranteed to go up by 1 each time?</div>
+</div></section></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-10"><div class="fn"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/IEEE_754-1985#Positive_and_negative_infinity</code></div></div>
 </div>
-</div>
-<div class="para" id="p-59">Here <span class="process-math">\(\phi\)</span> is used as the angle of rotation and <span class="process-math">\(\theta\)</span> is used as the angle of circle creation. Unlike a sphere, both <span class="process-math">\(\phi\)</span> and <span class="process-math">\(\theta\)</span> must go from 0 to 2π in order to generate a full Torus. Limiting one of the angles to π would result in odd variations of half-tori.</div></section></section><section class="section" id="section-14"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.4</span> <span class="title">Implementing 3D Shapes</span>
-</h3>
-<div class="para" id="p-60">The algorithms desribed above generate the points for our 3D shapes, but they don't cover how we should use those points in order to</div>
-<div class="para" id="p-61">Currently, the basic drawing unit for our graphics engine is a <em class="emphasis">line</em>. This works quite well for representing</div></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="part-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="chapter-7.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<a class="previous-button button" href="chapter-10.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer">

@@ -8,7 +8,7 @@
 <html lang="en-US">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>3D Shapes</title>
+<title>Scanline Conversion</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="part-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-2.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="chapter-7.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="part-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-4.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -282,7 +282,7 @@ window.MathJax = {
 <li>
 <div class="toc-item"><a href="part-2.html" class="internal"><span class="codenumber">II</span> <span class="title">3-D Structures</span></a></div>
 <ul class="structural">
-<li class="active">
+<li>
 <div class="toc-item"><a href="chapter-6.html" class="internal"><span class="codenumber">6</span> <span class="title">3D Shapes</span></a></div>
 <ul class="structural">
 <li><div class="toc-item"><a href="chapter-6.html#section-11" class="internal"><span class="codenumber">6.1</span> <span class="title">Box</span></a></div></li>
@@ -345,7 +345,7 @@ window.MathJax = {
 </li>
 <li>
 <div class="toc-item"><a href="part-4.html" class="internal"><span class="codenumber">IV</span> <span class="title">Lighting &amp; Shading</span></a></div>
-<ul class="structural"><li>
+<ul class="structural"><li class="active">
 <div class="toc-item"><a href="chapter-10.html" class="internal"><span class="codenumber">10</span> <span class="title">Scanline Conversion</span></a></div>
 <ul class="structural">
 <li><div class="toc-item"><a href="chapter-10.html#section-22" class="internal"><span class="codenumber">10.1</span> <span class="title">Overview</span></a></div></li>
@@ -365,165 +365,91 @@ window.MathJax = {
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-6"><h2 class="heading">
-<span class="type">Chapter</span> <span class="codenumber">6</span> <span class="title">3D Shapes</span>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-10"><h2 class="heading">
+<span class="type">Chapter</span> <span class="codenumber">10</span> <span class="title">Scanline Conversion</span>
 </h2>
-<section class="introduction" id="introduction-1">We will be working with the following 3D shapes: Box, Sphere, Torus. There are many other 3D shapes that could be easily generated programmatically, these specific three allow us to work with and test many advanced features, especially when it comes to lighting &amp; shading. If you want to add more shapes, keep that idea as a feature to be added to your final project. For each shape, we want to start by considering 2 important questions: <ol class="decimal">
-<li id="li-43"><div class="para" id="p-derived-li-43">What given information should we require?</div></li>
-<li id="li-44"><div class="para" id="p-derived-li-44">What are the points that our engine will need to generate in order to draw the shape?</div></li>
-</ol> The goal of our engine will be to create the necessary points from the given information (this is how we created circles &amp; splines as well).</section><section class="section" id="section-11"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.1</span> <span class="title">Box</span>
+<section class="introduction" id="introduction-8">Now that we have moved to a polygon based drawing engine (for 3D objects at least), we can realistically talk about filling in the polygons to make our shapes appear solid, instead of meshes. Filling in each polygon means that our engine needs to plot every single pixel on the surface of each object being drawn (this is were backface culling starts to pay off, since we are already ignoring any non-visible faces). Because this is so exhaustive, we're going to need to make sure we're doing our best to minimalize the amount of work our engine does to fill in the polygons. This is where scanline conversion comes in.</section><section class="section" id="section-22"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">10.1</span> <span class="title">Overview</span>
 </h3>
-<div class="para logical" id="p-53">
-<div class="para">To make a box, we need the folloing:</div>
+<div class="para logical" id="p-94">
+<div class="para">Scanline conversion is the process of filling in a polygon by drawing a series of horizontal (or vertical) lines covering the entire surface of the polygon. This has a number of advantages over other possible approaches such as:</div>
 <ul class="disc">
-<li id="li-45"><div class="para" id="p-derived-li-45">A vertex: for consistency, we will be using the <em class="emphasis">left-top-front</em> vertex.</div></li>
-<li id="li-46"><div class="para" id="p-derived-li-46">Width: Size in the <em class="emphasis">x</em> dimension.</div></li>
-<li id="li-47"><div class="para" id="p-derived-li-47">Height: Size in the <em class="emphasis">y</em> dimension.</div></li>
-<li id="li-48"><div class="para" id="p-derived-li-48">Depth: Size in the <em class="emphasis">z</em> dimension.</div></li>
+<li id="li-84"><div class="para" id="p-derived-li-84">The y value for each scanline is just 1 plus the previous y value.</div></li>
+<li id="li-85"><div class="para" id="p-derived-li-85">Horizontal lines have the same y value for each pixel, negating the need for y calculations inside the line algorithm.</div></li>
+<li id="li-86"><div class="para" id="p-derived-li-86">We can cover the entire surface while only visiting each pixel exactly <em class="emphasis">once</em>
+</div></li>
 </ul>
-<div class="para">The defining points of a box are its 8 vertices, which can be straightfporwardly calculated from the given information above. Once you have the 8 vertices, you can directly add the 12 edges that make up the box. You don't need to do anything fancy here.</div>
-</div></section><section class="section" id="section-12"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.2</span> <span class="title">Sphere</span>
-</h3>
-<div class="para logical" id="p-54">
-<div class="para">To make a sphere, we need the following:</div>
-<ul class="disc">
-<li id="li-49"><div class="para" id="p-derived-li-49">Center point.</div></li>
-<li id="li-50"><div class="para" id="p-derived-li-50">Radius.</div></li>
-</ul>
-<div class="para">The defining points are any points along the surface of the sphere. in theory, there are an infinite number of points on the surface, but we can use a subset of all those to help draw something that looks like a sphere.</div>
 </div>
-<section class="subsection" id="subsection-16"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">6.2.1</span> <span class="title">Sphere Point Generation</span>
+<div class="para" id="p-95">In order to scanline convert a triangle, the first thing we have to do is find the top, bottom and middle vertices. As long as each triangle in our triangle matrix has 3 distinct vertices, there will always <em class="emphasis">at least</em> be a distinct top and bottom (this is why it was important not to add the degenerate triangles at the poles of a sphere). We can define the middle as the vertex that isn't either the top or bottom (more on this later). After ordering our vertices vertically, we have something like this: <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch09-scanline-triangle.png" class="contained" alt="A triangle with vertices labeled Bottom, Top, and Middle."></div>
+</div></section><section class="section" id="section-23"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">10.2</span> <span class="title">Scanlines</span>
+</h3>
+<div class="para" id="p-96">Each scanline will go from one edge of the triangle to another. In order to draw each line, we have to determine the endpoints. <span class="process-math">\(y\)</span> values are very simple. They start at the bottom (<span class="process-math">\(y_b\)</span>), go up by 1 each time, and end at the top (<span class="process-math">\(y_t\)</span>). The <span class="process-math">\(x\)</span> values are more complicated. They must move along the edges of the triangle. In the diagram above, I've designated that <span class="process-math">\(x_0\)</span> for each scanline to be the endpoint somewhere along the line <span class="process-math">\(\overline{BT}\text{,}\)</span> and <span class="process-math">\(x_1\)</span> will be the other endpoint, which will either be along <span class="process-math">\(\overline{BM}\)</span> or <span class="process-math">\(\overline{MT}\text{,}\)</span> depending on how far up we've made it. It doesn't matter if the middle vertex is to the left of right of the <span class="process-math">\(\overline{BT}\)</span> edge, since our <code class="code-inline tex2jax_ignore">draw_line</code> function will swap endpoints if they're not listed left to right. This will make it easier to develop the scanline algorithm.</div>
+<section class="subsection" id="subsection-27"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">10.2.1</span> <span class="title">Calculating <span class="process-math">\(x_0\)</span></span>
 </h4>
-<div class="para logical" id="p-55">
-<div class="para">The points on the surface of a sphere can be generated by taking a circle and rotating it. Each circle rotation creates a new "slice" of the sphere. The circle can be rotated about the x or y axes, but not z. The only difference will be the location of the "poles" of the sphere. An x-rotated sphere will have its poles on the left and right ends, while a y-rotated sphere will have its poles on the top and bottom.</div>
+<div class="para logical" id="p-97">
+<div class="para">
+<span class="process-math">\(x_0\)</span> starts at <span class="process-math">\(x_b\)</span> and ends at <span class="process-math">\(x_t\text{.}\)</span> The question is, how much does <span class="process-math">\(x_0\)</span> change with each scanline (<span class="process-math">\(\Delta x_0\)</span>)? The total change in <span class="process-math">\(x_0\)</span> is <span class="process-math">\(x_t - x_b\text{,}\)</span> which occurs over the course of drawing each scanline. So the number of scanlines determines the number of times we change <span class="process-math">\(x_0\text{.}\)</span> In turn, the number of scanlines is just the difference in <span class="process-math">\(y\)</span> over the course of the triangle.</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\begin{array}{c}
-x rotation \\
-\left[
-\begin{matrix} 1 \amp 0 \amp 0
-\\\ 0 \amp cos(\phi) \amp -sin(\phi)
-\\\ 0 \amp sin(\phi) \amp cos(phi)
-\end{matrix}
-\right]
-\end{array}
-\begin{array}{c}
-circle \\
-\left[
-\begin{matrix} rcos(\theta)
-\\\ rsin(\theta)
-\\\ 0
-\end{matrix}
-\right]
-\end{array}
-=
-\begin{array}{c}
-sphere \\
-\left[
-\begin{matrix} rcos(\theta)
-\\\ rsin(\theta)cos(\phi)
-\\\ rsin(\theta)sin(\phi)
-\end{matrix}
-\right]
-\end{array}
+\Delta x_0 = \frac{x_t - x_b}{y_t - y_b + 1}
 \end{equation*}
 </div>
-<div class="para">The matrix multiplication above leaves us with equations that we can use to find the points of a sphere:</div>
+<div class="para">(we need to add 1 to the y difference to account for the bottom-most line).</div>
+</div></section><section class="subsection" id="subsection-28"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">10.2.2</span> <span class="title">Calculating <span class="process-math">\(x_1\)</span></span>
+</h4>
+<div class="para logical" id="p-98">
+<div class="para">
+<span class="process-math">\(x_1\)</span> also starts at <span class="process-math">\(x_b\text{,}\)</span> but it ends at <span class="process-math">\(x_m\)</span> and then changes direction to go towards <span class="process-math">\(x_t\text{.}\)</span> We need to calculate <span class="process-math">\(\Delta x_1\)</span> similarly to how we calcluated <span class="process-math">\(x_0\text{,}\)</span> but we will have 2 different values, depending on whether we've moved past the middle vertex or not.</div>
 <div class="displaymath process-math">
 \begin{equation*}
 \begin{aligned}
-x \amp= rcos(\theta) + C_x \\
-y \amp= rsin(\theta)cos(\phi) + C_y \\
-z \amp= rsin(\theta)sin(\phi) + C_z
-\end{aligned}
+\Delta x_1 = \frac{x_m - x_b}{y_m - y_b + 1} \\
+\Delta x_1 = \frac{x_t - x_m}{y_t - y_m + 1}
+\end{aligned}\text{.}
 \end{equation*}
 </div>
+<div class="para">We flip from the first to the second calculation once our <span class="process-math">\(y\)</span> has reached <span class="process-math">\(y_m\text{.}\)</span>
 </div>
-<div class="para logical" id="p-56">
-<div class="para">Here <span class="process-math">\(\phi\)</span> is used as the angle of rotation and <span class="process-math">\(\theta\)</span> is used as the angle of circle creation. If you only use one angle, then you would generate one point per circle each rotation. The resulting shape would be a sprial going along the sphere (pleasing, but not our goal). You can generate a sphere either by creating a full circle and rotating it π radians, or by creating a semi-circle and rotating it 2π radians. For reasons that will become clear later, it is to our advantage to use the semi-circle method. With these equations we can create a nested-loop parametric function to generate all the points on a circle:</div>
+</div></section></section><section class="section" id="section-24"><h3 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">10.3</span> <span class="title">The Algorithm</span>
+</h3>
+<div class="para logical" id="p-99">
+<div class="para">Putting this all together, we can come up with this pseudocode outline:</div>
 <pre class="code-display tex2jax_ignore">
-        for rot: 0 -&gt; 1
-          for cir: 0 -&gt; 1
-            x = r * cos(π * cir) + Cx
-            y = r * sin(π * cir) * cos(2π * rot) + Cy
-            z = r * sin(π * cir) * sin(2π * rot) + Cz
-        </pre>
-</div></section></section><section class="section" id="section-13"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.3</span> <span class="title">Torus</span>
-</h3>
-<div class="para logical" id="p-57">
-<div class="para">A torus is a doughnut (or bagel, if that's your thing)-like shape, that is simlar in some repsects to a sphere. To generate a torus, we will need:</div>
-<ul class="disc">
-<li id="li-51"><div class="para" id="p-derived-li-51">Center point of the entire torus.</div></li>
-<li id="li-52"><div class="para" id="p-derived-li-52">Radius of circular cross-section <span class="process-math">\(r\)</span>
+        //initial setup, find b, t, m
+        x0 = xb, x1 = xb, y0 = yb
+        dx0 = (xt - xb) / (yt - yb)
+        dx1 = (xm - xb) / (ym - yb)
+        dx1_1 = (xt - xm) / (yt - ym)
+        while y &lt;= yt
+            draw_line(x0, y, x1, y)
+            //move the endpoints
+            x0+= dx0
+            x1+= dx1
+            y+= 1
+            //swap dx1 if neeced
+            if y &gt;= ym
+                dx1 = dx1_1
+                x1 = xm
+      </pre>
+<div class="para">It is a good idea to think of the loop here as having 3 distinct parts:</div>
+<ol class="decimal">
+<li id="li-87"><div class="para" id="p-derived-li-87">drawing the line</div></li>
+<li id="li-88"><div class="para" id="p-derived-li-88">updating the endpoints</div></li>
+<li id="li-89"><div class="para" id="p-derived-li-89">swapping <span class="process-math">\(\Delta x_1\)</span>
 </div></li>
-<li id="li-53"><div class="para" id="p-derived-li-53">Distance from the torus center to center of the cross-section <span class="process-math">\(R\)</span>
-</div></li>
-</ul>
-<div class="para">Like a sphere, the defining points are any points along the surface of the torus.</div>
+</ol>
+<div class="para">The order in which you do these may not match the outline above, depending on how you handle "special" cases and other potential issues as they arise.</div>
 </div>
-<section class="subsection" id="subsection-17"><h4 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">6.3.1</span> <span class="title">Torus Point Generation</span>
+<section class="subsection" id="subsection-29"><h4 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">10.3.1</span> <span class="title">"Special" Triangles</span>
 </h4>
-<div class="para logical" id="p-58">
-<div class="para">A torus, can be generated in a similar way to a sphere, except you move the circle away from the torus center before rotating. You have to be careful about how you move the circle and then rotate it. Only specific combinations will work:</div>
-<ul class="disc">
-<li id="li-54"><div class="para" id="p-derived-li-54">Move a circle horizontally (x translation) and y rotation.</div></li>
-<li id="li-55"><div class="para" id="p-derived-li-55">Move a circle vertically (y translation) and x rotation.</div></li>
-</ul>
-<div class="displaymath process-math">
-\begin{equation*}
-\begin{array}{c}
-y rotation \\
-\left[
-\begin{matrix} cos(\phi) \amp 0 \amp sin(\phi)
-\\\ 0 \amp 1 \amp 0
-\\\ -sin(\phi) \amp 0 \amp cos(\phi)
-\end{matrix}
-\right]
-\end{array}
-\begin{array}{c}
-circle \\
-\left[
-\begin{matrix} rcos(\theta) + R
-\\\ rsin(\theta)
-\\\ 0
-\end{matrix}
-\right]
-\end{array}
-=
-\begin{array}{c}
-sphere \\
-\left[
-\begin{matrix} cos(\phi)(rcos(\theta) + R)
-\\\ rsin(\theta)
-\\\ -sin(\phi)(rcos(\theta) + R)
-\end{matrix}
-\right]
-\end{array}
-\end{equation*}
-</div>
-<div class="para">This leaves us with the following Torus equations:</div>
-<div class="displaymath process-math">
-\begin{equation*}
-\begin{aligned}
-x \amp= cos(p) * (rcos(t) + R) + C_x \\
-y \amp= rsin(t) + C_y \\
-z \amp= -sin(p) * (rcos(t) + R) + C_z
-\end{aligned}
-\end{equation*}
-</div>
-</div>
-<div class="para" id="p-59">Here <span class="process-math">\(\phi\)</span> is used as the angle of rotation and <span class="process-math">\(\theta\)</span> is used as the angle of circle creation. Unlike a sphere, both <span class="process-math">\(\phi\)</span> and <span class="process-math">\(\theta\)</span> must go from 0 to 2π in order to generate a full Torus. Limiting one of the angles to π would result in odd variations of half-tori.</div></section></section><section class="section" id="section-14"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">6.4</span> <span class="title">Implementing 3D Shapes</span>
-</h3>
-<div class="para" id="p-60">The algorithms desribed above generate the points for our 3D shapes, but they don't cover how we should use those points in order to</div>
-<div class="para" id="p-61">Currently, the basic drawing unit for our graphics engine is a <em class="emphasis">line</em>. This works quite well for representing</div></section></section></div>
+<div class="para" id="p-100">Scanline conversion works very well when there are distinct top, bottom and middle vertices. Sometimes, there is no distinct middle (once again, there will always be a top and bottom). These are cases when two vertices have the same <span class="process-math">\(y\)</span> value (either the top or bottom is a flat horizontal line). <em class="emphasis">But</em> the <span class="process-math">\(x\)</span> values will be different, which is important. You can handle these cases either explicitly or implicitly, but you do need to consider them.</div></section></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="part-2.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="chapter-7.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<a class="previous-button button" href="part-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer">
