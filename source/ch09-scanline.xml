@@ -1,0 +1,90 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Scanline Conversion</title>
+  <introduction>
+    Now that we have moved to a polygon based drawing engine (for 3D objects at least), we can realistically talk about filling in the polygons to make our shapes appear solid, instead of meshes.
+
+    Filling in each polygon means that our engine needs to plot every single pixel on the surface of each object being drawn (this is were backface culling starts to pay off, since we are already ignoring any non-visible faces). Because this is so exhaustive, we're going to need to make sure we're doing our best to minimalize the amount of work our engine does to fill in the polygons. This is where scanline conversion comes in.
+  </introduction>
+  <section>
+    <title>Overview</title>
+    <p>
+      Scanline conversion is the process of filling in a polygon by drawing a series of horizontal (or vertical) lines covering the entire surface of the polygon. This has a number of advantages over other possible approaches such as:
+      <ul>
+        <li>The y value for each scanline is just 1 plus the previous y value.</li>
+        <li>Horizontal lines have the same y value for each pixel, negating the need for y calculations inside the line algorithm.</li>
+        <li>We can cover the entire surface while only visiting each pixel exactly <em>once</em></li>
+      </ul>
+    </p>
+    <p>
+      In order to scanline convert a triangle, the first thing we have to do is find the top, bottom and middle vertices. As long as each triangle in our triangle matrix has 3 distinct vertices, there will always <em>at least</em> be a distinct top and bottom (this is why it was important not to add the degenerate triangles at the poles of a sphere). We can define the middle as the vertex that isn't either the top or bottom (more on this later). After ordering our vertices vertically, we have something like this:
+      <image source="images/ch09-scanline-triangle.png">
+        <description>A triangle with vertices labeled Bottom, Top, and Middle.</description>
+      </image>
+     </p>
+  </section>
+  <section>
+    <title>Scanlines</title>
+    <p>
+      Each scanline will go from one edge of the triangle to another. In order to draw each line, we have to determine the endpoints. <m>y</m> values are very simple. They start at the bottom (<m>y_b</m>), go up by 1 each time, and end at the top (<m>y_t</m>). The <m>x</m> values are more complicated. They must move along the edges of the triangle. In the diagram above, I've designated that <m>x_0</m> for each scanline to be the endpoint somewhere along the line <m>\overline{BT}</m>, and <m>x_1</m> will be the other endpoint, which will either be along <m>\overline{BM}</m> or <m>\overline{MT}</m>, depending on how far up we've made it. It doesn't matter if the middle vertex is to the left of right of the <m>\overline{BT}</m> edge, since our <c>draw_line</c> function will swap endpoints if they're not listed left to right. This will make it easier to develop the scanline algorithm.
+    </p>
+    <subsection>
+      <title>Calculating <m>x_0</m></title>
+      <p>
+        <m>x_0</m> starts at <m>x_b</m> and ends at <m>x_t</m>. The question is, how much does <m>x_0</m> change with each scanline (<m>\Delta x_0</m>)? The total change in <m>x_0</m> is <m>x_t - x_b</m>, which occurs over the course of drawing each scanline. So the number of scanlines determines the number of times we change <m>x_0</m>. In turn, the number of scanlines is just the difference in <m>y</m> over the course of the triangle.
+        <me>
+          \Delta x_0 = \frac{x_t - x_b}{y_t - y_b + 1}
+        </me>
+        (we need to add 1 to the y difference to account for the bottom-most line).
+      </p>
+    </subsection>
+    <subsection>
+      <title>Calculating <m>x_1</m></title>
+      <p>
+        <m>x_1</m> also starts at <m>x_b</m>, but it ends at <m>x_m</m> and then changes direction to go towards <m>x_t</m>. We need to calculate <m>\Delta x_1</m> similarly to how we calcluated <m>x_0</m>, but we will have 2 different values, depending on whether we've moved past the middle vertex or not.
+          <me>
+            \begin{aligned}
+            \Delta x_1 = \frac{x_m - x_b}{y_m - y_b + 1} \\
+            \Delta x_1 = \frac{x_t - x_m}{y_t - y_m + 1}
+            \end{aligned}
+          </me>.
+          We flip from the first to the second calculation once our <m>y</m> has reached <m>y_m</m>.
+      </p>
+    </subsection>
+  </section>
+  <section>
+    <title>The Algorithm</title>
+    <p>
+      Putting this all together, we can come up with this pseudocode outline:
+      <cd>
+        //initial setup, find b, t, m
+        x0 = xb, x1 = xb, y0 = yb
+        dx0 = (xt - xb) / (yt - yb)
+        dx1 = (xm - xb) / (ym - yb)
+        dx1_1 = (xt - xm) / (yt - ym)
+        while y &lt;= yt
+            draw_line(x0, y, x1, y)
+            //move the endpoints
+            x0+= dx0
+            x1+= dx1
+            y+= 1
+            //swap dx1 if neeced
+            if y >= ym
+                dx1 = dx1_1
+                x1 = xm
+      </cd>
+      It is a good idea to think of the loop here as having 3 distinct parts:
+      <ol>
+        <li>drawing the line</li>
+        <li>updating the endpoints</li>
+        <li>swapping <m>\Delta x_1</m></li>
+      </ol>
+      The order in which you do these may not match the outline above, depending on how you handle "special" cases and other potential issues as they arise.
+    </p>
+    <subsection>
+      <title>"Special" Triangles</title>
+      <p>
+        Scanline conversion works very well when there are distinct top, bottom and middle vertices. Sometimes, there is no distinct middle (once again, there will always be a top and bottom). These are cases when two vertices have the same <m>y</m> value (either the top or bottom is a flat horizontal line). <em>But</em> the <m>x</m> values will be different, which is important. You can handle these cases either explicitly or implicitly, but you do need to consider them.
+      </p>
+    </subsection>
+  </section>
+</chapter>

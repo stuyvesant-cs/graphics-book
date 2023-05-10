@@ -63,9 +63,18 @@
       <xi:include href="ch06-polygons.xml" />
       <xi:include href="ch07-culling.xml" />
     </part>
+    <part>
+      <title>Motion</title>
+      <xi:include href="ch08-rcs.xml" />
+    </part>
+    <part>
+      <title>Lighting &amp; Shading</title>
+      <xi:include href="ch09-scanline.xml" />
+      
+    </part>
+
     <backmatter xml:id="backmatter">
       <title>Backmatter</title>
-
       <colophon>
         <p> This book was authored in <pretext />. </p>
       </colophon>

@@ -1,0 +1,49 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Relative Coordinate Systems</title>
+  <introduction>
+    Currently, all of our shapes are drawn in the same coordinate system. This was initially brought up back when we started transformations, noting that they were all done with respect to the origin. If our shapes were note centered at the origin, then scaling or rotating would move the shape in addition to performing the desired transformation. The has made the way we apply transformations programatically simple, but also difficult to make complex scenes with multiple shapes that may or may not be interconnected. The time has come to add some more back-end complixity to allow us to make more interesting images that we can have more control over.
+  </introduction>
+  <section>
+    <title>The Global Coordinate System</title>
+    <p>
+      Currently we create shapes without considering the world they will be drawn in, and separately build up transformations in a single transformation matrix. We manually apply these transformations to the edge/polygon lists.
+
+     </p>
+  </section>
+</chapter>
+
+<!--
+### Relative Coordinate Systems
+
+* We manually apply the transformations to the points that make up our shapes.
+* We only draw shapes to the screen when it is time to display/save.
+
+* In a global coordinate system, it is also difficult to create complex objects made of multiple shapes. Take this "robot" for example:
+    ![robot]({{"/assets/img/n03-robot.png" | relative_url}})
+  * Some things to note about this image:
+    * There are 8 distinct parts.
+    * Each part is positioned relative to the main "torso" box.
+    * The entire robot is rotated about the y-axis.
+    * Both arms are rotated about the x-axis.
+    * The left lower arm is rotated along with the upper arm, and then rotated independently of it.
+* In order to achieve this level of shape dependence and independence, we need to change the way we think about transformations.
+*
+* To implement relative coordinate systems:
+  * We modify the coordinate systems first with transformations, before generating shapes.
+  * When we add a shape, we generate the necessary polygons/lines and immediately place them in the current coordinate system (apply the current transformations).
+  * _We no longer draw a sphere and then rotate it, now we rotate the world and draw the sphere in the changed world._
+* This gives us shape independence, in order to create shape dependence, we need to keep track of changes we make to the world as we do them.
+  * We can achieve this by maintaining a _stack_ of coordinate systems.
+  * Each coordinate system on the stack will represent the "world" at a specific time.
+  * When we push onto the stack, the new top will be based off of the previous top.
+  * Popping off the stack will act like rewinding to an earlier version of the coordinate system.
+* __Main changes to our graphics engine__
+  * Replace the single master transformation matrix with a stack of matrices.
+  * Transformation commands modify the current top of the stack.
+    * __The order is important__, is should be __top * transformation__. You will need to account for this in your
+  * Adding shapes follows the following pipeline:
+    1. Generate the necessary polygons/lines (no changes needed in the drawing commands)
+    2. Multiply the generated polygons/lines by the current top of the coordinate systems stack (placing the shape in the modified world).
+    3. Draw the transformed polygons/lines to the screen.
+    4. Clear out the polygons/lines.
+-->
