@@ -70,7 +70,7 @@
     <part>
       <title>Lighting &amp; Shading</title>
       <xi:include href="ch09-scanline.xml" />
-      
+      <xi:include href="ch10-z-buffer.xml" />
     </part>
 
     <backmatter xml:id="backmatter">
