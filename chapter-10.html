@@ -177,7 +177,7 @@ window.MathJax = {
 <span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
 </ol>
 </li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="part-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-4.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="part-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-4.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="chapter-11.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
 <input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
 </div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
@@ -345,7 +345,8 @@ window.MathJax = {
 </li>
 <li>
 <div class="toc-item"><a href="part-4.html" class="internal"><span class="codenumber">IV</span> <span class="title">Lighting &amp; Shading</span></a></div>
-<ul class="structural"><li class="active">
+<ul class="structural">
+<li class="active">
 <div class="toc-item"><a href="chapter-10.html" class="internal"><span class="codenumber">10</span> <span class="title">Scanline Conversion</span></a></div>
 <ul class="structural">
 <li><div class="toc-item"><a href="chapter-10.html#section-22" class="internal"><span class="codenumber">10.1</span> <span class="title">Overview</span></a></div></li>
@@ -361,7 +362,21 @@ window.MathJax = {
 <ul class="structural"><li><div class="toc-item"><a href="chapter-10.html#subsection-29" class="internal"><span class="codenumber">10.3.1</span> <span class="title">"Special" Triangles</span></a></div></li></ul>
 </li>
 </ul>
-</li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="chapter-11.html" class="internal"><span class="codenumber">11</span> <span class="title">Z Buffering</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-11.html#section-25" class="internal"><span class="codenumber">11.1</span> <span class="title">The Z-Buffer</span></a></div></li>
+<li>
+<div class="toc-item"><a href="chapter-11.html#section-26" class="internal"><span class="codenumber">11.2</span> <span class="title">Calculating <span class="process-math">\(z\)</span> Values</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="chapter-11.html#subsection-30" class="internal"><span class="codenumber">11.2.1</span> <span class="title"><code class="code-inline tex2jax_ignore">scanline_convert</code></span></a></div></li>
+<li><div class="toc-item"><a href="chapter-11.html#subsection-31" class="internal"><span class="codenumber">11.2.2</span> <span class="title"><code class="code-inline tex2jax_ignore">draw_line</code> and <code class="code-inline tex2jax_ignore">draw_scanline</code></span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 <li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
@@ -449,7 +464,7 @@ window.MathJax = {
 </h4>
 <div class="para" id="p-100">Scanline conversion works very well when there are distinct top, bottom and middle vertices. Sometimes, there is no distinct middle (once again, there will always be a top and bottom). These are cases when two vertices have the same <span class="process-math">\(y\)</span> value (either the top or bottom is a flat horizontal line). <em class="emphasis">But</em> the <span class="process-math">\(x\)</span> values will be different, which is important. You can handle these cases either explicitly or implicitly, but you do need to consider them.</div></section></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="part-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<a class="previous-button button" href="part-4.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="chapter-11.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer">
