@@ -71,6 +71,9 @@
       <title>Lighting &amp; Shading</title>
       <xi:include href="ch09-scanline.xml" />
       <xi:include href="ch10-z-buffer.xml" />
+      <xi:include href="ch11-lighting-models.xml" />
+      <xi:include href="ch12-phong-reflection.xml" />
+
     </part>
 
     <backmatter xml:id="backmatter">

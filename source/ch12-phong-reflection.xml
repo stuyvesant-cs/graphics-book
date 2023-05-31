@@ -1,0 +1,135 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Phong Reflection Models</title>
+  <introduction>
+    We will be using the _Phong Reflection Model_ to calculate the color of an object. (This is different from the Phong <em>shading</em> model, which is a separate concept).
+
+    The Phong reflection model combines ambient, diffuse and specular reflections.
+    <image source="images/ch12-phong_reflection.png">
+      <description>A shape made of 5 connected spheres with only ambient, diffuse, or specular reflection, and one with all 3.</description>
+    </image>
+  </introduction>
+  <section>
+    <title>Overview</title>
+    <p>
+      The color of an object will depend on:
+      <ul>
+        <li> <m>A</m>: The color of ambient light (RGB or a single value [0-255]). e.g. 255, 255, 255 (white)</li>
+        <li> <m>P</m>: The color of a point light source (RGB or a single value [0-255]). e.g. 255, 0, 255 (magenta)</li>
+        <li> <m>\overrightarrow{L}</m>: The vector from the surface of an object to a point light source (<m>\lt x, y, z></m>). e.g. <m>\lt 1, 0.5, 1></m> (to the right, slightly up and in front)</li>
+        <li> <m>\overrightarrow{V}</m>: The view vector (from the surface of an object to the viewer) (<m>\lt x, y, z></m>).e.g. <m>\lt 0, 0, 1></m> (directly in front)</li>
+        <li> <m>\overrightarrow{N}</m>: The surface normal of a polygon, see notes on [backface culling](#backface-culling) for more on this.</li>
+        <li> <m>K_a</m>: Constant of ambient reflection; how much ambient light is reflected by the object. ( RGB or a single value [0-1], think of it like a %). e.g. 0.1, 0.1, 0.1 </li>
+        <li> <m>K_d</m>: Constant of diffuse reflection; how much a point light is reflected diffusely by the object. ( RGB or a single value [0-1] ). e.g. 0.5, 0.5, 0.5</li>
+        <li> <m>K_s</m>: Constant of specular reflection; how much a point light is reflected specularly by the object. ( RGB or a single value [0-1] ). e.g. 0.5, 0.5, 0.5</li>
+      </ul>
+
+      In general, <m>I</m> (for illumination), or the color of an object based on lighting will be calculated by
+      <me>
+        I = I_{ambient} + I_{diffuse} + I_{specular}
+      </me>
+    </p>
+  </section>
+  <section>
+    <title>Ambient Reflection</title>
+    <p>
+      This is the ambient component of color. It is the easiest to compute since we don't need to take into account the location of the object or the viewer.
+      <me>
+        I_{ambient} = AK_a
+      </me>
+      If working in RGB instead of grayscale, you'll have to compute this separately for each color.
+    </p>
+  </section>
+  <section>
+    <title>Diffuse Reflection</title>
+    <p>
+      This is the diffuse reflection of a point light source. We will need to model the relationship between the light source and the object.
+      <image source="images/ch12-diffuse_reflection.jpg">
+        <description>A surface, its surface normal and an incoming light vector.</description>
+      </image>
+      Diffuse reflection is strongest when the surface is pointing directly at the light, and gets weaker as the object points away from the light. Put another way, the diffuse reflection is inversely proportional to <m>\theta</m>. This can be modeled with <m>cos\theta</m>. Lucky, for us, we already know that <m>cos\theta</m> is the dot product of the two vectors. Unlike with backface culling, we <em>DO</em> care about the magnitudes, so it is in our best interest to normalize both<m>\overrightarrow{N}</m> and <m>\overrightarrow{L}</m>.
+    </p>
+    <p>
+      The normalized version of a vector is often shown with a ^ like so: <m>\hat{N}</m>. To normalize a vector, divide each component by the magnitude of the original vector. For Vector <m>\overrightarrow{A} =  \lt x, y, z></m>, <m>M = \sqrt{x^2 + y^2 + z^2}</m>, <m>\hat{A} = \lt \dfrac{x}{M}, \dfrac{y}{M}, \dfrac{z}{M}></m>. Once normalized, we can do: <m>cos\theta = \hat{N} \cdot \hat{L}</m> Combined with P and Kd, we get:
+      <me>
+        I_{diffuse} = PK_d(\hat{N} \cdot \hat{L})
+      </me>
+    </p>
+  </section>
+  <section>
+    <title>Specular Reflection</title>
+    <p>
+      This is the specular reflection of a point light source. We will need to model the relationship between the light source and the <em>viewer</em>.
+      <image source="images/ch12-specular_reflection.jpg">
+        <description>A surface, its surface normal, an incoming light vector, the reflected vector, and the view vector.</description>
+      </image>
+      Specular reflection is strongest when the reflected light is pointing directly at the viewer. This is inversely proportional to <m>\alpha</m>, and can be modeled by <m>cos\alpha</m>. What we need is:
+      <me>
+        cos\alpha = \hat{R} \cdot \hat{V}
+      </me>
+      <m>\hat{V}</m> is given, but how can we find <m>\hat{R}</m>?
+    </p>
+    <p>
+      <image source="images/ch12-r.jpg">
+        <description>Similar Triangles</description>
+      </image>
+      Using the above diagram:
+      <me>
+        \hat{R} = \overrightarrow{T} + \overrightarrow{S}
+      </me>
+      <m>\overrightarrow{T}</m> is the projection of <m>\hat{L}</m> onto <m>\hat{N}</m>. The result is a vector with the same direction as <m>\hat{N}</m>, but with a magnitude scaled by <m>\hat{L}</m>.
+      <me>
+        \overrightarrow{T} = \hat{N}(\hat{N} \cdot \hat{L})
+      </me>
+      Note that while <m>\hat{N}</m> and <m>\hat{L}</m> should be normalized, <m>\overrightarrow{T}</m> will not be (unless <m>\alpha = 0</m>). Now we know <m>\overrightarrow{T}</m> in terms of information we already have. <m>\overrightarrow{S}</m> can be found by doing some similar triangle work.
+      <me>
+        \begin{aligned}
+        \hat{L} + \overrightarrow{S} \amp= \overrightarrow{T} \\
+        \overrightarrow{S} \amp= \overrightarrow{T} - \hat{L} \\
+        \overrightarrow{S} \amp= \hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}
+        \end{aligned}
+      </me>
+      Which then gives us:
+      <me>
+        \begin{aligned}
+        \hat{R} \amp= \hat{N}(\hat{N} \cdot \hat{L}) + \hat{N}(\hat{N} \cdot \hat{L}) - \hat{L} \\
+        \hat{R} \amp= 2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}
+        \end{aligned}
+      </me>
+      Using this, we get <m>\cos\alpha =[2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V}</m>. Combined with P and Ks we get:
+      <me>
+        I_{specular} = PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V})
+      </me>
+      This doesn't take into account the fact that specular reflections are supposed to die off quickly. Note that the specular component from the Phong reflection image above is mostly a group of small, bright circles. The simplest way to get this effect is to raise <m>cos\alpha</m> to some exponenet larger than 1. The specific value will depend on what looks right to you.
+      <me>
+        I_{specular} = PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V})^x
+      </me>
+    </p>
+  </section>
+  <section>
+    <title>Putting it All Together</title>
+    <p>
+      <me>
+        \begin{aligned}
+        I \amp= I_{ambient} + I_{diffuse} + I_{specular} \\
+        I_{ambient} \amp= AK_a \\
+        I_{diffuse} \amp= PK_d(\hat{N} \cdot \hat{L}) \\
+        I_{specular} \amp= PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V})^x
+        \end{aligned}
+      </me>
+      <me>
+        I = AK_a + PK_d(\hat{N} \cdot \hat{L}) + PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V})^x
+      </me>
+    </p>
+  </section>
+
+</chapter>
+
+<!--
+
+__Putting it all together__
+<li> <m><m>
+<li> <m> <m>
+<li> For now, we should calculate <m>I<m> once per polygon. This is known as __flat shading__. Later on we will look at other shading options.
+
+
+-->

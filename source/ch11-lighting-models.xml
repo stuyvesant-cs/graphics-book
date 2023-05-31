@@ -1,0 +1,57 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Lighting Models</title>
+  <introduction>
+    In the real world, the color of an object depends on the color and location of any light source and the reflective properties of the object. Here are a few examples of how this works out:
+    <ol>
+      <li>If an object appears to be white then we know for certain that the object reflects white (that is all colors) and white light is hitting the object</li>
+      <li>If an object appears to be red, then we know for certain that the object reflects red light and red light is hitting the object.</li>
+      <li>If an object appears to be magenta (red and blue) then we know for certain that the object reflects red and blue light and red and blue light is hitting the object.</li>
+    </ol>
+    In all thses cases, other things may be true. It's possible that the light in 3 is white, and the object only reflects red and blue. It is equally possible that the object reflects all colors, but the light itself is only red and blue. Both of these scenarios would result in the same image.
+  </introduction>
+  <section>
+    <title>Light Sources</title>
+    <p>
+      We will work with 2 kinds of light sources, <em>ambient</em> and <em>point lights</em>. Both will have an associated color, either as an RGB triple or a single grayscale value.
+    </p>
+    <subsection>
+      <title>Ambient Light</title>
+      <p>
+        This is the general background lighting of an image. Imagine you were outside on a cloudy day, there would be a general amount of brightness to everything, but no one specific location that light was coming from. It is common to think about ambient light as if it is coming from all directions with equal intensity. This means that it doesn't matter where an object is located within the image, or where the viwer is with respect to the object.
+      </p>
+    </subsection>
+    <subsection>
+      <title>Point Light Sources</title>
+      <p>
+        Point light sources come from a specific location. Think of these like a flashlight or spot light.Here, the position of an object in important, since that will tell us the object's relationship to the light source. It is possible for there to be multiple distinct point light sources in an image. We will model these as vectors from the surface of our objects to the light source.
+      </p>
+    </subsection>
+  </section>
+  <section>
+    <title>Reflection Types</title>
+    <p>
+      There are three kinds of reflections we will consider, <em>ambient</em>, <em>diffuse</em>, and <em>specular</em>. Ambient reflection only involves amient light, whereas diffuse and specular reflection involve poiont light sources.
+    </p>
+    <subsection>
+      <title>Ambient Reflection</title>
+      <p>
+        This is simply the amount of ambient light reflected by an object. In the real world, this would not be separate from the other types of reflection, but it makes out modeling easier to separate it out.
+      </p>
+    </subsection>
+    <subsection>
+      <title>Diffuse Reflection</title>
+      <p>
+        This is specifically for reflection of a point light source. Diffusse reflection  of a specific light source evenly in all directions. Note this is different from ambient light in that ambient light comes from all directions. Here, it is only the reflection that goes in all directions.
+      </p>
+      <p>
+        In the real world, we say that an object that displays a lot of diffuse reflection appears dull or <em>matte</em>. Things like cloth or cardboard boxes tend to exhibit a lot of diffuse reflection. This behvior stems from the fact that matte surfaces are irregular (and often rough to the touch), allowing incoming light to bouce off in various directions before being reflected toward a viewer.
+      </p>
+    </subsection>
+    <subsection>
+      <title>Specular Reflection</title>
+      <p>
+        This is specifically for reflection of a point light source. Specular reflection is the reflection of a specific light source in a specific direction (as oppsed to diffuse, which is reflected in all directions). Objects that display a lot of specular reflection often appear shinny or <em>glossy</em>. Things like polished metal and glass tend to exhibit a lot of specular reflection. This stems from the fact that glossy surfaces are very smooth. Since the reflection has a specific direction, specular reflection is dependent on the location of the object with respect to the point light source <em>and</em> the viewer. The more the viewer is in line with the reflected light, the strong the reflection will appear.
+      </p>
+    </subsection>
+  </section>
+</chapter>
