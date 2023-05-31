@@ -12,7 +12,15 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">We will work with 2 kinds of light sources, <em class="emphasis">ambient</em> and <em class="emphasis">point lights</em>. Both will have an associated color, either as an RGB triple or a single grayscale value.</div>
-<span class="incontext"><a href="chapter-12.html#p-111" class="internal">in-context</a></span>
+<div class="para logical">
+<div class="para">This is the ambient component of color. It is the easiest to compute since we don't need to take into account the location of the object or the viewer.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+I_{ambient} = AK_a
+\end{equation*}
+</div>
+<div class="para">If working in RGB instead of grayscale, you'll have to compute this separately for each color.</div>
+</div>
+<span class="incontext"><a href="chapter-13.html#p-120" class="internal">in-context</a></span>
 </body>
 </html>
