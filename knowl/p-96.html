@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -12,7 +12,7 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">Each scanline will go from one edge of the triangle to another. In order to draw each line, we have to determine the endpoints. <span class="process-math">\(y\)</span> values are very simple. They start at the bottom (<span class="process-math">\(y_b\)</span>), go up by 1 each time, and end at the top (<span class="process-math">\(y_t\)</span>). The <span class="process-math">\(x\)</span> values are more complicated. They must move along the edges of the triangle. In the diagram above, I've designated that <span class="process-math">\(x_0\)</span> for each scanline to be the endpoint somewhere along the line <span class="process-math">\(\overline{BT}\text{,}\)</span> and <span class="process-math">\(x_1\)</span> will be the other endpoint, which will either be along <span class="process-math">\(\overline{BM}\)</span> or <span class="process-math">\(\overline{MT}\text{,}\)</span> depending on how far up we've made it. It doesn't matter if the middle vertex is to the left of right of the <span class="process-math">\(\overline{BT}\)</span> edge, since our <code class="code-inline tex2jax_ignore">draw_line</code> function will swap endpoints if they're not listed left to right. This will make it easier to develop the scanline algorithm.</div>
-<span class="incontext"><a href="chapter-10.html#p-96" class="internal">in-context</a></span>
+<div class="para">The biggest conceptual shift in moving from a global to a relative coordinate system is understanding what we are applying our transformations to. Instead of transforming shapes (i.e. generating a sphere, then rotating that sphere), we will be <em class="emphasis">transforming the world</em>.</div>
+<span class="incontext"><a class="internal" href="chapter-9.html#p-96">in-context</a></span>
 </body>
 </html>

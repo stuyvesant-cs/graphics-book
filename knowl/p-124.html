@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -11,55 +11,8 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para logical">
-<div class="para">
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch12-r.jpg" class="contained" alt="Similar Triangles"></div> Using the above diagram:</div>
-<div class="displaymath process-math">
-\begin{equation*}
-\hat{R} = \overrightarrow{T} + \overrightarrow{S}
-\end{equation*}
-</div>
-<div class="para">
-<span class="process-math">\(\overrightarrow{T}\)</span> is the projection of <span class="process-math">\(\hat{L}\)</span> onto <span class="process-math">\(\hat{N}\text{.}\)</span> The result is a vector with the same direction as <span class="process-math">\(\hat{N}\text{,}\)</span> but with a magnitude scaled by <span class="process-math">\(\hat{L}\text{.}\)</span>
-</div>
-<div class="displaymath process-math">
-\begin{equation*}
-\overrightarrow{T} = \hat{N}(\hat{N} \cdot \hat{L})
-\end{equation*}
-</div>
-<div class="para">Note that while <span class="process-math">\(\hat{N}\)</span> and <span class="process-math">\(\hat{L}\)</span> should be normalized, <span class="process-math">\(\overrightarrow{T}\)</span> will not be (unless <span class="process-math">\(\alpha = 0\)</span>). Now we know <span class="process-math">\(\overrightarrow{T}\)</span> in terms of information we already have. <span class="process-math">\(\overrightarrow{S}\)</span> can be found by doing some similar triangle work.</div>
-<div class="displaymath process-math">
-\begin{equation*}
-\begin{aligned}
-\hat{L} + \overrightarrow{S} \amp= \overrightarrow{T} \\
-\overrightarrow{S} \amp= \overrightarrow{T} - \hat{L} \\
-\overrightarrow{S} \amp= \hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}
-\end{aligned}
-\end{equation*}
-</div>
-<div class="para">Which then gives us:</div>
-<div class="displaymath process-math">
-\begin{equation*}
-\begin{aligned}
-\hat{R} \amp= \hat{N}(\hat{N} \cdot \hat{L}) + \hat{N}(\hat{N} \cdot \hat{L}) - \hat{L} \\
-\hat{R} \amp= 2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}
-\end{aligned}
-\end{equation*}
-</div>
-<div class="para">Using this, we get <span class="process-math">\(\cos\alpha =[2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V}\text{.}\)</span> Combined with P and Ks we get:</div>
-<div class="displaymath process-math">
-\begin{equation*}
-I_{specular} = PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V})
-\end{equation*}
-</div>
-<div class="para">This doesn't take into account the fact that specular reflections are supposed to die off quickly. Note that the specular component from the Phong reflection image above is mostly a group of small, bright circles. The simplest way to get this effect is to raise <span class="process-math">\(cos\alpha\)</span> to some exponenet larger than 1. The specific value will depend on what looks right to you.</div>
-<div class="displaymath process-math">
-\begin{equation*}
-I_{specular} = PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V})^x
-\end{equation*}
-</div>
-</div>
-<span class="incontext"><a href="chapter-13.html#p-124" class="internal">in-context</a></span>
+<h5 class="heading"><span class="type">Paragraph</span></h5>
+<div class="para">This is specifically for reflection of a point light source. Diffusse reflection  of a specific light source evenly in all directions. Note this is different from ambient light in that ambient light comes from all directions. Here, it is only the reflection that goes in all directions.</div>
+<span class="incontext"><a class="internal" href="chapter-12.html#p-124">in-context</a></span>
 </body>
 </html>

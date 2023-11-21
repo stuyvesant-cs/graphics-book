@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -11,10 +11,35 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h5 class="heading"><span class="type">Paragraph</span></h5>
-<div class="para">
-<span class="process-math">\(z_0\)</span> is on the line <span class="process-math">\(\overline{BT}\text{,}\)</span> so it starts at <span class="process-math">\(z_b\)</span> and goes to <span class="process-math">\(z_t\text{.}\)</span> <span class="process-math">\(z_1\)</span> is on the line <span class="process-math">\(\overline{BM}\)</span> starting at <span class="process-math">\(z_b\)</span> going to <span class="process-math">\(z_m\)</span> and then it moves onto the line <span class="process-math">\(\overline{MT}\text{,}\)</span> going from <span class="process-math">\(z_m\)</span> to <span class="process-math">\(z_t\text{.}\)</span>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para logical">
+<div class="para">Putting this all together, we can come up with this pseudocode outline:</div>
+<pre class="code-display tex2jax_ignore">
+        //initial setup, find b, t, m
+        x0 = xb, x1 = xb, y0 = yb
+        dx0 = (xt - xb) / (yt - yb)
+        dx1 = (xm - xb) / (ym - yb)
+        dx1_1 = (xt - xm) / (yt - ym)
+        while y &lt;= yt
+            draw_line(x0, y, x1, y)
+            //move the endpoints
+            x0+= dx0
+            x1+= dx1
+            y+= 1
+            //swap dx1 if neeced
+            if y &gt;= ym
+                dx1 = dx1_1
+                x1 = xm
+      </pre>
+<div class="para">It is a good idea to think of the loop here as having 3 distinct parts:</div>
+<ol class="decimal">
+<li><div class="para">drawing the line</div></li>
+<li><div class="para">updating the endpoints</div></li>
+<li><div class="para">swapping <span class="process-math">\(\Delta x_1\)</span>
+</div></li>
+</ol>
+<div class="para">The order in which you do these may not match the outline above, depending on how you handle "special" cases and other potential issues as they arise.</div>
 </div>
-<span class="incontext"><a href="chapter-11.html#p-107" class="internal">in-context</a></span>
+<span class="incontext"><a class="internal" href="chapter-10.html#p-107">in-context</a></span>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -11,8 +11,17 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">In addition to maintaining a Z-Buffer, we need to now calculate z values whenever we draw lines. This includes our <code class="code-inline tex2jax_ignore">draw_line</code>, <code class="code-inline tex2jax_ignore">scanline_convert</code>, and <code class="code-inline tex2jax_ignore">draw_scanline</code> (if you made a separate function to just draw scanlines) functions.</div>
-<span class="incontext"><a href="chapter-11.html#p-105" class="internal">in-context</a></span>
+<h5 class="heading"><span class="type">Paragraph</span></h5>
+<div class="para logical">
+<div class="para">
+<span class="process-math">\(x_0\)</span> starts at <span class="process-math">\(x_b\)</span> and ends at <span class="process-math">\(x_t\text{.}\)</span> The question is, how much does <span class="process-math">\(x_0\)</span> change with each scanline (<span class="process-math">\(\Delta x_0\)</span>)? The total change in <span class="process-math">\(x_0\)</span> is <span class="process-math">\(x_t - x_b\text{,}\)</span> which occurs over the course of drawing each scanline. So the number of scanlines determines the number of times we change <span class="process-math">\(x_0\text{.}\)</span> In turn, the number of scanlines is just the difference in <span class="process-math">\(y\)</span> over the course of the triangle.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\Delta x_0 = \frac{x_t - x_b}{y_t - y_b + 1}
+\end{equation*}
+</div>
+<div class="para">(we need to add 1 to the y difference to account for the bottom-most line).</div>
+</div>
+<span class="incontext"><a class="internal" href="chapter-10.html#p-105">in-context</a></span>
 </body>
 </html>

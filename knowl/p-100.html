@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -11,8 +11,25 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h5 class="heading"><span class="type">Paragraph</span></h5>
-<div class="para">Scanline conversion works very well when there are distinct top, bottom and middle vertices. Sometimes, there is no distinct middle (once again, there will always be a top and bottom). These are cases when two vertices have the same <span class="process-math">\(y\)</span> value (either the top or bottom is a flat horizontal line). <em class="emphasis">But</em> the <span class="process-math">\(x\)</span> values will be different, which is important. You can handle these cases either explicitly or implicitly, but you do need to consider them.</div>
-<span class="incontext"><a href="chapter-10.html#p-100" class="internal">in-context</a></span>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para logical">
+<div class="para">Ok, so how does this all play out in code? To implement relative coordinate systems:</div>
+<ul class="disc">
+<li><div class="para">Transformations modify the current coordinate system</div></li>
+<li><div class="para">When we add a shape, we generate the necessary polygons/lines and immediately place them in the current coordinate system (apply the current transformations).</div></li>
+<li><div class="para">Once the transformations have been applied, we then immediately render the shape to the screen.</div></li>
+<li><div class="para">Once the shape has been rendered to the screen, we can clear out the edge/polygon lists.</div></li>
+</ul>
+<div class="para">We also need to maintain a stack of coordinate systems that behaves as follows:</div>
+<ul class="disc">
+<li><div class="para">
+<code class="code-inline tex2jax_ignore">peek</code>: Return the current top.</div></li>
+<li><div class="para">
+<code class="code-inline tex2jax_ignore">pop</code>: Remove the current top (no need to return).</div></li>
+<li><div class="para">
+<code class="code-inline tex2jax_ignore">push</code>: Push a <em class="emphasis">copy</em> of the current top onto the stack. This will ensure that each pushed coordinate system will be based on the previous version.</div></li>
+</ul>
+</div>
+<span class="incontext"><a class="internal" href="chapter-9.html#p-100">in-context</a></span>
 </body>
 </html>

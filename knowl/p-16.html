@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -26,7 +26,7 @@ f(x_{0}+1, y_{0}+\dfrac{1}{2}) \amp= A + \dfrac{1}{2}B
 \end{equation*}
 </div>
 <div class="para">
-<span class="process-math">\((x_{0}, y_{0})\)</span> is on the line so we know <span class="process-math">\(f(x_{0}, y_{0}) = 0\text{.}\)</span> This results in an initial calculation based on values that are straightforward to get given the endpoints of the line. This is not a huge benefit though, since we're still calculating <span class="process-math">\(f\)</span> repeatedly inside our loop. So let's think about what's happening inside the loop. Each time the loop runs, we add 1 to <span class="process-math">\(x\text{,}\)</span> and sometimes we add 1 to <span class="process-math">\(y\text{.}\)</span> Look at what happens when we choose <span class="process-math">\((x+1, y+1)\text{.}\)</span>
+<span class="process-math">\((x_{0}, y_{0})\)</span> is on the line so we know <span class="process-math">\(f(x_{0}, y_{0}) = 0\text{.}\)</span> This results in an initial calculation based on values that are straightforward to get given the endpoints of the line. This is not a huge benefit though, since we’re still calculating <span class="process-math">\(f\)</span> repeatedly inside our loop. So let’s think about what’s happening inside the loop. Each time the loop runs, we add 1 to <span class="process-math">\(x\text{,}\)</span> and sometimes we add 1 to <span class="process-math">\(y\text{.}\)</span> Look at what happens when we choose <span class="process-math">\((x+1, y+1)\text{.}\)</span>
 </div>
 <div class="displaymath process-math">
 \begin{equation*}
@@ -39,6 +39,6 @@ f(x+1, y+1) \amp= f(x, y) + A + B
 </div>
 <div class="para">In our code, <code class="code-inline tex2jax_ignore">d</code> represents the previous value of <span class="process-math">\(f\text{,}\)</span> calculated as <span class="process-math">\(f(x, y)\text{,}\)</span> then if we use <span class="process-math">\((x+1, y+1)\text{,}\)</span> the result is <code class="code-inline tex2jax_ignore">d + A + B</code>. In general, every time we add 1 to <code class="code-inline tex2jax_ignore">x</code>, we must add <code class="code-inline tex2jax_ignore">A</code> to <code class="code-inline tex2jax_ignore">d</code>, and every time we add 1 to <code class="code-inline tex2jax_ignore">y</code>, we must add <code class="code-inline tex2jax_ignore">B</code> to <code class="code-inline tex2jax_ignore">d</code>. This means we can remove <span class="process-math">\(f\)</span> from our algorithm entirely, giving us (this version starts by multiplying <code class="code-inline tex2jax_ignore">A</code> and <code class="code-inline tex2jax_ignore">B</code> by 2 in order to keep all values as integers):</div>
 </div>
-<span class="incontext"><a href="chapter-2.html#p-16" class="internal">in-context</a></span>
+<span class="incontext"><a class="internal" href="chapter-2.html#p-16">in-context</a></span>
 </body>
 </html>

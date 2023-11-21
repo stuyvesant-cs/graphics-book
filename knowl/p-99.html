@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -13,33 +13,19 @@
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
 <div class="para logical">
-<div class="para">Putting this all together, we can come up with this pseudocode outline:</div>
-<pre class="code-display tex2jax_ignore">
-        //initial setup, find b, t, m
-        x0 = xb, x1 = xb, y0 = yb
-        dx0 = (xt - xb) / (yt - yb)
-        dx1 = (xm - xb) / (ym - yb)
-        dx1_1 = (xt - xm) / (yt - ym)
-        while y &lt;= yt
-            draw_line(x0, y, x1, y)
-            //move the endpoints
-            x0+= dx0
-            x1+= dx1
-            y+= 1
-            //swap dx1 if neeced
-            if y &gt;= ym
-                dx1 = dx1_1
-                x1 = xm
-      </pre>
-<div class="para">It is a good idea to think of the loop here as having 3 distinct parts:</div>
-<ol class="decimal">
-<li><div class="para">drawing the line</div></li>
-<li><div class="para">updating the endpoints</div></li>
-<li><div class="para">swapping <span class="process-math">\(\Delta x_1\)</span>
-</div></li>
-</ol>
-<div class="para">The order in which you do these may not match the outline above, depending on how you handle "special" cases and other potential issues as they arise.</div>
+<div class="para">In order to have both shape dependence and independence, we need to be able to keep track of coordinate systems as we make them. For the robot, we set up the system for the torso, then create a new system from that one for the head, once we’re done with the head, we can "rewind" back to the torso system and then make a new one based off that for the arm, and so on. So we’d like a data structure with the following features:</div>
+<ul class="disc">
+<li><div class="para">Quick access to the current coordinate system.</div></li>
+<li><div class="para">A way to revert back to previous coordinate systems.</div></li>
+<li><div class="para">A way to create new coordinate systems based off the current one.</div></li>
+</ul>
+<div class="para">At any given time, we only need to look at the <em class="emphasis">current</em> coordinate system, which means this is a great place to use a <em class="emphasis">stack</em>. With a stack of matrices:</div>
+<ul class="disc">
+<li><div class="para">We can always quickly access the top.</div></li>
+<li><div class="para">We can pop the top to access previous matrices.</div></li>
+<li><div class="para">We can push to quickly make new matrices (and with some minor customization, have theses new ones start from the previous top’s state).</div></li>
+</ul>
 </div>
-<span class="incontext"><a href="chapter-10.html#p-99" class="internal">in-context</a></span>
+<span class="incontext"><a class="internal" href="chapter-9.html#p-99">in-context</a></span>
 </body>
 </html>

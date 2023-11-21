@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -12,7 +12,8 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">A Z-Buffer is a 2D array of <em class="emphasis">floating point</em> z values that maps directly to the 2D array of colors/pixels that contains our image. For example, the Z-buffer value at <span class="process-math">\((4, 10)\)</span> is the z coordinate for the pixel drawn at point <span class="process-math">\((4, 10)\text{.}\)</span> Since z values represent the depth of a pixel, we can use the Z-Buffer to keep track of how forward or backward any plotted pixel is.</div>
-<span class="incontext"><a href="chapter-11.html#p-101" class="internal">in-context</a></span>
+<div class="para">As we say before when we introduced transformations, the order of multiplication matters greatly. In a relative coordinate system, the last (that is to say, the most recent) transformation to be applied to the world needs to be the <em class="emphasis">first</em> transformation applied to a shape. This means that the last transformation should be on the right hand side of your multiplication. In fact, every time you apply a new transformation to the current coordinate system, the new transformation needs to be on the right hand side of the multiplication. To put it simply, all transformations need to be applied as follows: <span class="process-math">\(top \times transformation\text{.}\)</span>
+</div>
+<span class="incontext"><a class="internal" href="chapter-9.html#p-101">in-context</a></span>
 </body>
 </html>

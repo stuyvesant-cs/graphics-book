@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -11,17 +11,8 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h5 class="heading"><span class="type">Paragraph</span></h5>
-<div class="para logical">
-<div class="para">
-<span class="process-math">\(x_0\)</span> starts at <span class="process-math">\(x_b\)</span> and ends at <span class="process-math">\(x_t\text{.}\)</span> The question is, how much does <span class="process-math">\(x_0\)</span> change with each scanline (<span class="process-math">\(\Delta x_0\)</span>)? The total change in <span class="process-math">\(x_0\)</span> is <span class="process-math">\(x_t - x_b\text{,}\)</span> which occurs over the course of drawing each scanline. So the number of scanlines determines the number of times we change <span class="process-math">\(x_0\text{.}\)</span> In turn, the number of scanlines is just the difference in <span class="process-math">\(y\)</span> over the course of the triangle.</div>
-<div class="displaymath process-math">
-\begin{equation*}
-\Delta x_0 = \frac{x_t - x_b}{y_t - y_b + 1}
-\end{equation*}
-</div>
-<div class="para">(we need to add 1 to the y difference to account for the bottom-most line).</div>
-</div>
-<span class="incontext"><a href="chapter-10.html#p-97" class="internal">in-context</a></span>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para">Another way to think about this, is that in a global coordinate system, all shapes are added to your edge/polygon lists without any context. We make the shapes, dump them in the lists, and then transform the whole thing later. In a relative coordinate system, we must provide a context <em class="emphasis">before</em> adding any shapes. So we will decide to say, rotate the coordinate system, then create a shape, rotate that shape, then add it to the edge/polygon list.</div>
+<span class="incontext"><a class="internal" href="chapter-9.html#p-97">in-context</a></span>
 </body>
 </html>

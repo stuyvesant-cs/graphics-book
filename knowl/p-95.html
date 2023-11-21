@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -12,8 +12,17 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">In order to scanline convert a triangle, the first thing we have to do is find the top, bottom and middle vertices. As long as each triangle in our triangle matrix has 3 distinct vertices, there will always <em class="emphasis">at least</em> be a distinct top and bottom (this is why it was important not to add the degenerate triangles at the poles of a sphere). We can define the middle as the vertex that isn't either the top or bottom (more on this later). After ordering our vertices vertically, we have something like this: <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch09-scanline-triangle.png" class="contained" alt="A triangle with vertices labeled Bottom, Top, and Middle."></div>
+<div class="para logical">
+<div class="para">Some things to note about this image:</div>
+<ul class="disc">
+<li><div class="para">There are 8 distinct parts.</div></li>
+<li><div class="para">Each part is positioned relative to the main "torso" box.</div></li>
+<li><div class="para">The entire robot is rotated about the y-axis.</div></li>
+<li><div class="para">Both arms are rotated about the x-axis.</div></li>
+<li><div class="para">The left lower arm is rotated along with the upper arm, and then rotated independently of it.</div></li>
+</ul>
+<div class="para">In order to achieve this level of shape dependence and independence, we need to change the way we think about transformations.</div>
 </div>
-<span class="incontext"><a href="chapter-10.html#p-95" class="internal">in-context</a></span>
+<span class="incontext"><a class="internal" href="chapter-9.html#p-95">in-context</a></span>
 </body>
 </html>

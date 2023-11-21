@@ -5,7 +5,7 @@
 <!--*         https://pretextbook.org          *-->
 <!--*                                          *-->
 <!--********************************************-->
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Phong Reflection Models</title>
@@ -14,172 +14,99 @@
 <meta property="og:type" content="book">
 <meta property="book:title" content="Computer Graphics">
 <meta property="book:author" content="JonAlf Dyrland-Weaver">
-<script>var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+<script>
+var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
 window.MathJax = {
-  tex: {
-    inlineMath: [['\\(','\\)']],
-    tags: "none",
-    tagSide: "right",
-    tagIndent: ".8em",
-    packages: {'[+]': ['base', 'extpfeil', 'ams', 'amscd', 'color', 'newcommand', 'knowl']}
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "tags": "none",
+    "tagSide": "right",
+    "tagIndent": ".8em",
+    "packages": {
+      "[+]": [
+        "base",
+        "extpfeil",
+        "ams",
+        "amscd",
+        "color",
+        "newcommand",
+        "knowl"
+      ]
+    }
   },
-  options: {
-    ignoreHtmlClass: "tex2jax_ignore|ignore-math",
-    processHtmlClass: "process-math",
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore|ignore-math",
+    "processHtmlClass": "process-math"
   },
-  chtml: {
-    scale: 0.98,
-    mtextInheritFont: true
+  "chtml": {
+    "scale": 0.98,
+    "mtextInheritFont": true
   },
-  loader: {
-    load: ['input/asciimath', '[tex]/extpfeil', '[tex]/amscd', '[tex]/color', '[tex]/newcommand', '[pretext]/mathjaxknowl3.js'],
-    paths: {pretext: "https://pretextbook.org/js/lib"},
+  "loader": {
+    "load": [
+      "input/asciimath",
+      "[tex]/extpfeil",
+      "[tex]/amscd",
+      "[tex]/color",
+      "[tex]/newcommand",
+      "[pretext]/mathjaxknowl3.js"
+    ],
+    "paths": {
+      "pretext": "https://pretextbook.org/js/lib"
+    }
   },
-  startup: {
+  "startup": {
     pageReady() {
       return MathJax.startup.defaultPageReady().then(function () {
       console.log("in ready function");
       rsMathReady();
       }
     )}
-  },
+  }
 };
-</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
-<script>js_version = 0.2</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.2/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.2/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.2/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="https://pretextbook.org/js/0.32/pretext_search.js"></script><link href="https://pretextbook.org/css/0.82/pretext_search.css" rel="stylesheet" type="text/css">
+<script>js_version = 0.32</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.32/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.32/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.32/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
 </script><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/dejavu-serif" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wdth,wght@8..144,50..150,100..900&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,300..800&amp;display=swap" rel="stylesheet">
-<link href="https://pretextbook.org/css/0.6/pretext.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/pretext_add_on.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/shell_default.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/banner_default.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/navbar_default.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/toc_default.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/knowls_default.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/style_default.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/colors_blue_red.css" rel="stylesheet" type="text/css">
-<link href="https://pretextbook.org/css/0.6/setcolors.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<link href="https://pretextbook.org/css/0.82/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/shell_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/banner_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/navbar_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/toc_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/knowls_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/style_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/colors_blue_red.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.82/setcolors.css" rel="stylesheet" type="text/css">
 </head>
 <body class="pretext book ignore-math">
-<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead"><div class="ptx-banner">
-<a id="logo-link" href=""></a><div class="title-container">
-<h1 class="heading"><a href="stuy-gfx.html"><span class="title">Computer Graphics:</span> <span class="subtitle">A Language Agnostic Guide to Fakin' It</span></a></h1>
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" class="logo-link" target="_blank" href=""></a><div class="title-container">
+<h1 class="heading"><a href="stuy-gfx.html"><span class="title">Computer Graphics:</span> <span class="subtitle">A Language Agnostic Guide to Fakin’ It</span></a></h1>
 <p class="byline">JonAlf Dyrland-Weaver</p>
 </div>
-<div id="searchresultsplaceholder" style="display: none">
-<button id="closesearchresults" onclick="document.getElementById('searchresultsplaceholder').style.display = 'none'; return false;">x</button><h2>Search Results: <span id="searchterms"></span>
-</h2>
-<div id="searchempty"><span>No results.</span></div>
-<ol id="searchresults"></ol>
+</div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><button class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="searchbox">
+<div class="searchwidget"><button id="searchbutton" class="searchbutton button" type="button" title="Search book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<div id="searchresultsplaceholder" class="searchresultsplaceholder" style="display: none">
+<div class="search-results-controls">
+<input aria-label="Search term" id="ptxsearch" class="ptxsearch" type="text" name="terms" placeholder="Search term"><button title="Close search" id="closesearchresults" class="closesearchresults"><span class="material-symbols-outlined">close</span></button>
 </div>
-</div></header><nav id="ptx-navbar" class="navbar"><button class="toc-toggle button" aria-label="Show or hide table of contents"><span class="icon">☰</span><span class="name">Contents</span></button><button id="user-preferences-button" class="user-preferences-button button" title="Modify user preferences"><span id="theavatarbutton" class="name">You!</span><div id="preferences_menu_holder" class="hidden"><ol id="preferences_menu" style="font-family: 'Roboto Serif', serif;">
-<li data-env="avatar" tabindex="-1">Choose avatar<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
-<ol class="hidden avatar">
-<li data-val="You!" tabindex="-1">
-<span id="theYou!" class="avatarcheck">✔️</span>You!</li>
-<li data-val="😺" tabindex="-1">
-<span id="the😺" class="avatarcheck"></span>😺</li>
-<li data-val="👤" tabindex="-1">
-<span id="the👤" class="avatarcheck"></span>👤</li>
-<li data-val="👽" tabindex="-1">
-<span id="the👽" class="avatarcheck"></span>👽</li>
-<li data-val="🐶" tabindex="-1">
-<span id="the🐶" class="avatarcheck"></span>🐶</li>
-<li data-val="🐼" tabindex="-1">
-<span id="the🐼" class="avatarcheck"></span>🐼</li>
-<li data-val="🌈" tabindex="-1">
-<span id="the🌈" class="avatarcheck"></span>🌈</li>
-</ol>
-</li>
-<li data-env="fontfamily" tabindex="-1">Font family<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
-<ol class="hidden fontfamily">
-<li data-val="face" data-change="OS" tabindex="-1" style="font-family: 'Open Sans'">
-<span id="theOS" class="ffcheck">✔️</span><span class="name">Open Sans</span><span class="sample">AaBbCc 123 PreTeXt</span>
-</li>
-<li data-val="face" data-change="RS" tabindex="-1" style="font-family: 'Roboto Serif'">
-<span id="theRS" class="ffcheck"></span><span class="name">Roboto Serif</span><span class="sample">AaBbCc 123 PreTeXt</span>
-</li>
-</ol>
-</li>
-<li data-env="font" tabindex="-1">Adjust font<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
-<ol class="hidden fonts">
-<li>Size</li>
-<li><span id="thesize">12</span></li>
-<li data-val="size" data-change="-1" tabindex="-1" style="font-size: 80%">Smaller</li>
-<li data-val="size" data-change="1" tabindex="-1" style="font-size: 110%">Larger</li>
-<li>Width</li>
-<li><span id="thewdth">100</span></li>
-<li data-val="wdth" data-change="-5" tabindex="-1" style="font-variation-settings: 'wdth' 60">narrower</li>
-<li data-val="wdth" data-change="5" tabindex="-1" style="font-variation-settings: 'wdth' 150">wider</li>
-<li>Weight</li>
-<li><span id="thewght">400</span></li>
-<li data-val="wght" data-change="-50" tabindex="-1" style="font-weight: 200">thinner</li>
-<li data-val="wght" data-change="50" tabindex="-1" style="font-weight: 700">heavier</li>
-<li>Letter spacing</li>
-<li>
-<span id="thelspace">0</span><span class="byunits">/200</span>
-</li>
-<li data-val="lspace" data-change="-1" tabindex="-1">closer</li>
-<li data-val="lspace" data-change="1" tabindex="-1">f a r t h e r</li>
-<li>Word spacing</li>
-<li>
-<span id="thewspace">0</span><span class="byunits">/50</span>
-</li>
-<li data-val="wspace" data-change="-1" tabindex="-1">smaller gap </li>
-<li data-val="wspace" data-change="1" tabindex="-1">larger gap</li>
-<li>Line Spacing</li>
-<li>
-<span id="theheight">135</span><span class="byunits">/100</span>
-</li>
-<li data-val="height" data-change="-5" tabindex="-1" style="line-height: 1">closer<br>together</li>
-<li data-val="height" data-change="5" tabindex="-1" style="line-height: 1.75">further<br>apart</li>
-</ol>
-</li>
-<li data-env="atmosphere" tabindex="-1">Light/dark mode<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
-<ol class="hidden atmosphere">
-<li data-val="default" tabindex="-1">
-<span id="thedefault" class="atmospherecheck">✔️</span>default</li>
-<li data-val="pastel" tabindex="-1">
-<span id="thepastel" class="atmospherecheck"></span>pastel</li>
-<li data-val="darktwilight" tabindex="-1">
-<span id="thedarktwilight" class="atmospherecheck"></span>twilight</li>
-<li data-val="dark" tabindex="-1">
-<span id="thedark" class="atmospherecheck"></span>dark</li>
-<li data-val="darkmidnight" tabindex="-1">
-<span id="thedarkmidnight" class="atmospherecheck"></span>midnight</li>
-</ol>
-</li>
-<li data-env="ruler" tabindex="-1">Reading ruler<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
-<ol class="hidden ruler">
-<li data-val="none" tabindex="-1">
-<span id="thenone" class="rulercheck">✔️</span>none</li>
-<li data-val="underline" tabindex="-1">
-<span id="theunderline" class="rulercheck"></span>underline</li>
-<li data-val="lunderline" tabindex="-1">
-<span id="thelunderline" class="rulercheck"></span>L-underline</li>
-<li data-val="greybar" tabindex="-1">
-<span id="thegreybar" class="rulercheck"></span>grey bar</li>
-<li data-val="lightbox" tabindex="-1">
-<span id="thelightbox" class="rulercheck"></span>light box</li>
-<li data-val="sunrise" tabindex="-1">
-<span id="thesunrise" class="rulercheck"></span>sunrise</li>
-<li data-val="sunriseunderline" tabindex="-1">
-<span id="thesunriseunderline" class="rulercheck"></span>sunrise underline</li>
-<li class="moveQ">Motion by:</li>
-<li data-val="mouse" tabindex="-1">
-<span id="themouse" class="motioncheck">✔️</span>follow the mouse</li>
-<li data-val="arrow" tabindex="-1">
-<span id="thearrow" class="motioncheck"></span>up/down arrows - not yet</li>
-<li data-val="eye" tabindex="-1">
-<span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
-</ol>
-</li>
-</ol></div></button><span class="treebuttons"><a class="previous-button button" href="chapter-12.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="part-4.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
-<input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
-</div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
+<h2 class="search-results-heading">Search Results: </h2>
+<div id="searchempty" class="searchempty"><span>No results.</span></div>
+<ol id="searchresults" class="searchresults"></ol>
+</div>
+</div>
+<span class="nav-other-controls"></span><span class="treebuttons"><a class="previous-button button" href="chapter-12.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="part-4.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
 \newcommand{\gt}{&gt;}
 \newcommand{\amp}{&amp;}
@@ -187,253 +114,257 @@ window.MathJax = {
 \newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
 \)</span></div>
 <div class="ptx-page">
-<div id="ptx-sidebar"><nav id="ptx-toc" class="depth2 parts"><ul class="structural">
-<li><div class="toc-item"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
-<li>
-<div class="toc-item"><a href="part-1.html" class="internal"><span class="codenumber">I</span> <span class="title">2-D structures</span></a></div>
-<ul class="structural">
-<li>
-<div class="toc-item"><a href="chapter-1.html" class="internal"><span class="codenumber">1</span> <span class="title">Colors, Depth, Space (and Time?)</span></a></div>
-<ul class="structural"><li>
-<div class="toc-item"><a href="chapter-1.html#section-1" class="internal"><span class="codenumber">1.1</span> <span class="title">Image File Formats</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-1.html#subsection-1" class="internal"><span class="codenumber">1.1.1</span> <span class="title">Vector Formats</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-1.html#subsection-2" class="internal"><span class="codenumber">1.1.2</span> <span class="title">Raster Formats</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-1.html#subsection-3" class="internal"><span class="codenumber">1.1.3</span> <span class="title">NetPBM File Formats</span></a></div></li>
+<div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 parts"><ul class="structural contains-active toc-item-list">
+<li class="toc-item toc-frontmatter"><div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
+<li class="toc-item toc-part">
+<div class="toc-title-box"><a href="part-1.html" class="internal"><span class="codenumber">I</span> <span class="title">2-D structures</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-1.html" class="internal"><span class="codenumber">1</span> <span class="title">Colors, Depth, Space (and Time?)</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-1.html#section-1" class="internal"><span class="codenumber">1.1</span> <span class="title">Image File Formats</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-1.html#subsection-1" class="internal"><span class="codenumber">1.1.1</span> <span class="title">Vector Formats</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-1.html#subsection-2" class="internal"><span class="codenumber">1.1.2</span> <span class="title">Raster Formats</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-1.html#subsection-3" class="internal"><span class="codenumber">1.1.3</span> <span class="title">NetPBM File Formats</span></a></div></li>
 </ul>
 </li></ul>
 </li>
-<li>
-<div class="toc-item"><a href="chapter-2.html" class="internal"><span class="codenumber">2</span> <span class="title">Bresenham's Line Algorithm</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-2.html#section-2" class="internal"><span class="codenumber">2.1</span> <span class="title">The Problem</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-2.html#section-3" class="internal"><span class="codenumber">2.2</span> <span class="title">Testing Potential Points</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-2.html#section-4" class="internal"><span class="codenumber">2.3</span> <span class="title">Developing the Algorithm</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-2.html#subsection-4" class="internal"><span class="codenumber">2.3.1</span> <span class="title">Round I: Testing Both Points</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-2.html#subsection-5" class="internal"><span class="codenumber">2.3.2</span> <span class="title">Round II: Testing the Midpoint</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-2.html#subsection-6" class="internal"><span class="codenumber">2.3.3</span> <span class="title">The Testing Function</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-2.html#subsection-7" class="internal"><span class="codenumber">2.3.4</span> <span class="title">Round III: Testing No Points!</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-2.html" class="internal"><span class="codenumber">2</span> <span class="title">Bresenham’s Line Algorithm</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-2.html#section-2" class="internal"><span class="codenumber">2.1</span> <span class="title">The Problem</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-2.html#section-3" class="internal"><span class="codenumber">2.2</span> <span class="title">Testing Potential Points</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-2.html#section-4" class="internal"><span class="codenumber">2.3</span> <span class="title">Developing the Algorithm</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-2.html#subsection-4" class="internal"><span class="codenumber">2.3.1</span> <span class="title">Round I: Testing Both Points</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-2.html#subsection-5" class="internal"><span class="codenumber">2.3.2</span> <span class="title">Round II: Testing the Midpoint</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-2.html#subsection-6" class="internal"><span class="codenumber">2.3.3</span> <span class="title">The Testing Function</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-2.html#subsection-7" class="internal"><span class="codenumber">2.3.4</span> <span class="title">Round III: Testing No Points!</span></a></div></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<div class="toc-item"><a href="chapter-3.html" class="internal"><span class="codenumber">3</span> <span class="title">Edge Lists &amp; Matricies</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-3.html#section-5" class="internal"><span class="codenumber">3.1</span> <span class="title">Using Edge Lists</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-3.html#section-6" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Math for Graphics</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-3.html#subsection-8" class="internal"><span class="codenumber">3.2.1</span> <span class="title">Matrix Multiplication</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-3.html#subsection-9" class="internal"><span class="codenumber">3.2.2</span> <span class="title">Multiplicative Identity</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-3.html" class="internal"><span class="codenumber">3</span> <span class="title">Edge Lists &amp; Matricies</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-3.html#section-5" class="internal"><span class="codenumber">3.1</span> <span class="title">Using Edge Lists</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-3.html#section-6" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Math for Graphics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-3.html#subsection-8" class="internal"><span class="codenumber">3.2.1</span> <span class="title">Matrix Multiplication</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-3.html#subsection-9" class="internal"><span class="codenumber">3.2.2</span> <span class="title">Multiplicative Identity</span></a></div></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<div class="toc-item"><a href="chapter-4.html" class="internal"><span class="codenumber">4</span> <span class="title">Transformations</span></a></div>
-<ul class="structural">
-<li>
-<div class="toc-item"><a href="chapter-4.html#section-7" class="internal"><span class="codenumber">4.1</span> <span class="title">Transformation Matrices</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-4.html#subsection-10" class="internal"><span class="codenumber">4.1.1</span> <span class="title">Translation</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-4.html#subsection-11" class="internal"><span class="codenumber">4.1.2</span> <span class="title">Dilation</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-4.html#subsection-12" class="internal"><span class="codenumber">4.1.3</span> <span class="title">Rotation</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-4.html#subsubsection-1" class="internal"><span class="codenumber">4.1.3.1</span> <span class="title">Z-Axis Rotation</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-4.html#subsubsection-2" class="internal"><span class="codenumber">4.1.3.2</span> <span class="title">X-Axis Rotation</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-4.html#subsubsection-3" class="internal"><span class="codenumber">4.1.3.3</span> <span class="title">Y-Axis Rotation</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-4.html" class="internal"><span class="codenumber">4</span> <span class="title">Transformations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-4.html#section-7" class="internal"><span class="codenumber">4.1</span> <span class="title">Transformation Matrices</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-4.html#subsection-10" class="internal"><span class="codenumber">4.1.1</span> <span class="title">Translation</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-4.html#subsection-11" class="internal"><span class="codenumber">4.1.2</span> <span class="title">Dilation</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="chapter-4.html#subsection-12" class="internal"><span class="codenumber">4.1.3</span> <span class="title">Rotation</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="chapter-4.html#subsubsection-1" class="internal"><span class="codenumber">4.1.3.1</span> <span class="title">Z-Axis Rotation</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="chapter-4.html#subsubsection-2" class="internal"><span class="codenumber">4.1.3.2</span> <span class="title">X-Axis Rotation</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="chapter-4.html#subsubsection-3" class="internal"><span class="codenumber">4.1.3.3</span> <span class="title">Y-Axis Rotation</span></a></div></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><div class="toc-item"><a href="chapter-4.html#section-8" class="internal"><span class="codenumber">4.2</span> <span class="title">Combining Transformations</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-4.html#section-8" class="internal"><span class="codenumber">4.2</span> <span class="title">Combining Transformations</span></a></div></li>
 </ul>
 </li>
-<li>
-<div class="toc-item"><a href="chapter-5.html" class="internal"><span class="codenumber">5</span> <span class="title">Parametric Equations &amp; Curves</span></a></div>
-<ul class="structural">
-<li>
-<div class="toc-item"><a href="chapter-5.html#section-9" class="internal"><span class="codenumber">5.1</span> <span class="title">Parametric Equations</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-5.html#subsection-13" class="internal"><span class="codenumber">5.1.1</span> <span class="title">Parametric Circle</span></a></div></li></ul>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-5.html" class="internal"><span class="codenumber">5</span> <span class="title">Parametric Equations &amp; Curves</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-5.html#section-9" class="internal"><span class="codenumber">5.1</span> <span class="title">Parametric Equations</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-5.html#subsection-13" class="internal"><span class="codenumber">5.1.1</span> <span class="title">Parametric Circle</span></a></div></li></ul>
 </li>
-<li>
-<div class="toc-item"><a href="chapter-5.html#section-10" class="internal"><span class="codenumber">5.2</span> <span class="title">Splines</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-5.html#subsection-14" class="internal"><span class="codenumber">5.2.1</span> <span class="title">Hermite Curves</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-5.html#subsection-15" class="internal"><span class="codenumber">5.2.2</span> <span class="title">Bezier Curves</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-5.html#subsubsection-4" class="internal"><span class="codenumber">5.2.2.1</span> <span class="title">Bezier Line</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-5.html#subsubsection-5" class="internal"><span class="codenumber">5.2.2.2</span> <span class="title">Bezier Quadratic</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-5.html#subsubsection-6" class="internal"><span class="codenumber">5.2.2.3</span> <span class="title">Bezier Cubic</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-5.html#subsubsection-7" class="internal"><span class="codenumber">5.2.2.4</span> <span class="title">Bezier Implementation</span></a></div></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<div class="toc-item"><a href="part-2.html" class="internal"><span class="codenumber">II</span> <span class="title">3-D Structures</span></a></div>
-<ul class="structural">
-<li>
-<div class="toc-item"><a href="chapter-6.html" class="internal"><span class="codenumber">6</span> <span class="title">3D Shapes</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-6.html#section-11" class="internal"><span class="codenumber">6.1</span> <span class="title">Box</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-6.html#section-12" class="internal"><span class="codenumber">6.2</span> <span class="title">Sphere</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-6.html#subsection-16" class="internal"><span class="codenumber">6.2.1</span> <span class="title">Sphere Point Generation</span></a></div></li></ul>
-</li>
-<li>
-<div class="toc-item"><a href="chapter-6.html#section-13" class="internal"><span class="codenumber">6.3</span> <span class="title">Torus</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-6.html#subsection-17" class="internal"><span class="codenumber">6.3.1</span> <span class="title">Torus Point Generation</span></a></div></li></ul>
-</li>
-<li><div class="toc-item"><a href="chapter-6.html#section-14" class="internal"><span class="codenumber">6.4</span> <span class="title">Implementing 3D Shapes</span></a></div></li>
-</ul>
-</li>
-<li>
-<div class="toc-item"><a href="chapter-7.html" class="internal"><span class="codenumber">7</span> <span class="title">Polygons</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-7.html#section-15" class="internal"><span class="codenumber">7.1</span> <span class="title">Polygon Lists</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-7.html#section-16" class="internal"><span class="codenumber">7.2</span> <span class="title">Polygon Based Shapes</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-7.html#subsection-18" class="internal"><span class="codenumber">7.2.1</span> <span class="title">Box</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-7.html#subsection-19" class="internal"><span class="codenumber">7.2.2</span> <span class="title">Sphere</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-7.html#subsection-20" class="internal"><span class="codenumber">7.2.3</span> <span class="title">Torus</span></a></div></li>
-</ul>
-</li>
-<li><div class="toc-item"><a href="chapter-7.html#section-17" class="internal"><span class="codenumber">7.3</span> <span class="title">Vectors</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-7.html#section-18" class="internal"><span class="codenumber">7.4</span> <span class="title">Backface Culling</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-7.html#subsection-21" class="internal"><span class="codenumber">7.4.1</span> <span class="title">Calculate <span class="process-math">\(\overrightarrow{N}\)</span></span></a></div></li>
-<li><div class="toc-item"><a href="chapter-7.html#subsection-22" class="internal"><span class="codenumber">7.4.2</span> <span class="title">Calculate <span class="process-math">\(\theta\)</span></span></a></div></li>
-<li><div class="toc-item"><a href="chapter-7.html#subsection-23" class="internal"><span class="codenumber">7.4.3</span> <span class="title">Putting it all together</span></a></div></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<div class="toc-item"><a href="chapter-8.html" class="internal"><span class="codenumber">8</span> <span class="title">Backface Culling</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-8.html#section-19" class="internal"><span class="codenumber">8.1</span> <span class="title">Vectors</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-8.html#section-20" class="internal"><span class="codenumber">8.2</span> <span class="title">The Algorithm</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-8.html#subsection-24" class="internal"><span class="codenumber">8.2.1</span> <span class="title">Calculate <span class="process-math">\(\overrightarrow{N}\)</span></span></a></div></li>
-<li><div class="toc-item"><a href="chapter-8.html#subsection-25" class="internal"><span class="codenumber">8.2.2</span> <span class="title">Calculate <span class="process-math">\(\theta\)</span></span></a></div></li>
-<li><div class="toc-item"><a href="chapter-8.html#subsection-26" class="internal"><span class="codenumber">8.2.3</span> <span class="title">Putting it all together</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-5.html#section-10" class="internal"><span class="codenumber">5.2</span> <span class="title">Splines</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-5.html#subsection-14" class="internal"><span class="codenumber">5.2.1</span> <span class="title">Hermite Curves</span></a></div></li>
+<li class="toc-item toc-subsection">
+<div class="toc-title-box"><a href="chapter-5.html#subsection-15" class="internal"><span class="codenumber">5.2.2</span> <span class="title">Bezier Curves</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="chapter-5.html#subsubsection-4" class="internal"><span class="codenumber">5.2.2.1</span> <span class="title">Bezier Line</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="chapter-5.html#subsubsection-5" class="internal"><span class="codenumber">5.2.2.2</span> <span class="title">Bezier Quadratic</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="chapter-5.html#subsubsection-6" class="internal"><span class="codenumber">5.2.2.3</span> <span class="title">Bezier Cubic</span></a></div></li>
+<li class="toc-item toc-subsubsection"><div class="toc-title-box"><a href="chapter-5.html#subsubsection-7" class="internal"><span class="codenumber">5.2.2.4</span> <span class="title">Bezier Implementation</span></a></div></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<div class="toc-item"><a href="part-3.html" class="internal"><span class="codenumber">III</span> <span class="title">Motion</span></a></div>
-<ul class="structural"><li>
-<div class="toc-item"><a href="chapter-9.html" class="internal"><span class="codenumber">9</span> <span class="title">Relative Coordinate Systems</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-9.html#section-21" class="internal"><span class="codenumber">9.1</span> <span class="title">The Global Coordinate System</span></a></div></li></ul>
+</ul>
+</li>
+<li class="toc-item toc-part">
+<div class="toc-title-box"><a href="part-2.html" class="internal"><span class="codenumber">II</span> <span class="title">3-D Structures</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-6.html" class="internal"><span class="codenumber">6</span> <span class="title">3D Shapes</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-6.html#section-11" class="internal"><span class="codenumber">6.1</span> <span class="title">Box</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-6.html#section-12" class="internal"><span class="codenumber">6.2</span> <span class="title">Sphere</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-6.html#subsection-16" class="internal"><span class="codenumber">6.2.1</span> <span class="title">Sphere Point Generation</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-6.html#section-13" class="internal"><span class="codenumber">6.3</span> <span class="title">Torus</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-6.html#subsection-17" class="internal"><span class="codenumber">6.3.1</span> <span class="title">Torus Point Generation</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-6.html#section-14" class="internal"><span class="codenumber">6.4</span> <span class="title">Implementing 3D Shapes</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-7.html" class="internal"><span class="codenumber">7</span> <span class="title">Polygons</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-7.html#section-15" class="internal"><span class="codenumber">7.1</span> <span class="title">Polygon Lists</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-7.html#section-16" class="internal"><span class="codenumber">7.2</span> <span class="title">Polygon Based Shapes</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-7.html#subsection-18" class="internal"><span class="codenumber">7.2.1</span> <span class="title">Box</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-7.html#subsection-19" class="internal"><span class="codenumber">7.2.2</span> <span class="title">Sphere</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-7.html#subsection-20" class="internal"><span class="codenumber">7.2.3</span> <span class="title">Torus</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-7.html#section-17" class="internal"><span class="codenumber">7.3</span> <span class="title">Vectors</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-7.html#section-18" class="internal"><span class="codenumber">7.4</span> <span class="title">Backface Culling</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-7.html#subsection-21" class="internal"><span class="codenumber">7.4.1</span> <span class="title">Calculate <span class="process-math">\(\overrightarrow{N}\)</span></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-7.html#subsection-22" class="internal"><span class="codenumber">7.4.2</span> <span class="title">Calculate <span class="process-math">\(\theta\)</span></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-7.html#subsection-23" class="internal"><span class="codenumber">7.4.3</span> <span class="title">Putting it all together</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-8.html" class="internal"><span class="codenumber">8</span> <span class="title">Backface Culling</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-8.html#section-19" class="internal"><span class="codenumber">8.1</span> <span class="title">Vectors</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-8.html#section-20" class="internal"><span class="codenumber">8.2</span> <span class="title">The Algorithm</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-8.html#subsection-24" class="internal"><span class="codenumber">8.2.1</span> <span class="title">Calculate <span class="process-math">\(\overrightarrow{N}\)</span></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-8.html#subsection-25" class="internal"><span class="codenumber">8.2.2</span> <span class="title">Calculate <span class="process-math">\(\theta\)</span></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-8.html#subsection-26" class="internal"><span class="codenumber">8.2.3</span> <span class="title">Putting it all together</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-part">
+<div class="toc-title-box"><a href="part-3.html" class="internal"><span class="codenumber">III</span> <span class="title">Motion</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-9.html" class="internal"><span class="codenumber">9</span> <span class="title">Relative Coordinate Systems</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-9.html#section-21" class="internal"><span class="codenumber">9.1</span> <span class="title">The Global Coordinate System</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-9.html#section-22" class="internal"><span class="codenumber">9.2</span> <span class="title">Relative Coordinate Systems: In Theory</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-9.html#section-23" class="internal"><span class="codenumber">9.3</span> <span class="title">In Practice</span></a></div></li>
+</ul>
 </li></ul>
 </li>
-<li>
-<div class="toc-item"><a href="part-4.html" class="internal"><span class="codenumber">IV</span> <span class="title">Lighting &amp; Shading</span></a></div>
-<ul class="structural">
-<li>
-<div class="toc-item"><a href="chapter-10.html" class="internal"><span class="codenumber">10</span> <span class="title">Scanline Conversion</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-10.html#section-22" class="internal"><span class="codenumber">10.1</span> <span class="title">Overview</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-10.html#section-23" class="internal"><span class="codenumber">10.2</span> <span class="title">Scanlines</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-10.html#subsection-27" class="internal"><span class="codenumber">10.2.1</span> <span class="title">Calculating <span class="process-math">\(x_0\)</span></span></a></div></li>
-<li><div class="toc-item"><a href="chapter-10.html#subsection-28" class="internal"><span class="codenumber">10.2.2</span> <span class="title">Calculating <span class="process-math">\(x_1\)</span></span></a></div></li>
+<li class="toc-item toc-part contains-active">
+<div class="toc-title-box"><a href="part-4.html" class="internal"><span class="codenumber">IV</span> <span class="title">Lighting &amp; Shading</span></a></div>
+<ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-10.html" class="internal"><span class="codenumber">10</span> <span class="title">Scanline Conversion</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-10.html#section-24" class="internal"><span class="codenumber">10.1</span> <span class="title">Overview</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-10.html#section-25" class="internal"><span class="codenumber">10.2</span> <span class="title">Scanlines</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-10.html#subsection-27" class="internal"><span class="codenumber">10.2.1</span> <span class="title">Calculating <span class="process-math">\(x_0\)</span></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-10.html#subsection-28" class="internal"><span class="codenumber">10.2.2</span> <span class="title">Calculating <span class="process-math">\(x_1\)</span></span></a></div></li>
 </ul>
 </li>
-<li>
-<div class="toc-item"><a href="chapter-10.html#section-24" class="internal"><span class="codenumber">10.3</span> <span class="title">The Algorithm</span></a></div>
-<ul class="structural"><li><div class="toc-item"><a href="chapter-10.html#subsection-29" class="internal"><span class="codenumber">10.3.1</span> <span class="title">"Special" Triangles</span></a></div></li></ul>
-</li>
-</ul>
-</li>
-<li>
-<div class="toc-item"><a href="chapter-11.html" class="internal"><span class="codenumber">11</span> <span class="title">Z Buffering</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-11.html#section-25" class="internal"><span class="codenumber">11.1</span> <span class="title">The Z-Buffer</span></a></div></li>
-<li>
-<div class="toc-item"><a href="chapter-11.html#section-26" class="internal"><span class="codenumber">11.2</span> <span class="title">Calculating <span class="process-math">\(z\)</span> Values</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-11.html#subsection-30" class="internal"><span class="codenumber">11.2.1</span> <span class="title"><code class="code-inline tex2jax_ignore">scanline_convert</code></span></a></div></li>
-<li><div class="toc-item"><a href="chapter-11.html#subsection-31" class="internal"><span class="codenumber">11.2.2</span> <span class="title"><code class="code-inline tex2jax_ignore">draw_line</code> and <code class="code-inline tex2jax_ignore">draw_scanline</code></span></a></div></li>
-</ul>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-10.html#section-26" class="internal"><span class="codenumber">10.3</span> <span class="title">The Algorithm</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-10.html#subsection-29" class="internal"><span class="codenumber">10.3.1</span> <span class="title">"Special" Triangles</span></a></div></li></ul>
 </li>
 </ul>
 </li>
-<li>
-<div class="toc-item"><a href="chapter-12.html" class="internal"><span class="codenumber">12</span> <span class="title">Lighting Models</span></a></div>
-<ul class="structural">
-<li>
-<div class="toc-item"><a href="chapter-12.html#section-27" class="internal"><span class="codenumber">12.1</span> <span class="title">Light Sources</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-12.html#subsection-32" class="internal"><span class="codenumber">12.1.1</span> <span class="title">Ambient Light</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-12.html#subsection-33" class="internal"><span class="codenumber">12.1.2</span> <span class="title">Point Light Sources</span></a></div></li>
-</ul>
-</li>
-<li>
-<div class="toc-item"><a href="chapter-12.html#section-28" class="internal"><span class="codenumber">12.2</span> <span class="title">Reflection Types</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-12.html#subsection-34" class="internal"><span class="codenumber">12.2.1</span> <span class="title">Ambient Reflection</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-12.html#subsection-35" class="internal"><span class="codenumber">12.2.2</span> <span class="title">Diffuse Reflection</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-12.html#subsection-36" class="internal"><span class="codenumber">12.2.3</span> <span class="title">Specular Reflection</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-11.html" class="internal"><span class="codenumber">11</span> <span class="title">Z Buffering</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-11.html#section-27" class="internal"><span class="codenumber">11.1</span> <span class="title">The Z-Buffer</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-11.html#section-28" class="internal"><span class="codenumber">11.2</span> <span class="title">Calculating <span class="process-math">\(z\)</span> Values</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-11.html#subsection-30" class="internal"><span class="codenumber">11.2.1</span> <span class="title"><code class="code-inline tex2jax_ignore">scanline_convert</code></span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-11.html#subsection-31" class="internal"><span class="codenumber">11.2.2</span> <span class="title"><code class="code-inline tex2jax_ignore">draw_line</code> and <code class="code-inline tex2jax_ignore">draw_scanline</code></span></a></div></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="active">
-<div class="toc-item"><a href="chapter-13.html" class="internal"><span class="codenumber">13</span> <span class="title">Phong Reflection Models</span></a></div>
-<ul class="structural">
-<li><div class="toc-item"><a href="chapter-13.html#section-29" class="internal"><span class="codenumber">13.1</span> <span class="title">Overview</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-13.html#section-30" class="internal"><span class="codenumber">13.2</span> <span class="title">Ambient Reflection</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-13.html#section-31" class="internal"><span class="codenumber">13.3</span> <span class="title">Diffuse Reflection</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-13.html#section-32" class="internal"><span class="codenumber">13.4</span> <span class="title">Specular Reflection</span></a></div></li>
-<li><div class="toc-item"><a href="chapter-13.html#section-33" class="internal"><span class="codenumber">13.5</span> <span class="title">Putting it All Together</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-12.html" class="internal"><span class="codenumber">12</span> <span class="title">Lighting Models</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-12.html#section-29" class="internal"><span class="codenumber">12.1</span> <span class="title">Light Sources</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-12.html#subsection-32" class="internal"><span class="codenumber">12.1.1</span> <span class="title">Ambient Light</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-12.html#subsection-33" class="internal"><span class="codenumber">12.1.2</span> <span class="title">Point Light Sources</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="chapter-12.html#section-30" class="internal"><span class="codenumber">12.2</span> <span class="title">Reflection Types</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-12.html#subsection-34" class="internal"><span class="codenumber">12.2.1</span> <span class="title">Ambient Reflection</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-12.html#subsection-35" class="internal"><span class="codenumber">12.2.2</span> <span class="title">Diffuse Reflection</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="chapter-12.html#subsection-36" class="internal"><span class="codenumber">12.2.3</span> <span class="title">Specular Reflection</span></a></div></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
+<li class="toc-item toc-chapter active">
+<div class="toc-title-box"><a href="chapter-13.html" class="internal"><span class="codenumber">13</span> <span class="title">Phong Reflection Models</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-13.html#section-31" class="internal"><span class="codenumber">13.1</span> <span class="title">Overview</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-13.html#section-32" class="internal"><span class="codenumber">13.2</span> <span class="title">Ambient Reflection</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-13.html#section-33" class="internal"><span class="codenumber">13.3</span> <span class="title">Diffuse Reflection</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-13.html#section-34" class="internal"><span class="codenumber">13.4</span> <span class="title">Specular Reflection</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="chapter-13.html#section-35" class="internal"><span class="codenumber">13.5</span> <span class="title">Putting it All Together</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
 <main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="chapter" id="chapter-13"><h2 class="heading">
-<span class="type">Chapter</span> <span class="codenumber">13</span> <span class="title">Phong Reflection Models</span>
+<span class="type">Chapter</span><span class="space"> </span><span class="codenumber">13</span><span class="space"> </span><span class="title">Phong Reflection Models</span>
 </h2>
-<section class="introduction" id="introduction-11">We will be using the _Phong Reflection Model_ to calculate the color of an object. (This is different from the Phong <em class="emphasis">shading</em> model, which is a separate concept). The Phong reflection model combines ambient, diffuse and specular reflections. <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch12-phong_reflection.png" class="contained" alt="A shape made of 5 connected spheres with only ambient, diffuse, or specular reflection, and one with all 3."></div></section><section class="section" id="section-29"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">13.1</span> <span class="title">Overview</span>
+<section class="introduction" id="introduction-11">We will be using the _Phong Reflection Model_ to calculate the color of an object. (This is different from the Phong <em class="emphasis">shading</em> model, which is a separate concept). The Phong reflection model combines ambient, diffuse and specular reflections. <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch12-phong_reflection.png" class="contained" alt="A shape made of 5 connected spheres with only ambient, diffuse, or specular reflection, and one with all 3."></div></section><section class="section" id="section-31"><h3 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">13.1</span><span class="space"> </span><span class="title">Overview</span>
 </h3>
-<div class="para logical" id="p-119">
+<div class="para logical" id="p-127">
 <div class="para">The color of an object will depend on:</div>
 <ul class="disc">
-<li id="li-93"><div class="para" id="p-derived-li-93">
+<li id="li-111"><div class="para" id="p-derived-li-111">
 <span class="process-math">\(A\text{:}\)</span> The color of ambient light (RGB or a single value [0-255]). e.g. 255, 255, 255 (white)</div></li>
-<li id="li-94"><div class="para" id="p-derived-li-94">
+<li id="li-112"><div class="para" id="p-derived-li-112">
 <span class="process-math">\(P\text{:}\)</span> The color of a point light source (RGB or a single value [0-255]). e.g. 255, 0, 255 (magenta)</div></li>
-<li id="li-95"><div class="para" id="p-derived-li-95">
+<li id="li-113"><div class="para" id="p-derived-li-113">
 <span class="process-math">\(\overrightarrow{L}\text{:}\)</span> The vector from the surface of an object to a point light source (<span class="process-math">\(\lt x, y, z&gt;\)</span>). e.g. <span class="process-math">\(\lt 1, 0.5, 1&gt;\)</span> (to the right, slightly up and in front)</div></li>
-<li id="li-96"><div class="para" id="p-derived-li-96">
+<li id="li-114"><div class="para" id="p-derived-li-114">
 <span class="process-math">\(\overrightarrow{V}\text{:}\)</span> The view vector (from the surface of an object to the viewer) (<span class="process-math">\(\lt x, y, z&gt;\)</span>).e.g. <span class="process-math">\(\lt 0, 0, 1&gt;\)</span> (directly in front)</div></li>
-<li id="li-97"><div class="para" id="p-derived-li-97">
+<li id="li-115"><div class="para" id="p-derived-li-115">
 <span class="process-math">\(\overrightarrow{N}\text{:}\)</span> The surface normal of a polygon, see notes on [backface culling](#backface-culling) for more on this.</div></li>
-<li id="li-98"><div class="para" id="p-derived-li-98">
+<li id="li-116"><div class="para" id="p-derived-li-116">
 <span class="process-math">\(K_a\text{:}\)</span> Constant of ambient reflection; how much ambient light is reflected by the object. ( RGB or a single value [0-1], think of it like a %). e.g. 0.1, 0.1, 0.1</div></li>
-<li id="li-99"><div class="para" id="p-derived-li-99">
+<li id="li-117"><div class="para" id="p-derived-li-117">
 <span class="process-math">\(K_d\text{:}\)</span> Constant of diffuse reflection; how much a point light is reflected diffusely by the object. ( RGB or a single value [0-1] ). e.g. 0.5, 0.5, 0.5</div></li>
-<li id="li-100"><div class="para" id="p-derived-li-100">
+<li id="li-118"><div class="para" id="p-derived-li-118">
 <span class="process-math">\(K_s\text{:}\)</span> Constant of specular reflection; how much a point light is reflected specularly by the object. ( RGB or a single value [0-1] ). e.g. 0.5, 0.5, 0.5</div></li>
 </ul>
 <div class="para">In general, <span class="process-math">\(I\)</span> (for illumination), or the color of an object based on lighting will be calculated by</div>
@@ -442,33 +373,33 @@ window.MathJax = {
 I = I_{ambient} + I_{diffuse} + I_{specular}
 \end{equation*}
 </div>
-</div></section><section class="section" id="section-30"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">13.2</span> <span class="title">Ambient Reflection</span>
+</div></section><section class="section" id="section-32"><h3 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">13.2</span><span class="space"> </span><span class="title">Ambient Reflection</span>
 </h3>
-<div class="para logical" id="p-120">
-<div class="para">This is the ambient component of color. It is the easiest to compute since we don't need to take into account the location of the object or the viewer.</div>
+<div class="para logical" id="p-128">
+<div class="para">This is the ambient component of color. It is the easiest to compute since we don’t need to take into account the location of the object or the viewer.</div>
 <div class="displaymath process-math">
 \begin{equation*}
 I_{ambient} = AK_a
 \end{equation*}
 </div>
-<div class="para">If working in RGB instead of grayscale, you'll have to compute this separately for each color.</div>
-</div></section><section class="section" id="section-31"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">13.3</span> <span class="title">Diffuse Reflection</span>
+<div class="para">If working in RGB instead of grayscale, you’ll have to compute this separately for each color.</div>
+</div></section><section class="section" id="section-33"><h3 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">13.3</span><span class="space"> </span><span class="title">Diffuse Reflection</span>
 </h3>
-<div class="para" id="p-121">This is the diffuse reflection of a point light source. We will need to model the relationship between the light source and the object. <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch12-diffuse_reflection.jpg" class="contained" alt="A surface, its surface normal and an incoming light vector."></div> Diffuse reflection is strongest when the surface is pointing directly at the light, and gets weaker as the object points away from the light. Put another way, the diffuse reflection is inversely proportional to <span class="process-math">\(\theta\text{.}\)</span> This can be modeled with <span class="process-math">\(cos\theta\text{.}\)</span> Lucky, for us, we already know that <span class="process-math">\(cos\theta\)</span> is the dot product of the two vectors. Unlike with backface culling, we <em class="emphasis">DO</em> care about the magnitudes, so it is in our best interest to normalize both<span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{L}\text{.}\)</span>
+<div class="para" id="p-129">This is the diffuse reflection of a point light source. We will need to model the relationship between the light source and the object. <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch12-diffuse_reflection.jpg" class="contained" alt="A surface, its surface normal and an incoming light vector."></div> Diffuse reflection is strongest when the surface is pointing directly at the light, and gets weaker as the object points away from the light. Put another way, the diffuse reflection is inversely proportional to <span class="process-math">\(\theta\text{.}\)</span> This can be modeled with <span class="process-math">\(cos\theta\text{.}\)</span> Lucky, for us, we already know that <span class="process-math">\(cos\theta\)</span> is the dot product of the two vectors. Unlike with backface culling, we <em class="emphasis">DO</em> care about the magnitudes, so it is in our best interest to normalize both<span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{L}\text{.}\)</span>
 </div>
-<div class="para logical" id="p-122">
+<div class="para logical" id="p-130">
 <div class="para">The normalized version of a vector is often shown with a ^ like so: <span class="process-math">\(\hat{N}\text{.}\)</span> To normalize a vector, divide each component by the magnitude of the original vector. For Vector <span class="process-math">\(\overrightarrow{A} =  \lt x, y, z&gt;\text{,}\)</span> <span class="process-math">\(M = \sqrt{x^2 + y^2 + z^2}\text{,}\)</span> <span class="process-math">\(\hat{A} = \lt \dfrac{x}{M}, \dfrac{y}{M}, \dfrac{z}{M}&gt;\text{.}\)</span> Once normalized, we can do: <span class="process-math">\(cos\theta = \hat{N} \cdot \hat{L}\)</span> Combined with P and Kd, we get:</div>
 <div class="displaymath process-math">
 \begin{equation*}
 I_{diffuse} = PK_d(\hat{N} \cdot \hat{L})
 \end{equation*}
 </div>
-</div></section><section class="section" id="section-32"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">13.4</span> <span class="title">Specular Reflection</span>
+</div></section><section class="section" id="section-34"><h3 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">13.4</span><span class="space"> </span><span class="title">Specular Reflection</span>
 </h3>
-<div class="para logical" id="p-123">
+<div class="para logical" id="p-131">
 <div class="para">This is the specular reflection of a point light source. We will need to model the relationship between the light source and the <em class="emphasis">viewer</em>. <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch12-specular_reflection.jpg" class="contained" alt="A surface, its surface normal, an incoming light vector, the reflected vector, and the view vector."></div> Specular reflection is strongest when the reflected light is pointing directly at the viewer. This is inversely proportional to <span class="process-math">\(\alpha\text{,}\)</span> and can be modeled by <span class="process-math">\(cos\alpha\text{.}\)</span> What we need is:</div>
 <div class="displaymath process-math">
 \begin{equation*}
@@ -479,7 +410,7 @@ cos\alpha = \hat{R} \cdot \hat{V}
 <span class="process-math">\(\hat{V}\)</span> is given, but how can we find <span class="process-math">\(\hat{R}\text{?}\)</span>
 </div>
 </div>
-<div class="para logical" id="p-124">
+<div class="para logical" id="p-132">
 <div class="para">
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch12-r.jpg" class="contained" alt="Similar Triangles"></div> Using the above diagram:</div>
 <div class="displaymath process-math">
@@ -520,16 +451,16 @@ cos\alpha = \hat{R} \cdot \hat{V}
 I_{specular} = PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V})
 \end{equation*}
 </div>
-<div class="para">This doesn't take into account the fact that specular reflections are supposed to die off quickly. Note that the specular component from the Phong reflection image above is mostly a group of small, bright circles. The simplest way to get this effect is to raise <span class="process-math">\(cos\alpha\)</span> to some exponenet larger than 1. The specific value will depend on what looks right to you.</div>
+<div class="para">This doesn’t take into account the fact that specular reflections are supposed to die off quickly. Note that the specular component from the Phong reflection image above is mostly a group of small, bright circles. The simplest way to get this effect is to raise <span class="process-math">\(cos\alpha\)</span> to some exponenet larger than 1. The specific value will depend on what looks right to you.</div>
 <div class="displaymath process-math">
 \begin{equation*}
 I_{specular} = PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) - \hat{L}] \cdot \hat{V})^x
 \end{equation*}
 </div>
-</div></section><section class="section" id="section-33"><h3 class="heading hide-type">
-<span class="type">Section</span> <span class="codenumber">13.5</span> <span class="title">Putting it All Together</span>
+</div></section><section class="section" id="section-35"><h3 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">13.5</span><span class="space"> </span><span class="title">Putting it All Together</span>
 </h3>
-<div class="para logical" id="p-125">
+<div class="para logical" id="p-133">
 <div class="displaymath process-math">
 \begin{equation*}
 \begin{aligned}
@@ -547,10 +478,10 @@ I = AK_a + PK_d(\hat{N} \cdot \hat{L}) + PK_s([2\hat{N}(\hat{N} \cdot \hat{L}) -
 </div>
 </div></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="chapter-12.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+<a class="previous-button button" href="chapter-12.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
 </div>
-<div id="ptx-page-footer">
+<div id="ptx-page-footer" class="ptx-page-footer">
 <a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png"></a>
 </div>
 </body>

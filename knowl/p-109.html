@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -11,8 +11,8 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h5 class="heading"><span class="type">Paragraph</span></h5>
-<div class="para">We actually have to go back to our very first graphics algorithm and modify it to take <span class="process-math">\(z\)</span> values into account. On the plus side, we <em class="emphasis">need</em> <span class="process-math">\(z\)</span> values to be floating point based, so we will not have to try to map them as best we can to integers. This makes the calculation more straightforward. You can think of generating <span class="process-math">\(z\)</span> values in a similar way to what weed need to do in <code class="code-inline tex2jax_ignore">scanline_convert</code>.</div>
-<span class="incontext"><a href="chapter-11.html#p-109" class="internal">in-context</a></span>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para">A Z-Buffer is a 2D array of <em class="emphasis">floating point</em> z values that maps directly to the 2D array of colors/pixels that contains our image. For example, the Z-buffer value at <span class="process-math">\((4, 10)\)</span> is the z coordinate for the pixel drawn at point <span class="process-math">\((4, 10)\text{.}\)</span> Since z values represent the depth of a pixel, we can use the Z-Buffer to keep track of how forward or backward any plotted pixel is.</div>
+<span class="incontext"><a class="internal" href="chapter-11.html#p-109">in-context</a></span>
 </body>
 </html>

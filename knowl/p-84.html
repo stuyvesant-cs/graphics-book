@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -21,7 +21,7 @@
 <span class="process-math">\(\overrightarrow{V}\text{:}\)</span> The view vector, a vector pointing out from the plane of the polygon (or surface) into the "eye" of the observer.</div></li>
 </ol>
 <div class="para">
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-backface_culling.png" class="contained" alt="A side-view of a polygon with a vctor poining perpendicular from it, and another vector drawn between the surace and an eye."></div> We can tell if a surface is front or back facing based on the value of <span class="process-math">\(\theta\text{,}\)</span> the angle between <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{.}\)</span> When <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> then the surface is visible to the observer. Outside of that range, the surface is pointing away from the observer and is thus a backface. While it is referred to as backface culling, this process could be more accurately described as frontface including. We don't actually remove the backfaces from our polygon lists (if we rotate the shape, then those faces may no longer be back facing!), rather, we check and only draw the polygons facing forward. We can break up backface culling as follows:</div>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch06-backface_culling.png" class="contained" alt="A side-view of a polygon with a vctor poining perpendicular from it, and another vector drawn between the surace and an eye."></div> We can tell if a surface is front or back facing based on the value of <span class="process-math">\(\theta\text{,}\)</span> the angle between <span class="process-math">\(\overrightarrow{N}\)</span> and <span class="process-math">\(\overrightarrow{V}\text{.}\)</span> When <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> then the surface is visible to the observer. Outside of that range, the surface is pointing away from the observer and is thus a backface. While it is referred to as backface culling, this process could be more accurately described as frontface including. We don’t actually remove the backfaces from our polygon lists (if we rotate the shape, then those faces may no longer be back facing!), rather, we check and only draw the polygons facing forward. We can break up backface culling as follows:</div>
 <ol class="decimal">
 <li><div class="para">Calculate <span class="process-math">\(\overrightarrow{N}\)</span>
 </div></li>
@@ -30,6 +30,6 @@
 <li><div class="para">IF <span class="process-math">\(-90 \lt \theta \lt 90\text{,}\)</span> draw the triangle.</div></li>
 </ol>
 </div>
-<span class="incontext"><a href="chapter-8.html#p-84" class="internal">in-context</a></span>
+<span class="incontext"><a class="internal" href="chapter-8.html#p-84">in-context</a></span>
 </body>
 </html>

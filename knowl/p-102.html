@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -12,7 +12,15 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">Currently when we plot a pixel we provide the <span class="process-math">\((x, y)\)</span> coordinates and color. Now we will provide <span class="process-math">\((x, y, z)\)</span> and a color. <span class="process-math">\((x, y)\)</span> will determine the position of the color in the image and the <span class="process-math">\(z\)</span> value in the Z-Buffer. Before we deicdee to plot a given pixel in the image, we will check the <span class="process-math">\(z\)</span> value against the value currently in the Z-Buffer.</div>
-<span class="incontext"><a href="chapter-11.html#p-102" class="internal">in-context</a></span>
+<div class="para logical">
+<div class="para">Scanline conversion is the process of filling in a polygon by drawing a series of horizontal (or vertical) lines covering the entire surface of the polygon. This has a number of advantages over other possible approaches such as:</div>
+<ul class="disc">
+<li><div class="para">The y value for each scanline is just 1 plus the previous y value.</div></li>
+<li><div class="para">Horizontal lines have the same y value for each pixel, negating the need for y calculations inside the line algorithm.</div></li>
+<li><div class="para">We can cover the entire surface while only visiting each pixel exactly <em class="emphasis">once</em>
+</div></li>
+</ul>
+</div>
+<span class="incontext"><a class="internal" href="chapter-10.html#p-102">in-context</a></span>
 </body>
 </html>

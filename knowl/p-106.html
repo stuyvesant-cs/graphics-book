@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -12,7 +12,20 @@
 </head>
 <body class="ignore-math">
 <h5 class="heading"><span class="type">Paragraph</span></h5>
-<div class="para">Here, <span class="process-math">\(z\)</span> values can be calculated the same way we find the <span class="process-math">\(x\)</span> values. We already have <span class="process-math">\(z\)</span> coordinates stored in out polygon matrices, we just need to calcualte the <span class="process-math">\(z\)</span> values as we move across each scanline. It is important to remember that unlike <span class="process-math">\(y\text{,}\)</span> we cannot be certain that the <span class="process-math">\(z\)</span> value is the same along the entire scanline.</div>
-<span class="incontext"><a href="chapter-11.html#p-106" class="internal">in-context</a></span>
+<div class="para logical">
+<div class="para">
+<span class="process-math">\(x_1\)</span> also starts at <span class="process-math">\(x_b\text{,}\)</span> but it ends at <span class="process-math">\(x_m\)</span> and then changes direction to go towards <span class="process-math">\(x_t\text{.}\)</span> We need to calculate <span class="process-math">\(\Delta x_1\)</span> similarly to how we calcluated <span class="process-math">\(x_0\text{,}\)</span> but we will have 2 different values, depending on whether we’ve moved past the middle vertex or not.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}
+\Delta x_1 = \frac{x_m - x_b}{y_m - y_b + 1} \\
+\Delta x_1 = \frac{x_t - x_m}{y_t - y_m + 1}
+\end{aligned}\text{.}
+\end{equation*}
+</div>
+<div class="para">We flip from the first to the second calculation once our <span class="process-math">\(y\)</span> has reached <span class="process-math">\(y_m\text{.}\)</span>
+</div>
+</div>
+<span class="incontext"><a class="internal" href="chapter-10.html#p-106">in-context</a></span>
 </body>
 </html>

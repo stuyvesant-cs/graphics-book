@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" dir="ltr">
 <!--********************************************-->
 <!--*       Generated from PreTeXt source      *-->
 <!--*                                          *-->
@@ -12,33 +12,7 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para logical">
-<div class="para">The color of an object will depend on:</div>
-<ul class="disc">
-<li><div class="para">
-<span class="process-math">\(A\text{:}\)</span> The color of ambient light (RGB or a single value [0-255]). e.g. 255, 255, 255 (white)</div></li>
-<li><div class="para">
-<span class="process-math">\(P\text{:}\)</span> The color of a point light source (RGB or a single value [0-255]). e.g. 255, 0, 255 (magenta)</div></li>
-<li><div class="para">
-<span class="process-math">\(\overrightarrow{L}\text{:}\)</span> The vector from the surface of an object to a point light source (<span class="process-math">\(\lt x, y, z&gt;\)</span>). e.g. <span class="process-math">\(\lt 1, 0.5, 1&gt;\)</span> (to the right, slightly up and in front)</div></li>
-<li><div class="para">
-<span class="process-math">\(\overrightarrow{V}\text{:}\)</span> The view vector (from the surface of an object to the viewer) (<span class="process-math">\(\lt x, y, z&gt;\)</span>).e.g. <span class="process-math">\(\lt 0, 0, 1&gt;\)</span> (directly in front)</div></li>
-<li><div class="para">
-<span class="process-math">\(\overrightarrow{N}\text{:}\)</span> The surface normal of a polygon, see notes on [backface culling](#backface-culling) for more on this.</div></li>
-<li><div class="para">
-<span class="process-math">\(K_a\text{:}\)</span> Constant of ambient reflection; how much ambient light is reflected by the object. ( RGB or a single value [0-1], think of it like a %). e.g. 0.1, 0.1, 0.1</div></li>
-<li><div class="para">
-<span class="process-math">\(K_d\text{:}\)</span> Constant of diffuse reflection; how much a point light is reflected diffusely by the object. ( RGB or a single value [0-1] ). e.g. 0.5, 0.5, 0.5</div></li>
-<li><div class="para">
-<span class="process-math">\(K_s\text{:}\)</span> Constant of specular reflection; how much a point light is reflected specularly by the object. ( RGB or a single value [0-1] ). e.g. 0.5, 0.5, 0.5</div></li>
-</ul>
-<div class="para">In general, <span class="process-math">\(I\)</span> (for illumination), or the color of an object based on lighting will be calculated by</div>
-<div class="displaymath process-math">
-\begin{equation*}
-I = I_{ambient} + I_{diffuse} + I_{specular}
-\end{equation*}
-</div>
-</div>
-<span class="incontext"><a href="chapter-13.html#p-119" class="internal">in-context</a></span>
+<div class="para">We will work with 2 kinds of light sources, <em class="emphasis">ambient</em> and <em class="emphasis">point lights</em>. Both will have an associated color, either as an RGB triple or a single grayscale value.</div>
+<span class="incontext"><a class="internal" href="chapter-12.html#p-119">in-context</a></span>
 </body>
 </html>
