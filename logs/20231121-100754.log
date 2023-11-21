@@ -1,0 +1,13 @@
+INFO    : PreTeXt project found in `/Users/dw/stuysync/director/curricula/graphics_book`.
+WARNING : Using CLI version 2.1.0 but project's `requirements.txt`
+WARNING : is configured to use 1.4.0. Consider either installing
+WARNING : CLI version 1.4.0 or running `pretext init --refresh`
+WARNING : to update `requirements.txt` to match 2.1.0.
+ERROR   : XML Syntax Error caused build to fail:
+ERROR   : /Users/dw/stuysync/director/curricula/graphics_book/publication/publication.ptx:53:19:FATAL:PARSER:ERR_NAME_REQUIRED: error parsing attribute name
+/Users/dw/stuysync/director/curricula/graphics_book/publication/publication.ptx:53:19:FATAL:PARSER:ERR_SPACE_REQUIRED: attributes construct error
+/Users/dw/stuysync/director/curricula/graphics_book/publication/publication.ptx:53:19:FATAL:PARSER:ERR_GT_REQUIRED: Couldn't find end of Start Tag chapter-start line 53
+CRITICAL: XML syntax for publication file is invalid
+INFO    : ------------------------
+INFO    : While running pretext, the following errors occurred:
+

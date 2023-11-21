@@ -1,0 +1,16 @@
+INFO    : PreTeXt project found in `/Users/dw/stuysync/director/curricula/graphics_book`.
+WARNING : Using CLI version 2.1.0 but project's `requirements.txt`
+WARNING : is configured to use 1.4.0. Consider either installing
+WARNING : CLI version 1.4.0 or running `pretext init --refresh`
+WARNING : to update `requirements.txt` to match 2.1.0.
+ERROR   : XInclude Error caused build to fail:
+ERROR   : /Users/dw/stuysync/director/curricula/graphics_book/source/ch08-rcs.xml:70:12:FATAL:PARSER:ERR_TAG_NAME_MISMATCH: Opening and ending tag mismatch: li line 69 and ul
+/Users/dw/stuysync/director/curricula/graphics_book/source/ch08-rcs.xml:71:9:FATAL:PARSER:ERR_TAG_NAME_MISMATCH: Opening and ending tag mismatch: ul line 66 and p
+/Users/dw/stuysync/director/curricula/graphics_book/source/ch08-rcs.xml:75:13:FATAL:PARSER:ERR_TAG_NAME_MISMATCH: Opening and ending tag mismatch: p line 57 and section
+/Users/dw/stuysync/director/curricula/graphics_book/source/ch08-rcs.xml:76:11:FATAL:PARSER:ERR_TAG_NAME_MISMATCH: Opening and ending tag mismatch: section line 55 and chapter
+/Users/dw/stuysync/director/curricula/graphics_book/source/ch08-rcs.xml:77:1:FATAL:PARSER:ERR_TAG_NOT_FINISHED: Premature end of data in tag chapter line 1
+/Users/dw/stuysync/director/curricula/graphics_book/source/main.ptx:68:0:ERROR:XINCLUDE:XINCLUDE_NO_FALLBACK: could not load /Users/dw/stuysync/director/curricula/graphics_book/source/ch08-rcs.xml, and no fallback was found
+CRITICAL: XML syntax for source file is invalid
+INFO    : ------------------------
+INFO    : While running pretext, the following errors occurred:
+
