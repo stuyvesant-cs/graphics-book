@@ -1,0 +1,5 @@
+/Users/dw/stuysync/director/curricula/graphics_book/source/main.ptx:30:0:ERROR:RELAXNGV:RELAXNG_ERR_ELEMNAME: Expecting element biography, got colophon
+/Users/dw/stuysync/director/curricula/graphics_book/source/main.ptx:53:0:ERROR:RELAXNGV:RELAXNG_ERR_NOTELEM: Expecting an element got text
+/Users/dw/stuysync/director/curricula/graphics_book/source/main.ptx:54:0:ERROR:RELAXNGV:RELAXNG_ERR_CONTENTVALID: Element part failed to validate content
+/Users/dw/stuysync/director/curricula/graphics_book/source/main.ptx:16:0:ERROR:RELAXNGV:RELAXNG_ERR_ELEMWRONG: Did not expect element subtitle there
+/Users/dw/stuysync/director/curricula/graphics_book/source/main.ptx:14:0:ERROR:RELAXNGV:RELAXNG_ERR_CONTENTVALID: Element book failed to validate content
