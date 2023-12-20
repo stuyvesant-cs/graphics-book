@@ -1,0 +1,23 @@
+INFO    : PreTeXt project found in `/Users/dw/stuysync/director/curricula/graphics_book`.
+WARNING : Using CLI version 2.1.0 but project's `requirements.txt`
+WARNING : is configured to use 1.4.0. Consider either installing
+WARNING : CLI version 1.4.0 or running `pretext init --refresh`
+WARNING : to update `requirements.txt` to match 2.1.0.
+ERROR   : XInclude Error caused build to fail:
+ERROR   : /Users/dw/stuysync/director/curricula/graphics_book/source/ch13-compiler-design.xml:120:1:FATAL:PARSER:ERR_HYPHEN_IN_COMMENT: Double hyphen within comment: <!--
+
+Our current parser is simplistic. It was great f
+/Users/dw/stuysync/director/curricula/graphics_book/source/ch13-compiler-design.xml:120:3:FATAL:PARSER:ERR_HYPHEN_IN_COMMENT: Double hyphen within comment: <!--
+
+Our current parser is simplistic. It was great f
+/Users/dw/stuysync/director/curricula/graphics_book/source/ch13-compiler-design.xml:145:1:FATAL:PARSER:ERR_HYPHEN_IN_COMMENT: Double hyphen within comment: <!--
+
+Our current parser is simplistic. It was great f
+/Users/dw/stuysync/director/curricula/graphics_book/source/ch13-compiler-design.xml:145:3:FATAL:PARSER:ERR_HYPHEN_IN_COMMENT: Double hyphen within comment: <!--
+
+Our current parser is simplistic. It was great f
+/Users/dw/stuysync/director/curricula/graphics_book/source/main.ptx:79:0:ERROR:XINCLUDE:XINCLUDE_NO_FALLBACK: could not load /Users/dw/stuysync/director/curricula/graphics_book/source/ch13-compiler-design.xml, and no fallback was found
+CRITICAL: XML syntax for source file is invalid
+INFO    : ------------------------
+INFO    : While running pretext, the following errors occurred:
+

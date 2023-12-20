@@ -73,7 +73,10 @@
       <xi:include href="ch10-z-buffer.xml" />
       <xi:include href="ch11-lighting-models.xml" />
       <xi:include href="ch12-phong-reflection.xml" />
-
+    </part>
+    <part>
+      <title>Compilers</title>
+      <xi:include href="ch13-compiler-design.xml" />
     </part>
 
     <backmatter xml:id="backmatter">
