@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para logical">
+<div class="para">
+<code class="code-inline tex2jax_ignore">$ convert</code> can be used to make animated gifs from multiple files. If you give convert multiple files and specify the output format as a gif, it will automatically create an animated gif. Working similar to <code class="code-inline tex2jax_ignore">animate</code> in terms of the ordering of files. There is an extra argument which you may want to use called <code class="code-inline tex2jax_ignore">-delay</code> it helps specify the framerate.</div>
+<ul class="disc">
+<li><div class="para">Normally, we think of framerate in Frames Per Second (fps). So 24 fps would mean 24 frames every second, this is the standard for film-based movies. 30 fps is the standard for TV shows (at least in the US, 25 for the rest of the world). 60 fps is a common HD framerate.</div></li>
+<li><div class="para">gifs measure frames a little differently, counting delays between frames in 1/100 second units. So we tend to think of gifs not in fps but in delay between frames, which is actually seconds per frame. To turn that into fps, just invert the value.</div></li>
+<li><div class="para">
+<code class="code-inline tex2jax_ignore">-delay t</code> will put a <code class="code-inline tex2jax_ignore">t/100</code> second delay between each frame. So if <code class="code-inline tex2jax_ignore">t</code> = 20, there will be 1/5 second delay between frames <em class="emphasis">or</em> 5 fps. A delay of 1.7 is close to 60fps, 4.1 is close to 24fps, 3.3 is close to 30fps.</div></li>
+<li><div class="para">An example of using <code class="code-inline tex2jax_ignore">convert</code> on a bunch of images that begin with the name rolling: <code class="code-inline tex2jax_ignore">$ convert rolling* -delay 1.7 rolling.gif</code>
+</div></li>
+</ul>
+</div>
+<span class="incontext"><a class="internal" href="chapter-15.html#p-159">in-context</a></span>
+</body>
+</html>

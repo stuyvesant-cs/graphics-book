@@ -11,8 +11,18 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h2 class="heading"><span class="type">Paragraph</span></h2>
-<div class="para">This book was authored in PreTeXt.</div>
-<span class="incontext"><a class="internal" href="colophon-2.html#p-146">in-context</a></span>
+<h3 class="heading"><span class="type">Paragraph</span></h3>
+<div class="para logical">
+<div class="para">An animated image is simply a whole lot of similar images strung together. We will procedurally generate animated images by taking a transformation and applying it over a series of individual frames. For example, if we want a ball to roll across the screen, we could frame that as a <code class="code-inline tex2jax_ignore">move</code> command that is applied increasingly over time. We can think about this as if we’re adding an extra argument to move, representing the amount of the transformation to apply.</div>
+<ul class="disc">
+<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 0</code></div></li>
+<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 0.25</code></div></li>
+<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 0.5</code></div></li>
+<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 0.75</code></div></li>
+<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 1</code></div></li>
+</ul>
+<div class="para">Here we have the move command applied first at 0%, then in 25% increments until we get to 100%. The entire animation would take place over 5 frames.</div>
+</div>
+<span class="incontext"><a class="internal" href="chapter-15.html#p-146">in-context</a></span>
 </body>
 </html>

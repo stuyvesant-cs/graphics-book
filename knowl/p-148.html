@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para logical">
+<div class="para">We will define the behavior of the knob in a new MDL command: <code class="code-inline tex2jax_ignore">vary</code> that looks like this:</div>
+<pre class="code-display tex2jax_ignore">
+        vary knob start_frame end_frame start_value end_value
+      </pre>
+<div class="para">This says modify the value of <code class="code-inline tex2jax_ignore">knob</code> between frames <code class="code-inline tex2jax_ignore">start_frame</code> and <code class="code-inline tex2jax_ignore">end_frame</code> so that it changes from <code class="code-inline tex2jax_ignore">start_value</code> to <code class="code-inline tex2jax_ignore">end_value</code>. Here is an example of creating and using a knob:</div>
+<pre class="code-display tex2jax_ignore">
+        move 400 0 0 knobby
+        vary knobby 0 5 0 1
+      </pre>
+<div class="para">These two commands would create the series of <code class="code-inline tex2jax_ignore">move</code> commands shown above.</div>
+</div>
+<span class="incontext"><a class="internal" href="chapter-15.html#p-148">in-context</a></span>
+</body>
+</html>
