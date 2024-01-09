@@ -1,0 +1,123 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Animation</title>
+  <introduction>
+    <p>
+      An animated image is simply a whole lot of similar images strung together. We will procedurally generate animated images by taking a transformation and applying it over a series of individual frames. For example, if we want a ball to roll across the screen, we could frame that as a <c>move</c> command that is applied increasingly over time. We can think about this as if we're adding an extra argument to move, representing the amount of the transformation to apply.
+      <ul>
+        <li><c>move 400 0 0 0</c></li>
+        <li><c>move 400 0 0 0.25</c></li>
+        <li><c>move 400 0 0 0.5</c></li>
+        <li><c>move 400 0 0 0.75</c></li>
+        <li><c>move 400 0 0 1</c></li>
+      </ul>
+      Here we have the move command applied first at 0%, then in 25% increments until we get to 100%. The entire animation would take place over 5 frames.
+    </p>
+  </introduction>
+  <section>
+    <title>Knobs</title>
+    <p>
+      In MDL, we will create this effect using a new type of variable called a <em>knob</em>. A knob is an optional parameter to any transformation command.If a knob name is present at the end of the transformation, it means that transformation is designed to be applied incrementally over some number of frames.
+    </p>
+    <p>
+      We will define the behavior of the knob in a new MDL command: <c>vary</c> that looks like this:
+      <cd>
+        vary knob start_frame end_frame start_value end_value
+      </cd>
+      This says modify the value of <c>knob</c> between frames <c>start_frame</c> and <c>end_frame</c> so that it changes from <c>start_value</c> to <c>end_value</c>. Here is an example of creating and using a knob:
+      <cd>
+        move 400 0 0 knobby
+        vary knobby 0 5 0 1
+      </cd>
+      These two commands would create the series of <c>move</c> commands shown above.
+    </p>
+    <p>
+      Some important things to keep in mind about how <c>vary</c> works in MDL.
+      <ul>
+        <li>You could have multiple vary commands for the same knob, as long as they don't overlap in frames.</li>
+        <li><c>start_frame</c> should always be less than <c>end_frame</c>.</li>
+        <li><c>end_frame</c> should always be less than or equal to the total number of frames.</li>
+        <li>The value can increase or decrease over time.</li>
+        <li>The value range can be bounded by any floating point values.</li>
+        <li>The frame and value ranges are inclusive.</li>
+      </ul>
+    </p>
+  </section>
+  <section>
+  <title>Implementing Animation in MDL</title>
+  <p>
+    In addition to knobs and the <c>vary</c> command, we'll have 2 other new commands:
+    <ul>
+      <li><c>frames x</c>: Set the total number of frames for the animation.</li>
+      <li><c>basename s</c>: Set the base file name for each frame file.</li>
+    </ul>
+    In order to produce an animation, we will go through the operations list three times.
+  </p>
+  <subsection>
+    <title>Animation Pass 0</title>
+    <p>
+      Pass 0 is designed to both check if animation code is present at all, and set the initial parameters for the animation. This deals specifically with the <c>frames</c> and <c>basename</c> commands, while also looking for the presence of <c>vary</c>. Specifically:
+      <ul>
+        <li>Set <c>frames</c> and <c>basename</c> to be used throughout your code generator.</li>
+        <li>If <c>vary</c> is present, but <c>frames</c> is not, this should be considered an MDL compiler error to be caught by your code generator, handle it accordingly.</li>
+        <li>If <c>frames</c> is preset, but <c>basename</c> is not, print a warning, and set the name to be used to some default value.</li>
+      </ul>
+    </p>
+  </subsection>
+  <subsection>
+    <title>Animation Pass 1</title>
+    <p>
+      This is the bulk of the new work for animation. In this pass, we will compute all the knob values for every frame and store them in a data structure to be used when we actually draw each frame.
+    </p>
+    <p>
+      Create an array/list, where each index represents a frame. In turn, each index will contain a list of the knobs and their values for that frame. When you see the <c>vary</c> command, compute how it modifies knob values, and add entries in the knob table for each frame covered in the <c>vary</c> command. Use a simple linear interpolation for the change (i.e. total_change/frames ). The knob list for the example at the beginning of this chapter might looks something like this in python:
+      <cd>
+        [[{'knobby': 0.0}],
+         [{'knobby': 0.25}],
+         [{'knobby': 0.5}],
+         [{'knobby': 0.75}],
+         [{'knobby': 1.0}]]
+      </cd>
+    </p>
+    </subsection>
+    <subsection>
+      <title>Animation Pass 2</title>
+      <p>
+        This is the normal drawing loop with 3 <em>potential</em> changes (depending on if the frames is greater than 1).
+        * Ignore <c>frames</c>, <c>basename</c> and <c>vary</c> commands, as they would have been taken care of in passes 0 and 1. If frames is 1, do nothing differently from the non-animation code generator.
+      </p>
+      <p>
+        If there are more than 1 frame:
+        <ul>
+          <li>Before iterating over the operations list, go through the knob values computed from pass 1. Update the symbol table accordingly with each knob value.</li>
+          <li>Go through the operations, when a knob is present, use the value stored in the symbol table to modify the values of the transformation.</li>
+          <li>Ignore the <c>display</c> and <c>save</c> commands, no one wants to have these things run all the time.</li>
+          <li>After drawing <em>each</em> frame, save it. Use the basename followed by a number (leading 0s are very useful, see the assignment for tips on adding them).</li>
+          <li>After drawing all the frames, stitch them together into an animated gif, more on that below.</li>
+        </ul>
+      </p>
+    </subsection>
+  </section>
+  <section>
+    <title>Dealing with frames and animated gifs</title>
+    <p>
+      <aside>
+        <p>
+          Git does not track empty directories, so put some placeholder text file in your frame directory so that it shows up on GitHub (remember <em>DO NOT</em> upload all your image files).
+        </p>
+      </aside>
+      You will be generating <em>a lot</em> of images. You should create a directory to store all the frames so they don't overrun your code directory. To turn these individual frames into a gif, we will use 2 utilities from the <em>imagemagick</em> suite:
+    </p>
+    <p>
+      <c>$ animate</c> Will display an animation based on the files given as parameters. You can individual list files like this: <c>$ animate frame0.png frame1.png frame2.png</c> or, the better option, use the <c>*</c> character. This will only work if your files all have the same start to their names. It will stitch them together in the same order that they appear when running <c>$ ls</c>, which is why I suggest using at least 1 leading 0 when naming the frames. <c>animate</c>should also be used when displaying an animated gif. Using the <c>display</c> command is not advised.
+    </p>
+    <p>
+      <c>$ convert</c> can be used to make animated gifs from multiple files. If you give convert multiple files and specify the output format as a gif, it will automatically create an animated gif. Working similar to <c>animate</c> in terms of the ordering of files. There is an extra argument which you may want to use called <c>-delay</c> it helps specify the framerate.
+      <ul>
+        <li>Normally, we think of framerate in Frames Per Second (fps). So 24 fps would mean 24 frames every second, this is the standard for film-based movies. 30 fps is the standard for TV shows (at least in the US, 25 for the rest of the world). 60 fps is a common HD framerate.</li>
+        <li>gifs measure frames a little differently, counting delays between frames in 1/100 second units. So we tend to think of gifs not in fps but in delay between frames, which is actually seconds per frame. To turn that into fps, just invert the value.</li>
+        <li><c>-delay t</c> will put a <c>t/100</c> second delay between each frame. So if <c>t</c> = 20, there will be 1/5 second delay between frames <em>or</em> 5 fps. A delay of 1.7 is close to 60fps, 4.1 is close to 24fps, 3.3 is close to 30fps.</li>
+        <li>An example of using <c>convert</c> on a bunch of images that begin with the name rolling: <c>$ convert rolling* -delay 1.7 rolling.gif</c></li>
+      </ul>
+    </p>
+  </section>
+</chapter>

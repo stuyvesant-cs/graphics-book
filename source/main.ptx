@@ -78,6 +78,10 @@
       <title>Compilers</title>
       <xi:include href="ch13-compiler-design.xml" />
     </part>
+    <part>
+      <title>Animation</title>
+      <xi:include href="ch14-animation.xml" />
+    </part>
 
     <backmatter xml:id="backmatter">
       <title>Backmatter</title>
