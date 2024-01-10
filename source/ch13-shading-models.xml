@@ -1,0 +1,108 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Shading Models</title>
+  <introduction>
+    The Phong Reflection Model is one way to calculate the color of an surface. A <em>shading</em> model determines how often we make that calculation, or how we apply a reflection model to an entire object. There are 4 kinds of shading models we will look at: <em>Wireframe, Flat, Gouraud, and Phong</em>.
+
+  </introduction>
+  <section>
+    <title>Wireframe Shading</title>
+    <sidebyside>
+      <image source="images/ch13-box-wire.png">
+        <description>
+          A box generated using wireframe shading.
+        </description>
+      </image>
+      <image source="images/ch13-sphere-wire.png">
+        <description>
+          A sphere generated using wireframe shading.
+        </description>
+      </image>
+    </sidebyside>
+    <p>
+      Wireframe shading is not really shading at all, but it is commonly provided as an option to true shading models. Wireframe models only draw the edges of the triangles that make up the objects of your image. Because we are not filling in the triangles, we do not calculate the color, nor can we handle z-buffering. Wireframe models are fast to produce since they require much less work of the computer.
+    </p>
+  </section>
+  <section>
+    <title>Flat Shading</title>
+    <sidebyside>
+      <image source="images/ch13-box-flat.png">
+        <description>
+          A box generated using flat shading.
+        </description>
+      </image>
+      <image source="images/ch13-sphere-flat.png">
+        <description>
+          A sphere generated using flat shading.
+        </description>
+      </image>
+    </sidebyside>
+    <p>
+      Flat shading is in fact what we are already doing with our images. Flat shading does calculate the color of a surface based on a reflection model, and then uses scanline conversion (or other related algorithm) to fill in the polygons. For flat shading, we make the color calculation once per polygon. Flat shading is least computationally true intensive shading model we will look at.
+    </p>
+    <p>
+      Edges of individual polygons tend to be fairly visible with flat shading, so objects with curved surfaces will look "boxy". This can be mitigated by increasing the number of polygons. Another issue with flat shading has to do with flat surfaces and point light reflection. If you have a large flat surface (like a box), flat shading will only make once calculation for an entire side of the box. This will get rid of any point light reflection that would be present.
+    </p>
+  </section>
+  <section>
+    <title>Interlude: Vertex Normals</title>
+    <p>
+      Before we get to Gouraud and Phong shading, we need to examine one of the key components to the Phone Reflection Model, the <em>surface normal</em>. The surface normal is useful in determining what direction an object is facing, as well as the relationship between an object and any point light sources. But a surface normal only really describes the direction of a polygon at a single point.
+    </p>
+    <p>
+      A <em>vertex normal</em> is the average of all the surface normals that share a given vertex. This means we still calculate the surface normals of all polygons, but instead of directly using them for lighting and shading, we average them together for each vertex. Now every triangle will have three vertex normals that we can use for more accurate shading.
+    </p>
+    <p>
+      In practice, calculating vertex normals means maintaining a separate structure that has to be populated before you start rendering your polygons. We don't know ahead of time what triangles share common vertices, so we have to iterate over our polygon list and do the following:
+      <ul>
+        <li>For each polygon, calculate the surface normal.</li>
+        <li>For each vertex of a polygon check if it is already in our vertex normal list.</li>
+        <li>If a vertex is not in the list already, make a new entry.</li>
+        <li>If a vertex is in the list, modify the existing entry (most commonly adding it)</li>
+        <li>Once all the polygons have been evaluated, normalize all the vertex normals. (If we keep track of the number of polygons per vertex, we can also average the values before normalizing).</li>
+      </ul>
+      Most commonly, some hash-table like data structure is used for the vertex normal list, where the keys are the vertices themselves and the values are the normals. This ensures one entry per vertex and allows for quick access later.
+    </p>
+  </section>
+  <section>
+    <title>Gouraud Shading</title>
+    <sidebyside>
+      <image source="images/ch13-box-gouraud.png">
+        <description>
+          A box generated using flat shading.
+        </description>
+      </image>
+      <image source="images/ch13-sphere-gouraud.png">
+        <description>
+          A sphere generated using flat shading.
+        </description>
+      </image>
+    </sidebyside>
+    <p>
+      Gouraud (named after Henri Gouraud) shading uses vertex normals to calculate colors more often than once per polygon. Gouraud shading calculates the color for each vertex of a polygon. So now we have 3 different colors to work with.
+    </p>
+    <p>
+      As our scanline conversion algorithm fills in each polygon, we will use the computed color values at each vertex to interpolate a new color for each pixel. Essentially, we will do the same calculations we currently perform for the endpoints of each scanline (and subsequently for the z values of each pixel) on the colors as well.
+    </p>
+  </section>
+  <section>
+    <title>Phong Shading</title>
+    <sidebyside>
+      <image source="images/ch13-box-phong.png">
+        <description>
+          A box generated using flat shading.
+        </description>
+      </image>
+      <image source="images/ch13-sphere-phong.png">
+        <description>
+          A sphere generated using flat shading.
+        </description>
+      </image>
+    </sidebyside>
+    <p>
+      Phong (named after Bui Tuong Phong) shading also uses vertex normals to calculate colors more often than once per polygon. The difference between Phong and Gouraud shading is that instead of calculating the color at each vertex, we calculate the color at each <em>pixel</em>.
+    </p>
+    <p>
+      As our scanline conversion algorithm fills in each polygon, we will interpolate a normal based on the vertex normals, then use that normal to calculate a new color for each pixel. Essentially, we will do the same calculations we currently perform for the endpoints of each scanline (and subsequently for the z values of each pixel) on the normals as well, and then generate a new color. Since we are running the color calculation once per pixel, Phong shading is the most computationally intensive shading model. But it is also the one that will produce the best results, especially when there are specular highlights.
+    </p>
+  </section>
+</chapter>

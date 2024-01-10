@@ -123,13 +123,3 @@
   </section>
 
 </chapter>
-
-<!--
-
-__Putting it all together__
-<li> <m><m>
-<li> <m> <m>
-<li> For now, we should calculate <m>I<m> once per polygon. This is known as __flat shading__. Later on we will look at other shading options.
-
-
--->
