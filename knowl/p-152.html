@@ -11,8 +11,16 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h5 class="heading"><span class="type">Paragraph</span></h5>
-<div class="para">This is the bulk of the new work for animation. In this pass, we will compute all the knob values for every frame and store them in a data structure to be used when we actually draw each frame.</div>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para logical">
+<div class="para">The semantic analyzer takes the syntax tree and create a list of operations in the order that they need to be performed so that the program can work. Given the syntax tree above, the semantic analyzer might make an operations list like the following:</div>
+<pre class="code-display tex2jax_ignore">
+        MULTIPLY 5, 8
+        ASSIGN x PREVIOUS
+        printf "%d", x
+      </pre>
+<div class="para">The <code class="code-inline tex2jax_ignore">ASSIGN</code> entry would have some reference to the previous entry. Things like <code class="code-inline tex2jax_ignore">x</code> and <code class="code-inline tex2jax_ignore">printf</code> would refer to the symbol table, since they are identifiers. The operations list is designed such that it can then be directly translated into processor operations, ready to be translated into binary code.</div>
+</div>
 <span class="incontext"><a class="internal" href="chapter-15.html#p-152">in-context</a></span>
 </body>
 </html>

@@ -12,7 +12,23 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">The code generator is the part of the compiler that generates the executable code (I know, shocking). At this point, the operations list can be traversed and translated into executable binary code. Some compilers provide an option to create an <em class="emphasis">assembly code</em> file instead of an executable binary. You can do this in gcc with the <code class="code-inline tex2jax_ignore">-S</code> flag.</div>
-<span class="incontext"><a class="internal" href="chapter-14.html#p-145">in-context</a></span>
+<div class="para logical">
+<div class="para">Until now, you’ve probably thought about a compiler in the following way:</div>
+<ol class="decimal">
+<li><div class="para">Source code</div></li>
+<li><div class="para">???</div></li>
+<li><div class="para">Executable code</div></li>
+</ol>
+<div class="para">Turns out, a lot happens in step 2, and we will investigate that. Compilers are made of the following parts:</div>
+<ol class="decimal">
+<li><div class="para">Lexer</div></li>
+<li><div class="para">Parser</div></li>
+<li><div class="para">Semantic Analyzer</div></li>
+<li><div class="para">Optimizer</div></li>
+<li><div class="para">Code Generator</div></li>
+</ol>
+<div class="para">As your code goes through these parts, it gets transformed into various structures that are less human-friendly but more computer-friendly, until we end up with the finished product, a binary executable program.</div>
+</div>
+<span class="incontext"><a class="internal" href="chapter-15.html#p-145">in-context</a></span>
 </body>
 </html>

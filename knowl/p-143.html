@@ -12,7 +12,7 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">Once we have a list operations to be performed, the optimizer can look it over and potential provide size and time improvements. Some possible examples are removing unused variables from the symbol table, removing conditional statements that are always true/false.</div>
+<div class="para">As our scanline conversion algorithm fills in each polygon, we will interpolate a normal based on the vertex normals, then use that normal to calculate a new color for each pixel. Essentially, we will do the same calculations we currently perform for the endpoints of each scanline (and subsequently for the z values of each pixel) on the normals as well, and then generate a new color. Since we are running the color calculation once per pixel, Phong shading is the most computationally intensive shading model. But it is also the one that will produce the best results, especially when there are specular highlights.</div>
 <span class="incontext"><a class="internal" href="chapter-14.html#p-143">in-context</a></span>
 </body>
 </html>

@@ -12,7 +12,17 @@
 </head>
 <body class="ignore-math">
 <h4 class="heading"><span class="type">Paragraph</span></h4>
-<div class="para">The parser performs <em class="emphasis">syntactic analysis</em>. This means that the parser checks the token list against the grammatical rules of the language. The parser will output a <em class="emphasis">syntax tree</em> and a corresponding <em class="emphasis">symbol table</em>. The syntax tree for the code above might look something like this: <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ch13-syntax_tree.png" class="contained"></div> Notice that the grouping symbols (i.e. <code class="code-inline tex2jax_ignore">() {} ;</code>) have been stripped away and are now built into the syntax tree.</div>
+<div class="para logical">
+<div class="para">In practice, calculating vertex normals means maintaining a separate structure that has to be populated before you start rendering your polygons. We don’t know ahead of time what triangles share common vertices, so we have to iterate over our polygon list and do the following:</div>
+<ul class="disc">
+<li><div class="para">For each polygon, calculate the surface normal.</div></li>
+<li><div class="para">For each vertex of a polygon check if it is already in our vertex normal list.</div></li>
+<li><div class="para">If a vertex is not in the list already, make a new entry.</div></li>
+<li><div class="para">If a vertex is in the list, modify the existing entry (most commonly adding it)</div></li>
+<li><div class="para">Once all the polygons have been evaluated, normalize all the vertex normals. (If we keep track of the number of polygons per vertex, we can also average the values before normalizing).</div></li>
+</ul>
+<div class="para">Most commonly, some hash-table like data structure is used for the vertex normal list, where the keys are the vertices themselves and the values are the normals. This ensures one entry per vertex and allows for quick access later.</div>
+</div>
 <span class="incontext"><a class="internal" href="chapter-14.html#p-139">in-context</a></span>
 </body>
 </html>

@@ -11,18 +11,8 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h3 class="heading"><span class="type">Paragraph</span></h3>
-<div class="para logical">
-<div class="para">Our current parser is simplistic. It was great for what we were doing, but we need more flexibility in our image description files. Things that would be nice to have:</div>
-<ul class="disc">
-<li><div class="para">A way to define ambient light.</div></li>
-<li><div class="para">A way to define point light sources.</div></li>
-<li><div class="para">A way to create a set of reflection constants such that we can reuse them when we add objects without having to type out 9 values each time.</div></li>
-<li><div class="para">A way to define a coordinate system totally independent of the current stack and use that when placing some objects (to give more control over our images).</div></li>
-<li><div class="para">A looping structure to help with animation.</div></li>
-</ul>
-<div class="para">The last 3 things on the list above are really the sorts of things you would see in a more robust programming language. The last one being loops and the other 2 being essentially variables. So we are going to move from a simple parser to a compiler-style design. In order to do so, we have to know more about how compilers work.</div>
-</div>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para">Wireframe shading is not really shading at all, but it is commonly provided as an option to true shading models. Wireframe models only draw the edges of the triangles that make up the objects of your image. Because we are not filling in the triangles, we do not calculate the color, nor can we handle z-buffering. Wireframe models are fast to produce since they require much less work of the computer.</div>
 <span class="incontext"><a class="internal" href="chapter-14.html#p-134">in-context</a></span>
 </body>
 </html>

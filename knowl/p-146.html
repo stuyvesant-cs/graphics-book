@@ -11,17 +11,35 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h3 class="heading"><span class="type">Paragraph</span></h3>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
 <div class="para logical">
-<div class="para">An animated image is simply a whole lot of similar images strung together. We will procedurally generate animated images by taking a transformation and applying it over a series of individual frames. For example, if we want a ball to roll across the screen, we could frame that as a <code class="code-inline tex2jax_ignore">move</code> command that is applied increasingly over time. We can think about this as if we’re adding an extra argument to move, representing the amount of the transformation to apply.</div>
-<ul class="disc">
-<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 0</code></div></li>
-<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 0.25</code></div></li>
-<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 0.5</code></div></li>
-<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 0.75</code></div></li>
-<li><div class="para"><code class="code-inline tex2jax_ignore">move 400 0 0 1</code></div></li>
-</ul>
-<div class="para">Here we have the move command applied first at 0%, then in 25% increments until we get to 100%. The entire animation would take place over 5 frames.</div>
+<div class="para">The lexer is the first process code goes through when being compiled. A lexer performs <em class="emphasis">lexical analysis</em>, which means that its job is to identify the <em class="emphasis">tokens</em> in a programming file. (A <em class="emphasis">lexicon</em> is the total collection of words in a language). The lexer will take in a computer program (most often a plain text file) and output a list of program tokens. Takes this example c code:</div>
+<pre class="code-display tex2jax_ignore">
+        int main() {
+            int x;
+            x = 5 * 18;
+            printf("%d", x);
+            return 0;
+        }
+      </pre>
+<div class="para">After going through a lexer, the code would look something like this:</div>
+<pre class="code-display tex2jax_ignore">
+        INT
+        IDENTIFIER main
+        (
+        )
+        {
+        int
+        IDENTIFIER x
+        ;
+        x
+        ASSIGNMENT
+        VALUE 5
+        MULTIPLY
+        VALUE 18
+        ...
+      </pre>
+<div class="para">As we can see, a lot of the things programmers use to make their code readable, like whitespace and comments, immediately get stripped out.</div>
 </div>
 <span class="incontext"><a class="internal" href="chapter-15.html#p-146">in-context</a></span>
 </body>

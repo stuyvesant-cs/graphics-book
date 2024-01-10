@@ -11,15 +11,8 @@
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body class="ignore-math">
-<h5 class="heading"><span class="type">Paragraph</span></h5>
-<div class="para logical">
-<div class="para">Pass 0 is designed to both check if animation code is present at all, and set the initial parameters for the animation. This deals specifically with the <code class="code-inline tex2jax_ignore">frames</code> and <code class="code-inline tex2jax_ignore">basename</code> commands, while also looking for the presence of <code class="code-inline tex2jax_ignore">vary</code>. Specifically:</div>
-<ul class="disc">
-<li><div class="para">Set <code class="code-inline tex2jax_ignore">frames</code> and <code class="code-inline tex2jax_ignore">basename</code> to be used throughout your code generator.</div></li>
-<li><div class="para">If <code class="code-inline tex2jax_ignore">vary</code> is present, but <code class="code-inline tex2jax_ignore">frames</code> is not, this should be considered an MDL compiler error to be caught by your code generator, handle it accordingly.</div></li>
-<li><div class="para">If <code class="code-inline tex2jax_ignore">frames</code> is preset, but <code class="code-inline tex2jax_ignore">basename</code> is not, print a warning, and set the name to be used to some default value.</div></li>
-</ul>
-</div>
+<h4 class="heading"><span class="type">Paragraph</span></h4>
+<div class="para">The parser will only be able to find structural errors. Natural language example: <em class="emphasis">mouse cat the hungry ate</em>. would not pass the parser stage, while <em class="emphasis">the tree computed blue integrals</em>. would, despite the later not making any sense. In order for a parser to work, it must be programmed with the syntax of the language. This is commonly done using a <em class="emphasis">context free grammar</em>.</div>
 <span class="incontext"><a class="internal" href="chapter-15.html#p-151">in-context</a></span>
 </body>
 </html>
